@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chapitre III</title>
 </head>
 
 <body>
+    <h1>Chapitre III : DNS (Domain Name System)</h1>
+
+    <strong style="text-align: left;">🌍 1. Qu’est-ce que le DNS ?</strong>
+    <ul style="text-align: left;">
+        <li>Le DNS est comme l’annuaire d’Internet</li>
+        <li>Il traduit un nom de domaine (ex. monsite.com) en adresse IP (ex. 192.168.1.1)
+        </li>
+    </ul>
+    👉 Sans DNS, tu serais obligé de taper l’IP du serveur pour accéder à un site
+    <br><br><br>
+
+    <strong style="text-align: left;">📖 2. Analogie simple</strong>
+    <ul style="text-align: left;">
+        <li>Nom de domaine = le nom d’une personne (ex. "Eluan")</li>
+        <li>Adresse IP = son numéro de téléphone</li>
+    </ul>
+    👉 Le DNS est l’annuaire téléphonique : tu cherches le nom, il te donne le numéro
+    <br><br><br>
+
+    <strong style="text-align: left;">🔑 3. Les enregistrements DNS principaux</strong>
+    <ul style="text-align: left;">
+        Un domaine possède plusieurs types d’enregistrements DNS :
+        <li>A → Associe un nom de domaine à une adresse IP (ex. monsite.com → 192.168.1.1)</li>
+        <li>AAAA → Comme A, mais pour IPv6</li>
+        <li>CNAME → Alias d’un autre nom (ex. www.monsite.com → monsite.com)</li>
+        <li>MX → Serveurs de messagerie (ex. gmail.com pour les emails)</li>
+        <li>TXT → Données supplémentaires (souvent pour la sécurité : SPF, DKIM)</li>
+        <li>NS → Indique quels serveurs font autorité pour le domaine (les DNS principaux)</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">🔒 4. Importance du DNS</strong>
+    <ul style="text-align: left;">
+        <li>Sans DNS bien configuré → ton site peut être inaccessible</li>
+        <li>Mauvaise configuration des DNS email → tes mails peuvent finir en spam</li>
+        <li>DNS rapide et sécurisé → améliore la performance et la fiabilité.</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">📡 Exemple concret</strong>
+    <ul style="text-align: left;">
+        <li>Tu tapes www.google.com dans ton navigateur</li>
+        <li>Le DNS traduit ça en une adresse IP de serveur Google</li>
+        <li>Le navigateur se connecte alors à ce serveur</li>
+    </ul>
+    <br>
+
+    <img src="./images/DNS.png" alt="">
+    <br>
+
+    <a id='lien' href="./index.html">Retour au sommaire</a>
 
 </body>
 
