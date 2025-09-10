@@ -1,14 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chapitre IV</title>
 </head>
 
 <body>
+    <h1>Chapitre IV : HTTPS et SSL/TLS</h1>
 
+    <strong style="text-align: left;">🔐 1. Qu’est-ce que HTTPS ?</strong>
+    <ul style="text-align: left;">
+        <li>HTTP = protocole qui permet de charger les pages web</li>
+        <li>HTTPS = HTTP sécurisé, grâce à un chiffrement SSL/TLS</li>
+    </ul>
+    👉 Quand tu vois le petit cadenas 🔒 dans ton navigateur, c’est que la connexion est protégée
+    <br><br><br>
+
+    <strong style="text-align: left;">📖 2. À quoi ça sert ?</strong>
+    <ul style="text-align: left;">
+        <li>Protéger les données échangées entre ton navigateur et le serveur</li>
+        <li>Exemple : sans HTTPS, tes mots de passe ou infos bancaires peuvent être interceptés</li>
+        <li>Avec HTTPS, tout est chiffré (illisible si quelqu’un intercepte le trafic)</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">🗝️ 3. Le rôle des certificats SSL/TLS</strong>
+    <ul style="text-align: left;">
+        <li>Le serveur possède un certificat numérique (comme une carte d’identité)</li>
+        <li>Il prouve :</li>
+        <ul>
+            <li>1. Authenticité → tu parles bien au vrai site, pas à un imposteur</li>
+            <li>2. Confidentialité → les données sont chiffrées</li>
+            <li>3. Intégrité → les données ne sont pas modifiées en chemin</li>
+        </ul>
+    </ul>
+    👉 Exemple : Let’s Encrypt fournit gratuitement des certificats SSL
+    <br><br><br>
+
+    <strong style="text-align: left;">🔄 4. Schéma simplifié de la connexion HTTPS</strong>
+    <ul style="text-align: left;">
+        <li>Tu tapes https://monsite.com</li>
+        <li>Le serveur envoie son certificat SSL/TLS</li>
+        <li>Le navigateur le vérifie</li>
+        <li>Un canal chiffré est créé</li>
+        <li>Les échanges sont sécurisés</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">📡 Exemple concret</strong>
+    <ul style="text-align: left;">
+        <li>Une boutique en ligne sans HTTPS ❌ : risque énorme de vol de données</li>
+        <li>Une boutique avec HTTPS ✅ : données bancaires protégées par chiffrement</li>
+    </ul>
+    <br>
+
+    <img src="./images/HTTP.png">
+
+    <br><br>
+    <a id='lien' href="./index.html">Retour au sommaire</a>
 </body>
 
 </html>
