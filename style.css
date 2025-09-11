@@ -2,15 +2,18 @@
   width: 100%;
   display: flex;
 }
+
 .texte {
   width: 50%;
   padding: 10px;
   text-align: center;
 }
+
 .image {
   width: 50%;
   padding: 10px;
 }
+
 img {
   max-width: 100%;
   height: auto;

@@ -1,14 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chapitre V</title>
 </head>
 
 <body>
+    <h1>Chapitre V : Le Pare-feu (Firewall)</h1>
 
+    <strong style="text-align: left;">🔥 1. Qu’est-ce qu’un pare-feu ?</strong>
+    <ul style="text-align: left;">
+        <li>C’est une barrière de sécurité entre ton serveur (ou ton ordinateur) et Internet</li>
+        <li>Il contrôle le trafic réseau : décide ce qui est autorisé à entrer/sortir</li>
+    </ul>
+    👉 Comme un vigile à l’entrée d’un bâtiment
+    <br><br><br>
+
+    <strong style="text-align: left;">🛡️ 2. Son rôle principal</strong>
+    <ul style="text-align: left;">
+        <li>Bloquer les connexions non autorisées (ex. pirates)</li>
+        <li>Autoriser seulement ce qui est nécessaire (ex. HTTP/HTTPS pour un site web)</li>
+        <li>Surveiller les flux pour détecter des comportements suspects</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">📖 3. Analogie simple</strong>
+    <ul style="text-align: left;">
+        Imagine un immeuble :
+        <li>Le pare-feu = le vigile à l’entrée</li>
+        <li>Il laisse entrer les locataires connus (trafic autorisé)</li>
+        <li>Il bloque les inconnus douteux (trafic interdit)</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">🔑 4. Types de pare-feu</strong>
+    <ul style="text-align: left;">
+        <li>Pare-feu matériel → boîtier dédié (souvent en entreprise)</li>
+        <li>Pare-feu logiciel → installé sur un serveur ou un PC (ex. iptables sous Linux, Windows Firewall)</li>
+        <li>Pare-feu applicatif (WAF) → protège les applications web (ex. contre injections SQL)</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">📡 Exemple concret</strong>
+    <ul style="text-align: left;">
+        Un serveur web :
+        <li>Autorise seulement HTTP (80) et HTTPS (443)</li>
+        <li>Bloque tout le reste (FTP, Telnet, ports suspects)</li>
+    </ul>
+    <br>
+
+    <img src="./images/PareFeu.png">
+
+    <br><br>
+
+    <a id='lien' href="./index.html">Retour au sommaire</a>
 </body>
 
 </html>
