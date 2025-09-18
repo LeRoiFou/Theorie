@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chapitre XI</title>
+</head>
+
+<body>
+    <h1>Chapitre XI : TLS / SSL</h1>
+
+    <strong style="text-align: left;">🔑 1. C’est quoi TLS / SSL ?</strong>
+    <ul style="text-align: left;">
+        <li>SSL (Secure Sockets Layer) = ancien protocole de sécurisation des communications</li>
+        <li>TLS (Transport Layer Security) = version moderne, plus sûre</li>
+    </ul>
+    👉 Aujourd’hui, quand on parle de certificat SSL, en réalité on utilise TLS <br><br>
+
+    <strong style="text-align: left;">🌍 2. Le rôle principal</strong>
+    <ul style="text-align: left;">
+        <li>Chiffrer 🔐 les échanges entre ton navigateur et le serveur</li>
+        <li>Garantir :</li>
+        <ul>
+            <li>Confidentialité → personne ne peut lire les données échangées</li>
+            <li>Intégrité → les données ne sont pas modifiées en chemin</li>
+            <li>Authenticité → tu es sûr de parler au bon serveur (et pas à un pirate)</li>
+        </ul>
+    </ul>
+
+    <strong style="text-align: left;">📖 3. Analogie simple</strong>
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;">Imagine que tu envoies une lettre :<strong></strong></p>
+        <li>Sans TLS → carte postale 📮 : tout le monde peut lire</li>
+        <li>Avec TLS → lettre dans une enveloppe scellée ✉️🔒 : seul le destinataire peut ouvrir</li>
+    </ul>
+
+    <strong style="text-align: left;">📌 4. Signes visibles</strong>
+    <ul style="text-align: left;">
+        <li>http:// ❌ → non sécurisé</li>
+        <li>https:// ✅ → sécurisé avec TLS</li>
+        <li>Petit cadenas dans la barre du navigateur 🔒</li>
+    </ul>
+
+    <strong style="text-align: left;">📡 5. Exemple concret</strong>
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;">Tu entres ton mot de passe ou tes coordonnées bancaires :<strong></strong></p>
+        <li>Sans TLS → un hacker sur le réseau Wi-Fi peut intercepter</li>
+        <li>Avec TLS → tes infos sont chiffrées, illisibles sans la clé privée du serveur</li>
+    </ul>
+    <br>
+
+    <img src="/images/HTTP2.png">
+    <br><br>
+
+    <a id='lien' href="./index.html">Retour au sommaire</a>
+</body>
+
+</html>
