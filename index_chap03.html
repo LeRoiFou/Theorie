@@ -57,6 +57,73 @@
     <img src="./images/DNS.png" alt="">
     <br>
 
+    <hr>
+
+    <h2>Email & DNS associés</h2>
+
+    <strong style="text-align: left;">1. Le lien entre nom de domaine et emails</strong>
+    <ul style="text-align: left;">
+        <li>Quand tu achètes un domaine (ex. monentreprise.fr), tu peux :</li>
+        <ul>
+            <li>héberger un site web → via un serveur web relié au DNS</li>
+            <li>créer des adresses email → ex. contact@monentreprise.fr</li>
+        </ul>
+        <li>Pour que les emails fonctionnent, ton domaine doit être configuré correctement dans le DNS</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">2. Les enregistrements DNS essentiels pour l’email</strong>
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;"><strong>📌 MX (Mail eXchanger)</strong></p>
+        <li>Indique quel serveur gère la réception des emails pour ton domaine</li>
+        <li>Exemple :
+            <pre><code>monentreprise.fr MX mail.serveur.com</code></pre>
+        </li>
+        <li>Sans MX → aucun email reçu</li>
+    </ul>
+
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;"><strong>📌 SPF (Sender Policy Framework)</strong></p>
+        <li>Liste les serveurs autorisés à envoyer des emails pour ton domaine</li>
+        <li>Objectif → éviter que des pirates envoient des spams en se faisant passer pour toi</li>
+        <li>Exemple :
+            <pre><code>monentreprise.fr   TXT   "v=spf1 include:_spf.google.com ~all"</code></pre>
+        </li>
+    </ul>
+
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;"><strong>📌 DKIM (DomainKeys Identified Mail)</strong></p>
+        <li>Ajoute une signature cryptographique dans chaque email sortant</li>
+        <li>Permet de vérifier que l’email n’a pas été modifié en chemin</li>
+        <li>Exemple : une clé publique DKIM est enregistrée dans le DNS</li>
+    </ul>
+
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;"><strong>📌 DMARC (Domain-based Message Authentication, Reporting and
+                Conformance)</strong></p>
+        <li>Donne des règles de sécurité sur ce qu’il faut faire si un mail échoue aux tests SPF/DKIM</li>
+        <li>Exemples de règles :</li>
+        <ul>
+            <li>none → juste rapporter</li>
+            <li>quarantine → mettre en spam</li>
+            <li>reject → rejeter directement</li>
+        </ul>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">3. Analogie simple</strong>
+    <ul style="text-align: left;">
+        <li>MX → comme l’adresse de ta boîte aux lettres 🏠 (où le facteur doit livrer)</li>
+        <li>SPF → la liste des livreurs autorisés à déposer du courrier 📋</li>
+        <li>DKIM → le tampon officiel qui prouve que le courrier est authentique 🔏</li>
+        <li>DMARC → la consigne donnée au gardien si un courrier douteux arrive 🚫</li>
+    </ul>
+    <br>
+
+    <img src="/images/Email.png">
+
+    <br><br>
+
     <a id='lien' href="./index.html">Retour au sommaire</a>
 
 </body>
