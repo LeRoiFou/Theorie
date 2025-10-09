@@ -26,15 +26,77 @@
     👉 Le DNS est l’annuaire téléphonique : tu cherches le nom, il te donne le numéro
     <br><br><br>
 
-    <strong style="text-align: left;">🔑 3. Les enregistrements DNS principaux</strong>
+    <strong style="text-align: left;">🔑 3. Les principaux enregistrements que possède un DNS</strong>
     <ul style="text-align: left;">
-        Un domaine possède plusieurs types d’enregistrements DNS :
-        <li>A → Associe un nom de domaine à une adresse IP (ex. monsite.com → 192.168.1.1)</li>
-        <li>AAAA → Comme A, mais pour IPv6</li>
-        <li>CNAME → Alias d’un autre nom (ex. www.monsite.com → monsite.com)</li>
-        <li>MX → Serveurs de messagerie (ex. gmail.com pour les emails)</li>
-        <li>TXT → Données supplémentaires (souvent pour la sécurité : SPF, DKIM)</li>
-        <li>NS → Indique quels serveurs font autorité pour le domaine (les DNS principaux)</li>
+
+        <li>🌍 1. A (Address Record)</li>
+        <ul>
+            <li>Associe un nom de domaine à une adresse IP (exemple : <code>monsite.com → 192.168.1.10</code>)</li>
+            <li>Lie un nom de domaine à une adresse IPv4
+            </li>
+            <li>Sert à pointer ton site vers le bon serveur</li>
+        </ul>
+        <br>
+
+        <li>🌐 2. AAAA (IPv6 Address Record)</li>
+        <ul>
+            <li>Même rôle que le A, mais pour une adresse IPv6
+            <li>IPv6 (Internet Protocol version 6) est la nouvelle version du protocole</li>
+            <li>Pourquoi IPv6 ? Parce qu’on manque d’adresses IPv4 😅</li>
+        </ul>
+        <br>
+
+        <li>🔗 3. CNAME (Canonical Name)</li>
+        <ul>
+            <li>Fait un alias vers un autre nom de domaine</li>
+            <li>Exemple : <br>
+                <code>www.monsite.com → monsite.com</code><br>
+                <code>blog.monsite.com → monsite.medium.com</code>
+            </li>
+            <li>⚠️ Ne peut pas coexister avec un enregistrement A sur le même nom</li>
+        </ul>
+        <br>
+
+        <li>📧 4. MX (Mail Exchange)</li>
+        <ul>
+            <li>Indique les serveurs qui gèrent les emails de ton domaine</li>
+            <li>Permet à un autre serveur de savoir où livrer les mails (<i>voir détail ci-après</i>)
+            </li>
+        </ul>
+        <br>
+
+        <li>🔍 5. TXT (Text Record)</li>
+        <ul>
+            <li>Contient des informations textuelles : vérifications, signatures, politiques de sécurité, etc.</li>
+            <li>Exemples d’usage :</li>
+            <ul>
+                <li>SPF : autorise certains serveurs à envoyer des emails pour ton domaine</li>
+                <li>DKIM : clé publique pour signer les mails sortants</li>
+                <li>DMARC : politique anti-usurpation (email spoofing)</li>
+            </ul>
+        </ul>
+        <br>
+
+        <li>🔄 6. NS (Name Server)</li>
+        <ul>
+            <li>Indique quels serveurs DNS font autorité pour ton domaine</li>
+        </ul>
+        <br>
+
+        <li>⏱️ 7. SOA (Start of Authority)</li>
+        <ul>
+            Donne des infos administratives sur la zone DNS :
+            <li>le serveur principal</li>
+            <li>la personne à contacter</li>
+            <li>la fréquence de mise à jour (TTL, refresh, etc.)</li>
+        </ul>
+        <br>
+
+        <li>🧭 8. SRV (Service Record)</li>
+        <ul>
+            <li>Spécifie l’adresse et le port d’un service réseau spécifique</li>
+        </ul>
+
     </ul>
     <br>
 
