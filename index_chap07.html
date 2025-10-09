@@ -7,55 +7,53 @@
 </head>
 
 <body>
-    <h1>Chapitre VII : Les ports réseau</h1>
+    <h1>Chapitre VII : Virtualisation et VPS</h1>
 
-    <strong style="text-align: left;">🌐 1. C’est quoi un port réseau ?</strong>
+    <strong style="text-align: left;">🖥️ 1. La virtualisation, c’est quoi ?</strong>
     <ul style="text-align: left;">
-        <li>Un port est comme une porte d’entrée ou de sortie sur un serveur</li>
-        <li>Chaque port correspond à un service ou une application spécifique</li>
+        <li>C’est la technologie qui permet de faire tourner plusieurs serveurs virtuels sur une seule machine physique
+        </li>
     </ul>
-    👉 Exemple : quand tu vas sur un site en HTTPS, ton navigateur communique avec le serveur via le port "443"
+    👉 Exemple : un gros serveur physique peut être découpé en plusieurs « mini-serveurs » indépendants
     <br><br><br>
 
-    <strong style="text-align: left;">🏠 2. Analogie simple</strong>
+    <strong style="text-align: left;">📦 2. VPS (Virtual Private Server)</strong>
     <ul style="text-align: left;">
-        Imagine ton serveur comme un immeuble :
-        <li>Chaque porte numérotée = un port réseau</li>
-        <li>Derrière chaque porte → un service particulier (web, email, FTP…) 👉 Le pare-feu (chapitre V) décide quelles
-            portes sont ouvertes ou fermées</li>
+        <li>Un VPS est un serveur virtuel créé grâce à la virtualisation</li>
+        <li>Chaque VPS a ses propres ressources dédiées (CPU, RAM, stockage), comme s’il était un vrai serveur</li>
+        <li>Mais il partage quand même la machine physique avec d’autres VPS</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">🔑 3. Exemples de ports importants</strong>
+    <strong style="text-align: left;">📖 3. Analogie simple</strong>
     <ul style="text-align: left;">
-        <li>80 → HTTP (sites web non sécurisés)</li>
-        <li>443 → HTTPS (sites web sécurisés)</li>
-        <li>22 → SSH (connexion sécurisée au serveur)</li>
-        <li>25 → SMTP (envoi d’emails)</li>
-        <li>3306 → MySQL (base de données)</li>
-        <li>21 → FTP (transfert de fichiers)</li>
+        <li>Imagine un immeuble (le serveur physique)</li>
+        <li>Chaque appartement est un VPS : indépendant, avec ses propres clés et espace</li>
+        <li>Mais tous partagent les mêmes fondations et infrastructures (électricité, eau…)</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">🛡️ 4. Pourquoi c’est important ?</strong>
+    <strong style="text-align: left;">🔑 4. Avantages d’un VPS</strong>
     <ul style="text-align: left;">
-        <li>Trop de ports ouverts = failles de sécurité (pirates)</li>
-        <li>Les services inutiles doivent être fermés</li>
-        <li>Le pare-feu filtre : ouvre seulement les ports nécessaires</li>
+        <li>Moins cher qu’un serveur dédié</li>
+        <li>Plus flexible qu’un hébergement mutualisé (où tout est partagé sans cloison)</li>
+        <li>Tu peux installer ton propre système d’exploitation et logiciels</li>
     </ul>
     <br>
 
     <strong style="text-align: left;">📡 Exemple concret</strong>
     <ul style="text-align: left;">
-        Un serveur web classique aura :
-        <li>un port "22" ouvert pour l’admin en SSH</li>
-        <li>les ports "80" et "443" ouverts pour les visiteurs</li>
-        <li>Tous les autres ports fermés</li>
+        <li>Tu veux héberger ton site web WordPress :</li>
+        <ul>
+            <li>Hébergement mutualisé → pas de contrôle, tout est partagé</li>
+            <li>VPS → tu contrôles ton serveur, tu choisis l’OS et les réglages</li>
+            <li>Serveur dédié → toute la machine est à toi, mais plus cher</li>
+        </ul>
     </ul>
-    <br>
 
-    <img src="./images/Ports.png">
-    <br><br>
+    <img src="./images/VPS.png" alt="">
+    <br>
+    <br>
 
     <a id='lien' href="./index.html">Retour au sommaire</a>
 </body>

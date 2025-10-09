@@ -7,62 +7,64 @@
 </head>
 
 <body>
-    <h1>Chapitre VIII : Les bases de données</h1>
+    <h1>Chapitre VIII : Sauvegardes & Monitoring</h1>
 
-    <strong style="text-align: left;">🗄️ 1. Qu’est-ce qu’une base de données (BDD) ?</strong>
+    <strong style="text-align: left;">💾 1. Les sauvegardes (Backups)</strong>
     <ul style="text-align: left;">
-        <li>C’est un logiciel qui organise les données pour qu’on puisse les stocker, les rechercher et les modifier
-            facilement</li>
-        <li>Contrairement au stockage brut (fichiers sur un disque), la base de données structure les infos en tables,
-            colonnes, lignes (comme un Excel super-puissant)</li>
-    </ul>
-    <br>
-
-    <strong style="text-align: left;">📊 2. Types de bases de données</strong>
-    <ul style="text-align: left;">
-        <li>🔹 Relationnelles (SQL)</li>
+        <p style="margin-bottom: 5px;"><strong>Pourquoi ?</strong></p>
+        <li>Protéger les données contre :</li>
         <ul>
-            <li>Données organisées en tables liées entre elles</li>
-            <li>Langage : SQL (Structured Query Language)</li>
-            <li>Exemples : MySQL, PostgreSQL, MariaDB, Oracle</li>
-            👉 Utilisées pour les sites web (WordPress, e-commerce, ERP)
+            <li>Panne matérielle ⚡</li>
+            <li>Piratage 🦹</li>
+            <li>Erreur humaine 🙈</li>
         </ul>
-        <li>🔹 Non-relationnelles (NoSQL)</li>
+        <li>Sans sauvegarde → risque de perte totale des données</li>
+        <br>
+
+        <p style="margin-bottom: 5px;"><strong>Types de sauvegardes :</strong></p>
+        <li>Complète → copie intégrale du système</li>
+        <li>Incrémentale → copie uniquement des changements depuis la dernière sauvegarde</li>
+        <li>Différentielle → copie des changements depuis la dernière sauvegarde complète</li>
+        <br>
+
+        <p style="margin-bottom: 5px;"><strong>Bonnes pratiques (3-2-1 Rule) :</strong></p>
+        <li>3 copies de tes données</li>
+        <li>2 supports différents (ex. disque + cloud)</li>
+        <li>1 copie hors site (ex. cloud ou autre data center)</li>
+    </ul>
+    <br>
+
+    <strong style="text-align: left;">📡 2. Le monitoring (surveillance)</strong>
+    <ul style="text-align: left;">
+        <p style="margin-bottom: 5px;"><strong>Pourquoi ?</strong></p>
+        <li>S’assurer que le serveur fonctionne bien en continu</li>
+        <li>Détecter rapidement :</li>
         <ul>
-            <li>Données organisées sous forme de documents, graphes, clés-valeurs</li>
-            <li>Plus flexibles, utiles pour le Big Data ou les applications temps réel</li>
-            <li>Exemples : MongoDB, Redis, Cassandra</li>
+            <li>une surcharge CPU/RAM</li>
+            <li>un disque presque plein</li>
+            <li>un service qui tombe (site inaccessible)</li>
         </ul>
+        <br>
+
+        <p style="margin-bottom: 5px;"><strong>Outils courants :</strong></p>
+        <li>Nagios, Zabbix, Prometheus, Grafana → monitoring avancé</li>
+        <li>UptimeRobot → simple vérification si un site est en ligne</li>
+        Indicateurs surveillés :
+        <li>CPU, RAM, stockage</li>
+        <li>Disponibilité (uptime)</li>
+        <li>Trafic réseau</li>
+        <li>Logs pour repérer les erreurs</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">🧩 3. Analogie simple</strong>
+    <strong style="text-align: left;">📖 3. Analogie simple</strong>
     <ul style="text-align: left;">
-        <li>BDD relationnelle (SQL) = un tableur Excel : colonnes, lignes, relations entre feuilles</li>
-        <li>BDD NoSQL = un dossier rempli de fiches : plus souple, mais moins structuré</li>
+        <li>Sauvegarde = assurance habitation 🏠 : si tu perds, tu reconstruis</li>
+        <li>Monitoring = tableau de bord 🚗 : tu surveilles l’état de ton véhicule en temps réel</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">🔑 4. Pourquoi c’est important ?</strong>
-    <ul style="text-align: left;">
-        <li>Toute application (site, appli mobile, ERP) a besoin de stocker ses infos : utilisateurs, mots de passe,
-            produits, factures, logs…</li>
-        <li>Une BDD bien optimisée → site rapide ⚡</li>
-        <li>Une BDD mal optimisée → site lent 🐌 voire plantage</li>
-    </ul>
-    <br>
-
-    <strong style="text-align: left;">📡 Exemple concret</strong>
-    <ul style="text-align: left;">
-        Tu te connectes à Amazon :
-        <li>Ton identifiant et mot de passe sont vérifiés dans la BDD</li>
-        <li>Les produits que tu vois viennent de la BDD</li>
-        <li>Ton panier est enregistré en BDD</li>
-    </ul>
-    <br>
-
-    <img src="./images/BDD.png">
-
+    <img src="/images/Monitoring.png">
     <br>
 
     <a id='lien' href="./index.html">Retour au sommaire</a>

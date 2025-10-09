@@ -7,51 +7,54 @@
 </head>
 
 <body>
-    <h1>Chapitre V : Le Pare-feu (Firewall)</h1>
+    <h1>Chapitre V : Les ports réseau</h1>
 
-    <strong style="text-align: left;">🔥 1. Qu’est-ce qu’un pare-feu ?</strong>
+    <strong style="text-align: left;">🌐 1. C’est quoi un port réseau ?</strong>
     <ul style="text-align: left;">
-        <li>C’est une barrière de sécurité entre ton serveur (ou ton ordinateur) et Internet</li>
-        <li>Il contrôle le trafic réseau : décide ce qui est autorisé à entrer/sortir</li>
+        <li>Un port est comme une porte d’entrée ou de sortie sur un serveur</li>
+        <li>Chaque port correspond à un service ou une application spécifique</li>
     </ul>
-    👉 Comme un vigile à l’entrée d’un bâtiment
+    👉 Exemple : quand tu vas sur un site en HTTPS, ton navigateur communique avec le serveur via le port "443"
     <br><br><br>
 
-    <strong style="text-align: left;">🛡️ 2. Son rôle principal</strong>
+    <strong style="text-align: left;">🏠 2. Analogie simple</strong>
     <ul style="text-align: left;">
-        <li>Bloquer les connexions non autorisées (ex. pirates)</li>
-        <li>Autoriser seulement ce qui est nécessaire (ex. HTTP/HTTPS pour un site web)</li>
-        <li>Surveiller les flux pour détecter des comportements suspects</li>
+        Imagine ton serveur comme un immeuble :
+        <li>Chaque porte numérotée = un port réseau</li>
+        <li>Derrière chaque porte → un service particulier (web, email, FTP…) 👉 Le pare-feu (chapitre V) décide quelles
+            portes sont ouvertes ou fermées</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">📖 3. Analogie simple</strong>
+    <strong style="text-align: left;">🔑 3. Exemples de ports importants</strong>
     <ul style="text-align: left;">
-        Imagine un immeuble :
-        <li>Le pare-feu = le vigile à l’entrée</li>
-        <li>Il laisse entrer les locataires connus (trafic autorisé)</li>
-        <li>Il bloque les inconnus douteux (trafic interdit)</li>
+        <li>80 → HTTP (sites web non sécurisés)</li>
+        <li>443 → HTTPS (sites web sécurisés)</li>
+        <li>22 → SSH (connexion sécurisée au serveur)</li>
+        <li>25 → SMTP (envoi d’emails)</li>
+        <li>3306 → MySQL (base de données)</li>
+        <li>21 → FTP (transfert de fichiers)</li>
     </ul>
     <br>
 
-    <strong style="text-align: left;">🔑 4. Types de pare-feu</strong>
+    <strong style="text-align: left;">🛡️ 4. Pourquoi c’est important ?</strong>
     <ul style="text-align: left;">
-        <li>Pare-feu matériel → boîtier dédié (souvent en entreprise)</li>
-        <li>Pare-feu logiciel → installé sur un serveur ou un PC (ex. iptables sous Linux, Windows Firewall)</li>
-        <li>Pare-feu applicatif (WAF) → protège les applications web (ex. contre injections SQL)</li>
+        <li>Trop de ports ouverts = failles de sécurité (pirates)</li>
+        <li>Les services inutiles doivent être fermés</li>
+        <li>Le pare-feu filtre : ouvre seulement les ports nécessaires</li>
     </ul>
     <br>
 
     <strong style="text-align: left;">📡 Exemple concret</strong>
     <ul style="text-align: left;">
-        Un serveur web :
-        <li>Autorise seulement HTTP (80) et HTTPS (443)</li>
-        <li>Bloque tout le reste (FTP, Telnet, ports suspects)</li>
+        Un serveur web classique aura :
+        <li>un port "22" ouvert pour l’admin en SSH</li>
+        <li>les ports "80" et "443" ouverts pour les visiteurs</li>
+        <li>Tous les autres ports fermés</li>
     </ul>
     <br>
 
-    <img src="./images/PareFeu.png">
-
+    <img src="./images/Ports.png">
     <br><br>
 
     <a id='lien' href="./index.html">Retour au sommaire</a>
