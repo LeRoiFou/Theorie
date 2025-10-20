@@ -18,7 +18,7 @@ h1 {
 
 @media screen and (max-width: 780px) {
   img.responsive-img {
-    width: 100%;
+    width: 50%;
     max-width: 200px;
   }
 }
