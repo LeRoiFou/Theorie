@@ -7,7 +7,8 @@ h1 {
   display: flex;
 }
 
-.col1 {
+.col1,
+.col2 {
   display: inline-block;
   width: 50%;
 }
@@ -17,8 +18,15 @@ h1 {
 }
 
 @media screen and (max-width: 780px) {
-  img.responsive-img {
+  .col1 {
+    width: 70%;
+  }
+
+  .col2 {
     width: 30%;
-    max-width: 200px;
+  }
+
+  img.responsive-img {
+    max-width: 50px;
   }
 }
