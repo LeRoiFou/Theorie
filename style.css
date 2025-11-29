@@ -17,6 +17,33 @@ h1 {
   font-style: italic;
 }
 
+#prio {
+  background-color: yellow;
+  display: inline;
+}
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  border: 1px solid black;
+}
+
+th {
+  background-color: white;
+}
+
+tr:nth-child(odd) {
+  background-color: cornflowerblue;
+}
+
+tr:nth-child(even) {
+  background-color: #aaa;
+}
+
 @media screen and (max-width: 780px) {
   .col1 {
     width: 50%;
