@@ -3,6 +3,10 @@ h1 {
   text-align: center;
 }
 
+h4 {
+  text-decoration: underline;
+}
+
 .conteneur {
   display: flex;
 }
@@ -15,11 +19,6 @@ h1 {
 
 #lien {
   font-style: italic;
-}
-
-#prio {
-  background-color: yellow;
-  display: inline;
 }
 
 table {
@@ -42,6 +41,11 @@ tr:nth-child(odd) {
 
 tr:nth-child(even) {
   background-color: #aaa;
+}
+
+#prio {
+  background-color: rgb(166, 210, 210);
+  display: inline;
 }
 
 @media screen and (max-width: 780px) {

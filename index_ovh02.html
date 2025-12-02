@@ -20,7 +20,7 @@
                 href="https://www.youtube.com/watch?v=brW5YDGXzrA&list=PL0DynEzr_sE67g_vQ_VsRhihalJxmU4Ur">Vidéos
                 YT (nom de domaine et hébergement d'un site web à partir d'un CMS)</a>
         </li>
-        <li id="prio"><a target="_blank"
+        <li><a target="_blank"
                 href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-essential-information?id=kb_article_view&sysparm_article=KB0050407">
                 L'essentiel pour commencer avec Public Cloud</a>
             <ul>
@@ -28,19 +28,15 @@
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
                         votre premier projet Public Cloud</a> : 1er projet nommé Project 2025-11-25 (mode découverte)
                 </li>
-                <li id="prio"><a target="_blank"
+                <li><a target="_blank" id="prio"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">Se
                         familiariser avec l'interface Public Cloud
                     </a></li>
             </ul>
         </li>
         <li><a
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
-                votre premier projet Public Cloud</a>
-        </li>
-        <li><a target="_blank"
-                href="https://help.ovhcloud.com/csm/fr-documentation-public-cloud-compute-getting-started?id=kb_browse_cat&kb_id=574a8325551974502d4c6e78b7421938&kb_category=7709e2a464282d10476b3689cb0d0ed9&spa=1">Comment
-                créer une instance Public Cloud et s'y connecter</a>
+                href="https://help.ovhcloud.com/csm/fr-web-hosting-publishing-website?id=kb_article_view&sysparm_article=KB0052788">Mettre
+                en ligne un site web sur son hébergement web</a>
         </li>
     </ul>
     <hr>
@@ -64,13 +60,141 @@
     </ul>
     <br>
 
-    <h2>Points essentiels</h2>
+    <h2>Les options de gestion des services</h2>
+
+    <a target="_blank"
+        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">OVHcloud
+        propose 3 outils principaux :</a>
     <ul>
-        <li id="prio"><a target="_blank"
+        <li>L'espace client OVHcloud</li>
+        <li>Horizon</li>
+        <li>API OpenStack</li>
+    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Critères/Caractéristiques</th>
+                <th>Espace client OVHcloud</th>
+                <th>Horizon</th>
+                <th>OpenStack API</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Avantages principaux</td>
+                <td>Interface intuitive, idéale pour une prise en main rapide.</td>
+                <td>Offre un contrôle accru pour les utilisateurs expérimentés, avec une vue avancée des paramètres.
+                </td>
+                <td>Automatisation complète, avec intégration fluide à d'autres outils.</td>
+            </tr>
+            <tr>
+                <td>Niveau de compétence requis</td>
+                <td>Accessible à tous, idéal pour les débutants ou les besoins simples</td>
+                <td>Intermédiaire, requiert une certaine expertise (Administrateurs systèmes, Ingénieurs Cloud…)</td>
+                <td>Avancé, nécessite des compétences en scripting/API (Architectes Cloud, Ingénieurs DevOps, Experts en
+                    automatisation)</td>
+            </tr>
+            <tr>
+                <td>Facilité d'utilisation</td>
+                <td>Intuitive et accessible</td>
+                <td>Avancée mais visuelle</td>
+                <td>Technique</td>
+            </tr>
+            <tr>
+                <td>Personnalisation</td>
+                <td>Faible – Idéal pour des configurations standards et rapides, avec un contrôle avancé limité.</td>
+                <td>Moyenne – Interface graphique offrant des réglages avancés (réseau, stockage, etc.), bien que
+                    restreints par l’interface utilisateur.</td>
+                <td>Très élevée – Personnalisation quasi complète via API, avec possibilité de créer des scripts, des
+                    workflows automatisés et des architectures sur mesure.</td>
+            </tr>
+            <tr>
+                <td>Performances et scalabilité</td>
+                <td>Performances limitées et scalabilité basique. Adapté aux déploiements de petite taille ou non
+                    critiques. La scalabilité est généralement manuelle et plus lente. Idéal pour des environnements
+                    statiques ou des petits projets.</td>
+                <td>Performances moyennes avec une gestion améliorée de la scalabilité via l'interface graphique.
+                    Scalabilité plus rapide qu'avec l'espace client OVHcloud., mais limitée par l’interface. Adapté aux
+                    projets de taille moyenne ou nécessitant une certaine évolutivité.</td>
+                <td>Performances optimales et scalabilité complète. Permet des déploiements massifs, automatisés et
+                    rapides via des scripts ou des outils tiers. Idéal pour des infrastructures dynamiques, des charges
+                    lourdes et des environnements nécessitant une haute élasticité. Recommandé pour des architectures
+                    critiques.</td>
+            </tr>
+            <tr>
+                <td>Périmètres d'utilisation (Compute)</td>
+                <td>- Création et gestion simplifiée des machines virtuelles (VM).<br> - Redimensionnement des VM après
+                    création (modification du modèle flavor à chaud ou à froid, selon les ressources disponibles).<br> -
+                    Sélection de configurations standards pour les VM (RAM, CPU, stockage).<br> - Gestion des actions
+                    essentielles : démarrage, arrêt et suppression des VM.<br> - Accès aux snapshots pour des
+                    sauvegardes rapides et restaurations simplifiées.<br> - Attribution et gestion des adresses Floating
+                    IP.<br> - Création et administration basique des disques additionnels.<br> - Supervision des
+                    ressources avec un monitoring essentiel (CPU, mémoire, stockage).</td>
+                <td>- Gestion avancée des accès : prise en charge du contrôle des accès basé sur les rôles (RBAC) pour
+                    une gestion multi-utilisateurs sécurisée.<br> - Administration réseau avancée : création et gestion
+                    de réseaux privés complexes associés aux VM (réseaux internes, sous-réseaux).<br> - Déploiement de
+                    VM avec configurations réseau spécifiques, incluant la gestion de plusieurs interfaces réseau.<br> -
+                    Utilisation d'images personnalisées pour la création de VM, en alternative aux images standards
+                    proposées par OVHcloud.<br> - Intégration de workflows préconfigurés via Horizon pour automatiser
+                    les déploiements et configurations.</td>
+                <td>- Automatisation complète : toutes les actions disponibles dans l'espace client OVHcloud et Horizon
+                    sont réalisables via l’API, avec la possibilité de les automatiser et de les scripter.<br> -
+                    Déploiement d’infrastructures en mode Infrastructure as Code (IaC) à l’aide d’outils comme
+                    Terraform, Ansible ou de scripts personnalisés.<br> - Intégration aux pipelines CI/CD pour des
+                    déploiements automatisés (ex. intégration avec GitLab CI).<br> - Gestion avancée des quotas de
+                    ressources (nombre de CPU, RAM total, etc.).<br> - Scalabilité dynamique : ajustement automatique
+                    des instances en fonction de la charge via API ou scripts.<br> - Monitoring et collecte de métriques
+                    personnalisées via API, offrant plus de granularité que l'interface Horizon ou l'espace client
+                    OVHcloud.</td>
+            </tr>
+            <tr>
+                <td>Périmètres d'utilisation (Network)</td>
+                <td>- Création et gestion de réseaux privés (Private Networks).<br> - Association d'adresses Floating IP
+                    et d'adresses Additional IP.<br> - Configuration de routage de base (Basic Routing).</td>
+                <td>- Gestion avancée des règles de sécurité via les groupes de sécurité (Security Groups).<br> -
+                    Visualisation des topologies réseau pour une gestion simplifiée.<br> - Support complet des
+                    sous-réseaux IPv6 pour une connectivité moderne.<br> - Configuration des politiques QoS (Quality of
+                    Service) pour prioriser les ressources réseau.</td>
+                <td>- Accès à toutes les fonctionnalités disponibles sur Horizon et l'espace client OVHcloud.<br> -
+                    Création de routes personnalisées pour une gestion réseau plus flexible.<br> - Configuration précise
+                    des politiques QoS (Quality of Service).<br> - Gestion avancée des VRRP (Virtual Router Redundancy
+                    Protocol) pour assurer la redondance des routeurs.<br> - Automatisation des actions réseau grâce à
+                    des scripts (Infrastructure as Code).<br> - Intégration avec des solutions SDN (Software-Defined
+                    Networking) pour une gestion réseau agile.</td>
+            </tr>
+            <tr>
+                <td>Périmètres d'utilisation (Storage &amp; backup)</td>
+                <td>- Création et gestion des volumes de stockage : Object Storage, Block Storage et File Storage.<br> -
+                    Sauvegarde automatique basique (snapshots) des volumes, avec possibilité de restauration.<br> -
+                    Association des volumes de stockage aux instances pour un accès simplifié.<br> - Gestion des
+                    conteneurs Object Storage (Swift) pour organiser les données.<br> - Visualisation de l'état des
+                    volumes et de l'espace de stockage utilisé.<br> - Ajout et gestion de fichiers dans un Object
+                    Storage.</td>
+                <td>- Gestion avancée des snapshots : rétention, duplication et autres options pour un contrôle précis
+                    des sauvegardes.<br> - Gestion détaillée des partages de volumes (multi-attach) pour une flexibilité
+                    accrue.<br> - Création et gestion des sauvegardes planifiées avec des politiques de sauvegarde
+                    personnalisables.<br> - Surveillance de l'utilisation des quotas de stockage pour un suivi optimal
+                    de l'espace disponible.</td>
+                <td>- Fonctionnalités accessibles via Horizon et l'espace client OVHcloud.<br> - Intégration et
+                    automatisation via scripts (Infrastructure as Code) pour une gestion fluide.<br> - Configuration
+                    avancée des partages réseau (NFS, CIFS) pour une flexibilité accrue dans l'organisation des
+                    fichiers.<br> - Gestion précise des métadonnées des objets dans Object Storage pour un contrôle
+                    optimal des données.<br> - Configuration avancée de la réplication et du versioning d'objets pour
+                    une haute disponibilité et une gestion des versions complète.<br> - Accès direct à l'API Swift pour
+                    une intégration fluide avec des outils tiers.<br> - Création de workflows personnalisés pour
+                    automatiser et gérer efficacement les processus de sauvegarde.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h2>Autres points essentiels</h2>
+    <ul>
+        <li><a target="_blank"
                 href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-billing-options?id=kb_article_view&sysparm_article=KB0050459">Informations
                 concernant le mode de facturation Public Cloud : comment bloquer un montant à payer ?</a>
         </li><br>
-        <li id="prio">Compute</li>
 
     </ul>
 
