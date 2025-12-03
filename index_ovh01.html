@@ -9,170 +9,142 @@
 </head>
 
 <body>
-    <a href="">
+    <href="https:
+        //help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">
         <h1>Chapitre I : Comprendre l’essentiel du Public Cloud OVHcloud</h1>
-    </a>
-    <br>
+        </a>
 
-    <hr>
-    <ul>
-        <h4>Tutoriels :</h4>
-        <li>
-            <a target="_blank"
-                href="https://www.youtube.com/watch?v=brW5YDGXzrA&list=PL0DynEzr_sE67g_vQ_VsRhihalJxmU4Ur">Vidéos
-                YT (nom de domaine et hébergement d'un site web à partir d'un CMS)</a>
-        </li>
-        <li><a target="_blank" id="prio"
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-essential-information?id=kb_article_view&sysparm_article=KB0050407">
-                L'essentiel pour commencer avec Public Cloud</a>
-            <ul>
-                <li><a target="_blank" id="prio"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
-                        votre premier projet Public Cloud</a> : 1er projet nommé Project 2025-11-25 (mode découverte)
-                </li>
-                <li><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">Se
-                        familiariser avec l'interface Public Cloud
-                    </a></li>
-            </ul>
-        </li>
-        <li><a
-                href="https://help.ovhcloud.com/csm/fr-web-hosting-publishing-website?id=kb_article_view&sysparm_article=KB0052788">Mettre
-                en ligne un site web sur son hébergement web</a>
-        </li>
-    </ul>
-    <hr>
+        <h2>1. Le compute (serveurs virtuels)</h2>
 
-    <h2>1. Le compute (serveurs virtuels)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Lancer et gérer des serveurs virtuels (appelés "instances") dans le cloud</li>
+            <li>Ces serveurs sont disponibles à la demande : tu décides du nombre, de la taille, et du type selon tes
+                besoins, et c’est OVH qui s’occupe de l’infrastructure</li>
+        </ul>
+        <p>Exemples d’utilisation : héberger un site web, une API, des applications, effectuer des calculs, lancer des
+            scripts en ligne</p>
+        <p>Similaire à : les “machines virtuelles” chez d’autres cloud (AWS EC2, Azure VM)</p>
+        <p>Utilité ? Oui, pour héberger le conteneur Docker</p>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Lancer et gérer des serveurs virtuels (appelés "instances") dans le cloud</li>
-        <li>Ces serveurs sont disponibles à la demande : tu décides du nombre, de la taille, et du type selon tes
-            besoins, et c’est OVH qui s’occupe de l’infrastructure</li>
-    </ul>
-    <p>Exemples d’utilisation : héberger un site web, une API, des applications, effectuer des calculs, lancer des
-        scripts en ligne</p>
-    <p>Similaire à : les “machines virtuelles” chez d’autres cloud (AWS EC2, Azure VM)</p>
-    <p>Utilité ? Oui, pour héberger le conteneur Docker</p>
-    <br>
+        <h2>2. Storage & backup (stockage et sauvegarde)</h2>
 
-    <h2>2. Storage & backup (stockage et sauvegarde)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Proposer différents types de stockage pour tes fichiers, données, sauvegardes et bases de données</li>
+            <li>Adapté selon ton usage : stockage objet (beaucoup de petits fichiers), bloc (disques virtuels pour
+                serveurs), sauvegarde automatisée, etc</li>
+        </ul>
+        <p>Exemples d’utilisation : stocker des fichiers volumineux, des sauvegardes d’applications, créer des bases de
+            données performantes, archiver des documents</p>
+        <p>Similaire à : AWS S3, Google Cloud Storage, Azure Blob Storage</p>
+        <p>Utilité ? Oui, pour les FEC et fichiers des stocks uploadés, les fichiers Excel générés</p>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Proposer différents types de stockage pour tes fichiers, données, sauvegardes et bases de données</li>
-        <li>Adapté selon ton usage : stockage objet (beaucoup de petits fichiers), bloc (disques virtuels pour
-            serveurs), sauvegarde automatisée, etc</li>
-    </ul>
-    <p>Exemples d’utilisation : stocker des fichiers volumineux, des sauvegardes d’applications, créer des bases de
-        données performantes, archiver des documents</p>
-    <p>Similaire à : AWS S3, Google Cloud Storage, Azure Blob Storage</p>
-    <p>Utilité ? Oui, pour les FEC et fichiers des stocks uploadés, les fichiers Excel générés</p>
-    <br>
+        <h2>3. Network (réseau et sécurité)</h2>
 
-    <h2>3. Network (réseau et sécurité)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Connecter tes ressources cloud OVH entre elles et avec d’autres produits (ex : serveurs dédiés, CDN,
+                réseau
+                privé)</li>
+            <li>Gestion des adresses IP, VPN, firewalls, sécurité réseau</li>
+        </ul>
+        <p>Exemples d’utilisation : relier tes serveurs cloud via un réseau privé, sécuriser l’accès avec des règles de
+            firewall, utiliser un VPN entre des infrastructures</p>
+        <p>Similaire à : VPC (Virtual Private Cloud), VPN, CDN chez d’autres cloud</p>
+        <p>Utilité ? Oui, pour rendre l’accès payant et restreint via IP, il faut :
+        <ul>
+            <li>configurer le réseau, les règles de firewall (n’autoriser que certaines IPs)</li>
+            <li>protéger le serveur contre les attaques et l’accès public non autorisé</li>
+        </ul>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Connecter tes ressources cloud OVH entre elles et avec d’autres produits (ex : serveurs dédiés, CDN, réseau
-            privé)</li>
-        <li>Gestion des adresses IP, VPN, firewalls, sécurité réseau</li>
-    </ul>
-    <p>Exemples d’utilisation : relier tes serveurs cloud via un réseau privé, sécuriser l’accès avec des règles de
-        firewall, utiliser un VPN entre des infrastructures</p>
-    <p>Similaire à : VPC (Virtual Private Cloud), VPN, CDN chez d’autres cloud</p>
-    <p>Utilité ? Oui, pour rendre l’accès payant et restreint via IP, il faut :
-    <ul>
-        <li>configurer le réseau, les règles de firewall (n’autoriser que certaines IPs)</li>
-        <li>protéger le serveur contre les attaques et l’accès public non autorisé</li>
-    </ul>
-    <br>
+        <h2>4. Containers & Orchestration (déploiement automatisé d’applicationss comme par ex Docker/Kubernetes)</h2>
 
-    <h2>4. Containers & Orchestration (déploiement automatisé d’applicationss comme par ex Docker/Kubernetes)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Lancer, gérer et automatiser des conteneurs Docker (et équivalents) dans le cloud</li>
+            <li>Orchestration (= gestion automatisée, déploiement, montée/descente en charge) via des outils comme
+                Kubernetes</li>
+        </ul>
+        <p>Exemples d’utilisation : déployer rapidement des applications, services, microservices dans des conteneurs ;
+            automatiser la gestion des ressources ; scaler facilement</p>
+        <p>Similaire à : AWS ECS/EKS, Azure AKS, Google Kubernetes Engine</p>
+        <p>Utilité ? Oui, seulement si déploiement de plusieurs instances ou ajout d'autres services dockerisés</p>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Lancer, gérer et automatiser des conteneurs Docker (et équivalents) dans le cloud</li>
-        <li>Orchestration (= gestion automatisée, déploiement, montée/descente en charge) via des outils comme
-            Kubernetes</li>
-    </ul>
-    <p>Exemples d’utilisation : déployer rapidement des applications, services, microservices dans des conteneurs ;
-        automatiser la gestion des ressources ; scaler facilement</p>
-    <p>Similaire à : AWS ECS/EKS, Azure AKS, Google Kubernetes Engine</p>
-    <p>Utilité ? Oui, seulement si déploiement de plusieurs instances ou ajout d'autres services dockerisés</p>
-    <br>
+        <h2>5. Databases & Analytics (bases de données et Big Data)</h2>
 
-    <h2>5. Databases & Analytics (bases de données et Big Data)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Proposer des bases de données (MySQL, PostgreSQL, MongoDB…) comme service cloud, avec sauvegarde,
+                scalabilité, haute disponibilité</li>
+            <li>Fournir des outils Big Data et d’analyse de données (Hadoop, Spark, managed analytics)</li>
+        </ul>
+        <p>Exemples d’utilisation : stocker de gros volumes de données, analyser en temps réel, traiter du “Big Data”,
+            dashboard, BI</p>
+        <p>Similaire à : AWS RDS, Google BigQuery, Azure SQL Database, AWS EMR</p>
+        <p>Utilité ? Non</p>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Proposer des bases de données (MySQL, PostgreSQL, MongoDB…) comme service cloud, avec sauvegarde,
-            scalabilité, haute disponibilité</li>
-        <li>Fournir des outils Big Data et d’analyse de données (Hadoop, Spark, managed analytics)</li>
-    </ul>
-    <p>Exemples d’utilisation : stocker de gros volumes de données, analyser en temps réel, traiter du “Big Data”,
-        dashboard, BI</p>
-    <p>Similaire à : AWS RDS, Google BigQuery, Azure SQL Database, AWS EMR</p>
-    <p>Utilité ? Non</p>
-    <br>
+        <h2>6. AI & Machine Learning (IA et infrastructures avancées)</h2>
 
-    <h2>6. AI & Machine Learning (IA et infrastructures avancées)</h2>
+        <p>A quoi ça sert ?</p>
+        <ul>
+            <li>Mettre à disposition des infrastructures optimisées (GPU, CPU puissants), plateformes et outils pour
+                l’intelligence artificielle et l’entraînement de modèles de machine learning</li>
+        </ul>
+        <p>Exemples d’utilisation : entraîner des modèles IA, faire du traitement d’image, NLP, automatiser des analyses
+            grâce au machine learning directement dans le cloud</p>
+        <p>Similaire à : AWS SageMaker, Azure Machine Learning, Google AI Platform</p>
+        <p>Utilité ? Non sauf ajout IA future</p>
+        <br>
 
-    <p>A quoi ça sert ?</p>
-    <ul>
-        <li>Mettre à disposition des infrastructures optimisées (GPU, CPU puissants), plateformes et outils pour
-            l’intelligence artificielle et l’entraînement de modèles de machine learning</li>
-    </ul>
-    <p>Exemples d’utilisation : entraîner des modèles IA, faire du traitement d’image, NLP, automatiser des analyses
-        grâce au machine learning directement dans le cloud</p>
-    <p>Similaire à : AWS SageMaker, Azure Machine Learning, Google AI Platform</p>
-    <p>Utilité ? Non sauf ajout IA future</p>
-    <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Utilité ?</th>
+                    <th>Pourquoi ?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Compute</td>
+                    <td>Oui</td>
+                    <td>Déploiment de l'application Docker</td>
+                </tr>
+                <tr>
+                    <td>Storage & backup</td>
+                    <td>Oui</td>
+                    <td>Sauvegarde des fichiers Excel (Comptes 6 et 7)/FEC/Export/logs/...</td>
+                </tr>
+                <tr>
+                    <td>Network</td>
+                    <td>Oui</td>
+                    <td>Sécurité IP, gestion des accès restreints, firewall, DNS...</td>
+                </tr>
+                <tr>
+                    <td>Containers & Orchestration</td>
+                    <td>Non obligatoire (peut évoluer)</td>
+                    <td>Si besoin de développer plusieurs dashboards ou scalabilité</td>
+                </tr>
+                <tr>
+                    <td>Databases & Analytics</td>
+                    <td>Non (Excel suffit en tant que DB)</td>
+                    <td>Base de données non indispensable sauf forte montée en charge</td>
+                </tr>
+                <tr>
+                    <td>AI & Machine Learning</td>
+                    <td>Non</td>
+                    <td>Pas d'automatisation IA/ML prévue</td>
+                </tr>
+            </tbody>
+        </table><br>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Module</th>
-                <th>Utilité ?</th>
-                <th>Pourquoi ?</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Compute</td>
-                <td>Oui</td>
-                <td>Déploiment de l'application Docker</td>
-            </tr>
-            <tr>
-                <td>Storage & backup</td>
-                <td>Oui</td>
-                <td>Sauvegarde des fichiers Excel (Comptes 6 et 7)/FEC/Export/logs/...</td>
-            </tr>
-            <tr>
-                <td>Network</td>
-                <td>Oui</td>
-                <td>Sécurité IP, gestion des accès restreints, firewall, DNS...</td>
-            </tr>
-            <tr>
-                <td>Containers & Orchestration</td>
-                <td>Non obligatoire (peut évoluer)</td>
-                <td>Si besoin de développer plusieurs dashboards ou scalabilité</td>
-            </tr>
-            <tr>
-                <td>Databases & Analytics</td>
-                <td>Non (Excel suffit en tant que DB)</td>
-                <td>Base de données non indispensable sauf forte montée en charge</td>
-            </tr>
-            <tr>
-                <td>AI & Machine Learning</td>
-                <td>Non</td>
-                <td>Pas d'automatisation IA/ML prévue</td>
-            </tr>
-        </tbody>
-    </table><br>
-
-    <a id='lien' href="./index.html">Retour au sommaire</a>
+        <a id='lien' href="./index.html">Retour au sommaire</a>
 
 </body>
 

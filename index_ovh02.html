@@ -9,37 +9,11 @@
 </head>
 
 <body>
-    <h1>Chapitre II : Se familiariser avec l'interface Public Cloud</h1>
+    <a target="_blank"
+        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">
+        <h1>Chapitre II : Se familiariser avec l'interface Public Cloud</h1>
+    </a>
     <br>
-
-    <hr>
-    <ul>
-        <h4>Tutoriels :</h4>
-        <li>
-            <a target="_blank"
-                href="https://www.youtube.com/watch?v=brW5YDGXzrA&list=PL0DynEzr_sE67g_vQ_VsRhihalJxmU4Ur">Vidéos
-                YT (nom de domaine et hébergement d'un site web à partir d'un CMS)</a>
-        </li>
-        <li><a target="_blank"
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-essential-information?id=kb_article_view&sysparm_article=KB0050407">
-                L'essentiel pour commencer avec Public Cloud</a>
-            <ul>
-                <li><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
-                        votre premier projet Public Cloud</a> : 1er projet nommé Project 2025-11-25 (mode découverte)
-                </li>
-                <li><a target="_blank" id="prio"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">Se
-                        familiariser avec l'interface Public Cloud
-                    </a></li>
-            </ul>
-        </li>
-        <li><a
-                href="https://help.ovhcloud.com/csm/fr-web-hosting-publishing-website?id=kb_article_view&sysparm_article=KB0052788">Mettre
-                en ligne un site web sur son hébergement web</a>
-        </li>
-    </ul>
-    <hr>
 
     <h2>Introduction</h2>
 
@@ -62,9 +36,7 @@
 
     <h2>Les options de gestion des services</h2>
 
-    <a target="_blank"
-        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">OVHcloud
-        propose 3 outils principaux :</a>
+    <p>OVHcloud propose 3 outils principaux :</p>
     <ul>
         <li>L'espace client OVHcloud</li>
         <li>Horizon</li>
@@ -188,7 +160,84 @@
         </tbody>
     </table>
 
-    <br>
+    <h2>Vocabulaire</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Concept</th>
+                <th>Définition simple</th>
+                <th>Analogie restaurant</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Scalabilité</td>
+                <td>Capacité du cloud à augmenter ou diminuer automatiquement les ressources (CPU, RAM, stockage, etc.)
+                    pour s’adapter à la charge de travail, sans tout reconstruire.[1][2]</td>
+                <td>Pouvoir ajouter ou enlever des tables et des serveurs en fonction du nombre de clients, pour éviter
+                    à la fois le surpeuplement et les salles vides.</td>
+            </tr>
+            <tr>
+                <td>Machines virtuelles (VM)</td>
+                <td>“Ordinateurs simulés” qui tournent à l’intérieur d’un vrai serveur, avec leur propre système
+                    d’exploitation, leurs applications et leurs ressources dédiées.[3][4]</td>
+                <td>Plusieurs petites cuisines séparées à l’intérieur d’une grande cuisine centrale, chacune avec son
+                    propre chef, ses ustensiles et son menu.</td>
+            </tr>
+            <tr>
+                <td>Flavor</td>
+                <td>Gabarit de VM qui définit le nombre de vCPU, la quantité de RAM et la taille de disque attribués à
+                    une machine virtuelle.[4][3]</td>
+                <td>Une formule de menu (petite faim, standard, XXL) qui précise la taille du plat, la garniture et la
+                    boisson.</td>
+            </tr>
+            <tr>
+                <td>Snapshots</td>
+                <td>“Photos” de l’état d’une VM ou d’un disque à un instant T, permettant de revenir à cet état plus
+                    tard (sauvegarde rapide ou point de restauration).[3][4]</td>
+                <td>Prendre une photo très détaillée de la cuisine et des plats à un moment précis, pour pouvoir
+                    remettre tout exactement comme avant en cas de problème.</td>
+            </tr>
+            <tr>
+                <td>Adresses Floating IP</td>
+                <td>Adresses IP publiques et fixes que l’on peut réassigner rapidement d’une VM à une autre pour assurer
+                    la haute disponibilité ou le basculement en cas de panne.[5][6]</td>
+                <td>Un numéro de téléphone unique du restaurant que tu peux rediriger vers une autre cuisine si la
+                    première ferme ou a un problème, sans que les clients aient à changer de numéro.</td>
+            </tr>
+            <tr>
+                <td>Adresses Additional IP</td>
+                <td>Adresses IP supplémentaires associées à une même VM ou interface réseau, permettant par exemple
+                    d’héberger plusieurs services ou sites distincts sur la même machine.[6][5]</td>
+                <td>Plusieurs numéros de téléphone pour le même restaurant (une ligne pour les commandes, une pour les
+                    réservations, une pour le service traiteur).</td>
+            </tr>
+            <tr>
+                <td>Basic Routing</td>
+                <td>Règles de base qui définissent par où passent les paquets réseau pour atteindre Internet, d’autres
+                    réseaux ou d’autres machines (tables de routage, passerelles, etc.).[5][6]</td>
+                <td>Le plan qui indique par quelle porte entrent les clients, où passent les serveurs et par quelle
+                    sortie sortent les livraisons pour que tout circule au bon endroit.</td>
+            </tr>
+            <tr>
+                <td>Object Storage</td>
+                <td>Service de stockage où les fichiers sont stockés comme des “objets” avec des métadonnées,
+                    accessibles via une API ou HTTP, adapté aux gros volumes (backups, médias, logs, etc.).[2]</td>
+                <td>Un grand entrepôt où chaque carton (objet) a une étiquette unique et des informations, et où tu peux
+                    demander un carton précis sans te soucier de l’étagère exacte où il se trouve.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a target="_blank" href="https://fr.wikipedia.org/wiki/%C3%89lasticit%C3%A9_(cloud_computing)">[1]</a>
+    <a target="_blank"
+        href="https://www.oneadvanced.com/resources/scalability-in-cloud-computing-definition-examples-types-and-more/">[2]</a>
+    <a target="_blank" href="https://docs.rackspacecloud.com/openstack-flavors/">[3]</a>
+    <a target="_blank" href="https://openmetal.io/docs/manage-flavors-in-openstack/">[4]</a>
+    <a target="_blank" href="https://www.ovhcloud.com/en/public-cloud/floating-ip/">[5]</a>
+    <a target="_blank" href="https://www.transip.eu/knowledgebase/5861-what-is-a-floating-ip">[6]</a><br>
+
     <h2>Autres points essentiels</h2>
     <ul>
         <li><a target="_blank"
