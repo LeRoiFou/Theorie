@@ -2,135 +2,149 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVH - Chapitre III</title>
-    <link rel="stylesheet" href="./style.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>OVH - Chapitre III</title>
+        <link rel="stylesheet" href="./style.css">
 </head>
 
 <hr>
 <ul>
-    <h4>Tutoriels :</h4>
-    <li>
-        <a target="_blank"
-            href="https://www.youtube.com/watch?v=brW5YDGXzrA&list=PL0DynEzr_sE67g_vQ_VsRhihalJxmU4Ur">Vidéos
-            YT (nom de domaine et hébergement d'un site web à partir d'un CMS)</a>
-    </li>
-    <li><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-essential-information?id=kb_article_view&sysparm_article=KB0050407">
-            L'essentiel pour commencer avec Public Cloud</a>
-        <ul>
-            <li><a target="_blank"
-                    href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
-                    votre premier projet Public Cloud</a> : 1er projet nommé Project 2025-11-25 (mode découverte)
-            </li>
-            <li><a target="_blank"
-                    href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">Se
-                    familiariser avec l'interface Public Cloud
-                </a></li>
-            <li><a target="_blank" id="prio"
-                    href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">Comment
-                    créer une instance Public Cloud et s'y connecter</a></li>
-        </ul>
-    </li>
-    <li>OVHcloud SecNumCloud ?</li>
+        <h4>Tutoriels :</h4>
+        <li>
+                <a target="_blank"
+                        href="https://www.youtube.com/watch?v=brW5YDGXzrA&list=PL0DynEzr_sE67g_vQ_VsRhihalJxmU4Ur">Vidéos
+                        YT (nom de domaine et hébergement d'un site web à partir d'un CMS)</a>
+        </li>
+        <li><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-essential-information?id=kb_article_view&sysparm_article=KB0050407">
+                        L'essentiel pour commencer avec Public Cloud</a>
+                <ul>
+                        <li><a target="_blank"
+                                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-create-project?id=kb_article_view&sysparm_article=KB0050614">Créer
+                                        votre premier projet Public Cloud</a> : 1er projet nommé Project 2025-11-25
+                                (mode découverte)
+                        </li>
+                        <li><a target="_blank"
+                                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">Se
+                                        familiariser avec l'interface Public Cloud
+                                </a></li>
+                        <li><a target="_blank" id="prio"
+                                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">Comment
+                                        créer une instance Public Cloud et s'y connecter</a></li>
+                </ul>
+        </li>
+        <li>OVHcloud SecNumCloud ?</li>
 </ul>
 <hr>
 
 <body>
-    <a target="_blank"
-        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">
-        <h1>Chapitre III : Comment créer une instance Public Cloud et s'y connecter</h1>
-    </a>
+        <a target="_blank"
+                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">
+                <h1>Chapitre III : Comment créer une instance Public Cloud et s'y connecter</h1>
+        </a><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">1.
-            Créer des clés SSH</a></h2>
+        <h2><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">1.
+                        Créer des clés SSH</a></h2>
 
-    <p>Les clés publiques et privées SSH forment une paire asymétrique utilisée pour sécuriser l'authentification lors
-        des connexions à distance, sans mot de passe. <br>
-        La clé privée reste secrète sur votre machine (client), tandis que
-        la clé publique est partagée avec le serveur distant, qui l'utilise pour vérifier votre identité via un défi
-        cryptographique. Cela repose sur la cryptographie à clé publique, comme RSA ou ECDSA, où la clé publique chiffre
-        un message que seule la clé privée peut déchiffrer.</p>
-    <ul>
-        <li><a target="_blank" href="https://www.it-connect.fr/chapitres/quest-ce-que-ssh/#google_vignette">Qu’est-ce
-                que SSH ?
-            </a></li>
-        <li><a target="_blank" href="https://www.youtube.com/watch?v=gxQKw7A6qDM">Le protocole SSH pour
-                les débutants</a></li>
-        <li><a target="_blank"
-                href="https://drane.ac-lyon.fr/spip/IMG/scenari/ubuntu2diapo/co/reseau_openssh.html?mode=html">SSH -
-                autre définition</a></li>
-    </ul>
+        <p>Les clés publiques et privées SSH forment une paire asymétrique utilisée pour sécuriser l'authentification
+                lors
+                des connexions à distance, sans mot de passe. <br>
+                La clé privée reste secrète sur votre machine (client), tandis que
+                la clé publique est partagée avec le serveur distant, qui l'utilise pour vérifier votre identité via un
+                défi
+                cryptographique. Cela repose sur la cryptographie à clé publique, comme RSA ou ECDSA, où la clé publique
+                chiffre
+                un message que seule la clé privée peut déchiffrer.</p>
+        <ul>
+                <li><a target="_blank"
+                                href="https://www.it-connect.fr/chapitres/quest-ce-que-ssh/#google_vignette">Qu’est-ce
+                                que SSH ?
+                        </a></li>
+                <li><a target="_blank" href="https://www.youtube.com/watch?v=gxQKw7A6qDM">Le protocole SSH pour
+                                les débutants</a></li>
+                <li><a target="_blank"
+                                href="https://drane.ac-lyon.fr/spip/IMG/scenari/ubuntu2diapo/co/reseau_openssh.html?mode=html">SSH
+                                -
+                                autre définition</a></li>
+        </ul>
 
-    <p></p>
+        <p></p>
 
-    <h3><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-web-hosting-putty-windows?id=kb_article_view&sysparm_article=KB0053133">
-            Comment utiliser PuTTY pour les connexions SSH et l'authentification</a></h3>
+        <h3><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-web-hosting-putty-windows?id=kb_article_view&sysparm_article=KB0053133">
+                        Comment utiliser PuTTY pour les connexions SSH et l'authentification</a></h3>
 
-    <p>PuTTY est un logiciel client SSH open source avec une interface utilisateur graphique. Il a été développé pour
-        Windows mais est également disponible pour d'autres systèmes d'exploitation et comprend des fonctionnalités
-        utiles, comme la gestion des clés SSH.</p>
+        <p>PuTTY est un logiciel client SSH open source avec une interface utilisateur graphique. Il a été développé
+                pour
+                Windows mais est également disponible pour d'autres systèmes d'exploitation et comprend des
+                fonctionnalités
+                utiles, comme la gestion des clés SSH. <br><strong>Les clés publiques et privées générées doivent
+                        également être
+                        sauvegardées dans un disque dur externe.</strong></p>
 
-    <ul>
-        <li><a id="prio" target="_blank" href="https://www.lecoindunet.com/generer-cle-ssh-putty">Générer une clé SSH
-                privée et publique avec PuTTY</a></li>
-        <li><a target="_blank"
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-creating-ssh-keys?id=kb_article_view&sysparm_article=KB0064541#create-ssh-key">Comment
-                créer et utiliser des clés d'authentification pour les connexions SSH aux instances Public Cloud
-            </a></li>
-    </ul>
+        <ul>
+                <li><a target="_blank" href="https://www.lecoindunet.com/generer-cle-ssh-putty">Générer une
+                                clé SSH
+                                privée et publique avec PuTTY</a></li>
+                <li><a target="_blank"
+                                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-creating-ssh-keys?id=kb_article_view&sysparm_article=KB0064541#create-ssh-key">Comment
+                                créer et utiliser des clés d'authentification pour les connexions SSH aux instances
+                                Public Cloud
+                        </a></li>
+        </ul><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">2.
-            Importer les clés SSH</a></h2>
+        <h2><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#import-ssh">2.
+                        Importer les clés SSH</a></h2>
 
-    <p><i>Dans l'espace client OVHcloud, section Public Cloud > projet concerné > Paramètres > Clés SSH, ajoutez votre
-            clé publique en entrant un nom et la chaîne de clé. Cela facilite la sélection lors de la création
-            d'instance</i></p>
+        <p>Dans l'espace client OVHcloud, section Public Cloud > projet concerné > Paramètres > Clés SSH, ajouter
+                la clé publique en entrant un nom et la chaîne de clé. <br> Les caractères composant cette clé doivent
+                représenter une unique ligne pour être prise en compte par OVHCloud.</p><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">3.
-            Préparer la configuration réseau</a></h2>
+        <h2><a id="prio" target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">3.
+                        Préparer la configuration réseau</a></h2>
 
-    <p><i>Pour un mini projet simple, optez pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans réseau
-            privé initial ; passez directement à l'étape suivante si pas de vRack nécessaire.</i></p>
+        <p><i>Pour un mini projet simple, optez pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans
+                        réseau
+                        privé initial ; passez directement à l'étape suivante si pas de vRack nécessaire.</i></p><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
-            Créer
-            l'instance</a></h2>
+        <h2><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
+                        Créer
+                        l'instance</a></h2>
 
-    <ul>
-        <li>Sélectionnez un modèle (flavor) petit comme Discovery pour tests (1 vCPU, 2 Go RAM)</li>
-        <li>Choisissez une région proche (ex. GRA pour France)</li>
-        <li>Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</li>
-        <li>Nommez l'instance, configurez options basiques (pas de script user-data pour débuter)</li>
-        <li>Confirmez réseau Public</li>
-        <li>Choisissez facturation horaire pour flexibilité, puis créez</li>
-    </ul>
+        <ul>
+                <li>Sélectionnez un modèle (flavor) petit comme Discovery pour tests (1 vCPU, 2 Go RAM)</li>
+                <li>Choisissez une région proche (ex. GRA pour France)</li>
+                <li>Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</li>
+                <li>Nommez l'instance, configurez options basiques (pas de script user-data pour débuter)</li>
+                <li>Confirmez réseau Public</li>
+                <li>Choisissez facturation horaire pour flexibilité, puis créez</li>
+        </ul><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
-            Se
-            connecter à l'instance</a></h2>
+        <h2><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
+                        Se
+                        connecter à l'instance</a></h2>
 
-    <p><i>Attendez l'état "Activé" dans Instances > tableau de bord. Connectez-vous via SSH : ssh
-            ubuntu@IP_de_votre_instance (utilisateur = ubuntu pour Ubuntu)</i></p>
+        <p><i>Attendez l'état "Activé" dans Instances > tableau de bord. Connectez-vous via SSH : ssh
+                        ubuntu@IP_de_votre_instance (utilisateur = ubuntu pour Ubuntu)</i></p><br>
 
-    <h2><a target="_blank"
-            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
-            Premiers
-            pas
-        </a></h2>
+        <h2><a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
+                        Premiers
+                        pas
+                </a></h2>
 
-    <p><i>Définissez un mot de passe avec sudo passwd pour activer console VNC si besoin ; installez ensuite Docker pour
-            votre projet Python</i></p>
+        <p><i>Définissez un mot de passe avec sudo passwd pour activer console VNC si besoin ; installez ensuite Docker
+                        pour
+                        votre projet Python</i></p>
 
-    <br><br>
-    <a id='lien' href="./index.html">Retour au sommaire</a>
+        <br><br>
+        <a id='lien' href="./index.html">Retour au sommaire</a>
 </body>
 
 </html>
