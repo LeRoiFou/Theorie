@@ -44,6 +44,7 @@
                 <h1>Chapitre III : Comment créer une instance Public Cloud et s'y connecter</h1>
         </a><br>
 
+        <!-- ****************** Chapitre I ****************** -->
         <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">1.
                         Créer des clés SSH</a></h2>
@@ -95,36 +96,166 @@
                         </a></li>
         </ul><br>
 
+        <!-- ****************** Chapitre II ****************** -->
         <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#import-ssh">2.
                         Importer les clés SSH</a></h2>
 
-        <p>Dans l'espace client OVHcloud, section Public Cloud > projet concerné > Paramètres > Clés SSH, ajouter
+        <p>Dans l'espace client OVHcloud, section Public Cloud 👉 projet concerné 👉 Paramètres 👉 Clés SSH, ajouter
                 la clé publique en entrant un nom et la chaîne de clé. <br> Les caractères composant cette clé doivent
                 représenter une unique ligne pour être prise en compte par OVHCloud.</p><br>
 
-        <h2><a id="prio" target="_blank"
+
+        <!-- ****************** Chapitre III ****************** -->
+        <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">3.
                         Préparer la configuration réseau</a></h2>
 
-        <p><i>Pour un mini projet simple, optez pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans
-                        réseau
-                        privé initial ; passez directement à l'étape suivante si pas de vRack nécessaire.</i></p><br>
+        <p>Pour un mini projet simple, opter pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans
+                réseau privé initial ; passer directement à l'étape suivante si pas de vRack nécessaire.</p>
 
-        <h2><a target="_blank"
+        <table>
+                <thead>
+                        <tr>
+                                <th>Notion</th>
+                                <th>Définition simple</th>
+                                <th>Rôle avec vRack / OVHcloud</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                <td>vRack</td>
+                                <td>Réseau privé OVHcloud qui relie tes serveurs et services entre eux, sans passer par
+                                        Internet public.</td>
+                                <td>Permet de faire circuler tes données sensibles entre tes ressources (serveurs
+                                        dédiés, Public Cloud, etc.) sur un réseau isolé des autres clients OVH et du web
+                                        public, tant que tu n’exposes pas toi‑même ces services via une IP publique ou
+                                        une mauvaise config.</td>
+                        </tr>
+                        <tr>
+                                <td>LAN isolé</td>
+                                <td>Réseau local (comme chez toi derrière ta box) où seules les machines raccordées à ce
+                                        réseau peuvent se parler.</td>
+                                <td>Le vRack se comporte comme un LAN isolé hébergé chez OVHcloud : seul ton parc de
+                                        machines raccordées y a accès.</td>
+                        </tr>
+                        <tr>
+                                <td>Switch virtuel</td>
+                                <td>Équivalent logiciel d’un switch physique (multiprise réseau) qui relie plusieurs
+                                        machines sur un même réseau local.</td>
+                                <td>Le vRack fonctionne comme un gros switch virtuel : tu “branches” tes
+                                        serveurs/instances dessus via leurs interfaces privées.</td>
+                        </tr>
+                        <tr>
+                                <td>VLAN privé</td>
+                                <td>“Sous‑réseau” logique à l’intérieur d’un switch, séparé des autres VLAN, réservé à
+                                        un usage précis.</td>
+                                <td>Dans le vRack, tu peux créer plusieurs VLAN privés (prod, préprod, BDD, etc.) pour
+                                        segmenter ton réseau tout en restant sur l’infra vRack.</td>
+                        </tr>
+                        <tr>
+                                <td>Cluster</td>
+                                <td>Groupe de machines qui travaillent ensemble pour fournir un service (BDD,
+                                        Kubernetes, serveurs applicatifs…).</td>
+                                <td>La communication interne du cluster passe typiquement par un réseau privé comme le
+                                        vRack, pour limiter l’exposition au public.</td>
+                        </tr>
+                        <tr>
+                                <td>VLAN de prod / VLAN de préprod</td>
+                                <td>Deux environnements séparés : prod (réel, pour les utilisateurs) et préprod (tests
+                                        avancés avant mise en ligne).</td>
+                                <td>On crée par exemple un VLAN “prod” et un VLAN “préprod” dans le même vRack pour
+                                        isoler les flux tout en gardant une administration centralisée.</td>
+                        </tr>
+                        <tr>
+                                <td>Confidentialité des données</td>
+                                <td>Seules tes ressources rattachées au vRack voient le trafic qui y circule ; les
+                                        autres clients OVH et Internet n’y ont pas accès directement.</td>
+                                <td>Le vRack fournit un fort niveau d’isolation réseau, mais la confidentialité dépend
+                                        aussi de ta configuration (pare‑feu, IP publiques, comptes, etc.).</td>
+                        </tr>
+                </tbody>
+        </table><br>
+
+
+        <!-- ****************** Chapitre IV ****************** -->
+        <h2><a id="prio" target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
                         Créer
                         l'instance</a></h2>
 
         <ul>
-                <li>Sélectionnez un modèle (flavor) petit comme Discovery pour tests (1 vCPU, 2 Go RAM)</li>
-                <li>Choisissez une région proche (ex. GRA pour France)</li>
+                <li>Sélectionnez le modèle (flavor) petit comme Discovery pour des tests :
+                        <a target="_blank" href="(https://www.ovhcloud.com/fr/public-cloud/prices/)">[1]</a>
+                        <a target="_blank" href="(https://www.ovhcloud.com/en/public-cloud/virtual-instances/)">[2]</a>
+                        <a target="_blank"
+                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[3]</a>
+                </li><br>
+
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Caractéristique</th>
+                                        <th>Ce que c’est</th>
+                                        <th>Ce que ça implique pour mon petit projet FastAPI</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>2 Go de RAM</td>
+                                        <td>Mémoire vive utilisée par l’OS, FastAPI, le serveur web (Uvicorn/Gunicorn),
+                                                et éventuellement un peu de cache.</td>
+                                        <td>Largement suffisant pour un petit service FastAPI avec menu déroulant, sans
+                                                traitements lourds ni grande base en mémoire.</td>
+                                </tr>
+                                <tr>
+                                        <td>1 vCore (≈ 2 GHz)</td>
+                                        <td>Cœur CPU virtuel qui exécute le code (Python, FastAPI, OS).</td>
+                                        <td>Adapte très bien pour un site quasi statique ou une API légère avec peu de
+                                                trafic simultané.</td>
+                                </tr>
+                                <tr>
+                                        <td>25 Go NVMe</td>
+                                        <td>Disque système rapide (SSD NVMe) pour l’OS, le code FastAPI, les logs et
+                                                quelques fichiers.</td>
+                                        <td>Suffisant pour mon projet (code + dépendances + logs). Limite seulement si
+                                                je stocke de gros fichiers ou beaucoup de données.</td>
+                                </tr>
+                                <tr>
+                                        <td>100 Mbit/s</td>
+                                        <td>Débit réseau maximal théorique d’environ 100 Mégabits par seconde vers
+                                                Internet.</td>
+                                        <td>Très largement suffisant pour servir un petit site/API avec des réponses
+                                                légères en JSON/HTML.</td>
+                                </tr>
+                                <tr>
+                                        <td>Région 1-AZ</td>
+                                        <td>Région géographique (ex. GRA en France) avec au moins une “zone de
+                                                disponibilité” gérée par OVHcloud.</td>
+                                        <td>Je choisis une région proche (ex. GRA) pour la latence. Pour un petit projet
+                                                perso, je n'ai pas besoin de gérer moi-même plusieurs AZ.</td>
+                                </tr>
+                                <tr>
+                                        <td>Modèle D2-2 (Discovery)</td>
+                                        <td>Petite instance de test avec ressources partagées (1 vCPU, 2 Go RAM, 25 Go
+                                                NVMe).</td>
+                                        <td>Très adaptée pour mon FastAPI simple de validation de menu déroulant, avec
+                                                un coût horaire faible tant que j'éteins/supprimes quand je n’en ai pas
+                                                besoin. </td>
+                                </tr>
+                        </tbody>
+                </table><br>
+
+                <li>
+                        <p id="prio">Choisissez une région proche (ex. GRA pour France)</p>
+                </li>
                 <li>Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</li>
                 <li>Nommez l'instance, configurez options basiques (pas de script user-data pour débuter)</li>
                 <li>Confirmez réseau Public</li>
                 <li>Choisissez facturation horaire pour flexibilité, puis créez</li>
         </ul><br>
 
+        <!-- ****************** Chapitre V ****************** -->
         <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
                         Se
@@ -133,6 +264,8 @@
         <p><i>Attendez l'état "Activé" dans Instances > tableau de bord. Connectez-vous via SSH : ssh
                         ubuntu@IP_de_votre_instance (utilisateur = ubuntu pour Ubuntu)</i></p><br>
 
+
+        <!-- ****************** Chapitre VI ****************** -->
         <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
                         Premiers
