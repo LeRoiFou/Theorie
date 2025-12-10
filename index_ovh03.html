@@ -182,10 +182,11 @@
         <h2><a id="prio" target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
                         Créer
-                        l'instance</a></h2>
+                        l'instance (VM ⇄ compute)</a></h2>
 
         <ul>
-                <li>Sélectionnez le modèle (flavor) petit comme Discovery pour des tests :
+                <li>Sélectionnez le modèle (flavor) <strong>👉 un petit modèle comme "Discovery" pour des tests
+                                :</strong>
                         <a target="_blank" href="(https://www.ovhcloud.com/fr/public-cloud/prices/)">[1]</a>
                         <a target="_blank" href="(https://www.ovhcloud.com/en/public-cloud/virtual-instances/)">[2]</a>
                         <a target="_blank"
@@ -217,7 +218,7 @@
                                 <tr>
                                         <td>25 Go NVMe</td>
                                         <td>Disque système rapide (SSD NVMe) pour l’OS, le code FastAPI, les logs et
-                                                quelques fichiers.</td>
+                                                quelques fichiers. C'est le stockage (I/O)</td>
                                         <td>Suffisant pour mon projet (code + dépendances + logs). Limite seulement si
                                                 je stocke de gros fichiers ou beaucoup de données.</td>
                                 </tr>
@@ -247,9 +248,85 @@
                 </table><br>
 
                 <li>
-                        <p id="prio">Choisissez une région proche (ex. GRA pour France)</p>
+                        <p><a target="_blank"
+                                        href="https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031">Choisissez
+                                        une région proche</a> <strong>👉 région 1-AZ pour un petit modèle</strong></p>
+                </li><br>
+
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Mode / notion</th>
+                                        <th>Définition</th>
+                                        <th>Avantages principaux</th>
+                                        <th>Limites</th>
+                                        <th>Cas d’usage typiques</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>AZ (Availability Zone)</td>
+                                        <td>Unité d’infrastructure composée d’un ou plusieurs datacenters isolés dans
+                                                une région géographique où sont hébergés les services Public Cloud.</td>
+                                        <td>Isolation des pannes locales, redondance interne (alimentation, réseau,
+                                                refroidissement).</td>
+                                        <td>Une seule AZ ne protège pas contre une panne de zone ou de région entière.
+                                        </td>
+                                        <td>Brique de base pour construire des régions 1-AZ, 3-AZ ou des Local Zones.
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>Région 1-AZ</td>
+                                        <td>Région constituée d’une seule AZ, elle-même composée de un ou plusieurs
+                                                datacenters interconnectés.</td>
+                                        <td>Coût optimisé, simplicité opérationnelle, redondance locale (erasure coding
+                                                / réplication interne), adaptée aux besoins généraux.</td>
+                                        <td>Pas de redondance multi-AZ, vulnérable à une panne totale de la zone, pas de
+                                                protection inter-régions.</td>
+                                        <td>Dev, environnements de transition, sauvegardes, applications non critiques
+                                                ou sensibles au coût. </td>
+                                </tr>
+                                <tr>
+                                        <td>Région 3-AZ</td>
+                                        <td>Région composée de trois AZ indépendantes, séparées géographiquement (≈ 30
+                                                km) avec infrastructures isolées.</td>
+                                        <td>Haute disponibilité, isolation des pannes entre zones, réplication
+                                                inter-zones possible, faible latence entre AZ, meilleure résilience.
+                                        </td>
+                                        <td>Coût plus élevé, plus complexe à concevoir et opérer, ne protège pas contre
+                                                une panne régionale complète.</td>
+                                        <td>Applications critiques, e-commerce, services essentiels, scénarios de
+                                                reprise après sinistre, charges de travail nécessitant une haute dispo.
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>Local Zones</td>
+                                        <td>AZ unique déployée au plus près d’une zone géographique spécifique, avec un
+                                                ensemble limité de services (Compute / Storage).</td>
+                                        <td>Latence très faible pour les utilisateurs proches, traitement et stockage
+                                                localisés, aide à la conformité réglementaire.</td>
+                                        <td>Pas de redondance inter-zones, vulnérable à une panne locale, périmètre de
+                                                services et capacité plus restreints.</td>
+                                        <td>Jeux en ligne, temps réel, flux vidéo, edge computing, workloads qui exigent
+                                                une localisation stricte des données. </td>
+                                </tr>
+                                <tr>
+                                        <td>Comparaison rapide</td>
+                                        <td>1-AZ : 1 zone / 3-AZ : 3 zones / Local Zone : 1 zone proche des
+                                                utilisateurs.</td>
+                                        <td>1-AZ : coût bas ; 3-AZ : résilience et haute dispo ; Local Zones : latence
+                                                minimale.</td>
+                                        <td>1-AZ : risque sur panne de zone ; 3-AZ : coût + complexité ; Local Zones :
+                                                peu de services, pas de multi-AZ.</td>
+                                        <td>Choix selon priorité : coût (1-AZ), disponibilité (3-AZ), latence/proximité
+                                                (Local Zones). </td>
+                                </tr>
+                        </tbody>
+                </table><br>
+
+                <li>
+                        <p id="prio">Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</p>
                 </li>
-                <li>Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</li>
                 <li>Nommez l'instance, configurez options basiques (pas de script user-data pour débuter)</li>
                 <li>Confirmez réseau Public</li>
                 <li>Choisissez facturation horaire pour flexibilité, puis créez</li>
