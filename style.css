@@ -60,4 +60,8 @@ tr:nth-child(even) {
   img.responsive-img {
     max-width: 50px;
   }
+
+  table {
+    max-width: 300px;
+  }
 }
