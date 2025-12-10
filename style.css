@@ -24,6 +24,8 @@ h4 {
 table {
   text-align: center;
   border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
 }
 
 td,
@@ -59,9 +61,5 @@ tr:nth-child(even) {
 
   img.responsive-img {
     max-width: 50px;
-  }
-
-  table {
-    max-width: 300px;
   }
 }
