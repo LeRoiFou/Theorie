@@ -325,11 +325,177 @@
                 </table><br>
 
                 <li>
-                        <p id="prio">Sélectionnez Ubuntu 22.04, ajoutez une clé SSH publique (stockée ou directe)</p>
+                        <p>Sélectionner une image (OS) + clé publique SSH à ajouter : <strong>👉 dans tous les cas,
+                                        prendre l'OS Ubuntu
+                                        22.04</strong></p>
                 </li>
-                <li>Nommez l'instance, configurez options basiques (pas de script user-data pour débuter)</li>
-                <li>Confirmez réseau Public</li>
-                <li>Choisissez facturation horaire pour flexibilité, puis créez</li>
+                <li>Configurer son instance : <strong>👉 pour un petit modèle : 1 instance, pas de script
+                                post-installation et pas de sauvegarde automatisée</strong> </li><br>
+
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Élément</th>
+                                        <th>Ce que c’est</th>
+                                        <th>Ce que ça implique pour toi maintenant</th>
+                                        <th>Quand ça devient utile plus tard</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>Nombre d’instances à créer</td>
+                                        <td>C’est le nombre de VM identiques qu’OVHcloud va lancer d’un coup avec la
+                                                même configuration (même flavor, même image, même clé SSH, etc.). <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                <a target="_blank"
+                                                        href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
+                                                </a>
+                                        </td>
+
+                                        <td>Pour ton projet FastAPI/Dash actuel, tu mets une instance. Une seule VM
+                                                suffit
+                                                largement pour héberger ton app et apprendre le cloud sans complexité de
+                                                “scaling” ni de préprod. <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                        </td>
+                                        <td>Quand tu feras du <strong>scaling horizontal</strong> (plusieurs instances
+                                                derrière un <strong>load balancer</strong>) ou que tu voudras créer d’un
+                                                coup plusieurs environnements
+                                                identiques (ex. 3 instances FastAPI pour tests de charge), tu pourras
+                                                augmenter ce nombre. <br><br>
+                                                <u>Exemples :</u> <br>
+                                                - Création d'une deuxième instance pour une version bêta <br>
+                                                - Quand le nombre de clients et de requêtes explose, on ajoute des
+                                                instances pour partager la charge, au lieu de “gonfler” une seule
+                                                machine à l’infini. Et dans ce cas là, le load balancer sera mis devant
+                                                pour répartir les requêtes entre les 2 instances (puis 3, 4, etc. si
+                                                besoin)
+                                                <a target="_blank"
+                                                        href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
+                                                </a>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031)">[3]</a>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>Script de post-installation (user-data)</td>
+                                        <td>Petit script (souvent shell ou cloud-init) exécuté automatiquement au
+                                                premier démarrage de la VM : installation de paquets, création
+                                                d’utilisateurs, configuration de base, etc. <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
+                                        </td>
+                                        <td>À ton niveau actuel, tu peux laisser ce champ vide. Tu feras à la main les
+                                                étapes d’installation Python, FastAPI, Dash, Uvicorn, etc., une fois
+                                                connecté en SSH. Ça te permet de comprendre ce que tu fais, étape par
+                                                étape. <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                        </td>
+                                        <td>Plus tard, quand tu automatiseras tes déploiements, tu pourras y mettre un
+                                                script qui installe automatiquement Python, ton environnement virtuel,
+                                                tes dépendances, crée un user “app”, déploie ton code et démarre ton
+                                                service FastAPI/Dash dès la création de l’instance. <br><br>
+                                                Mais étant donné qu'on a recours à une image Docker, cet élément aura
+                                                peu d'importance.
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started-instance?id=kb_article_view&sysparm_article=KB0050764)">[5]</a>
+                                        </td>
+                                </tr>
+                                <tr>
+                                        <td>Sauvegarde automatisée des instances</td>
+                                        <td>Service OVHcloud qui crée régulièrement des snapshots (copies) complets de
+                                                ta VM pour pouvoir la restaurer ou cloner facilement en cas de problème
+                                                (erreur, crash, suppression accidentelle). <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051162)">[7]</a>
+                                        </td>
+                                        <td>Ce n’est pas indispensable pour un petit environnement de test et ça a un
+                                                coût supplémentaire. Tu peux commencer sans sauvegarde auto, à condition
+                                                de garder ton code versionné (Git) et ta config documentée. <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                        </td>
+                                        <td>Utile quand ton instance héberge une app importante ou des données que tu ne
+                                                veux pas perdre : tu peux restaurer rapidement après un incident ou
+                                                revenir à un état “propre” connu (avant une grosse mise à jour par
+                                                exemple). <br>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                                <a target="_blank"
+                                                        href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-create-restore-virtual-server-from-backup?id=kb_article_view&sysparm_article=KB0050670)">[8]</a>
+                                        </td>
+                                </tr>
+                        </tbody>
+                </table><br>
+
+                <strong>Vocabulaire</strong><br>
+
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Concept</th>
+                                        <th>Définition</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>Scaling horizontal ("scale out")</td>
+                                        <td>Consiste à ajouter des machines (instances) identiques pour partager la
+                                                charge, au lieu de rendre une seule machine toujours plus grosse</td>
+                                </tr>
+                                <tr>
+                                        <td>Load balancer</td>
+                                        <td>Composant qui se place devant plusieurs instances et répartit les requêtes
+                                                entre elles</td>
+                                </tr>
+                        </tbody>
+                </table><br>
+
+
+                <li>Confirmez votre réseau : <strong> 👉 choisir le mode public pour publier une application</strong>
+                </li>
+                <br>
+
+                <table>
+                        <thead>
+                                <tr>
+                                        <th>Mode réseau</th>
+                                        <th>Définition</th>
+                                        <th>Exemple concret</th>
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                        <td>Mode public</td>
+                                        <td>L’instance reçoit une adresse IP publique et est directement accessible
+                                                depuis Internet si les ports sont ouverts. </td>
+                                        <td>Instance Ubuntu avec FastAPI exposée sur une IP publique, mais tu limites
+                                                l’accès au dashboard en autorisant uniquement ton adresse IP (firewall
+                                                OVH). </td>
+                                </tr>
+                                <tr>
+                                        <td>Mode privé</td>
+                                        <td>L’instance n’a pas d’IP publique : elle est joignable uniquement via un
+                                                réseau privé (vRack / Private Network) et, éventuellement, via une
+                                                Gateway, un Load Balancer ou un VPN. </td>
+                                        <td>Comme un réseau interne d’entreprise : plusieurs serveurs (API, BDD) se
+                                                parlent entre eux dans un réseau privé, sans être exposés directement
+                                                sur Internet, seul un reverse proxy / LB public fait l’interface. </td>
+                                </tr>
+                        </tbody>
+                </table><br>
+
+                <li>Facturation : <strong>👉 pour une application test avec plus de flexibilité, choisir une facturation
+                                horaire</strong> </li>
         </ul><br>
 
         <!-- ****************** Chapitre V ****************** -->
