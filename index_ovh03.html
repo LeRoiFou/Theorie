@@ -71,30 +71,23 @@
                                 autre définition</a></li>
         </ul>
 
-        <p></p>
+        <h3>Création de clés SSH via Windows PowerShell</h3>
 
-        <h3><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-web-hosting-putty-windows?id=kb_article_view&sysparm_article=KB0053133">
-                        Comment utiliser PuTTY pour les connexions SSH et l'authentification</a></h3>
-
-        <p>PuTTY est un logiciel client SSH open source avec une interface utilisateur graphique. Il a été développé
-                pour
-                Windows mais est également disponible pour d'autres systèmes d'exploitation et comprend des
-                fonctionnalités
-                utiles, comme la gestion des clés SSH. <br><strong>Les clés publiques et privées générées doivent
-                        également être
-                        sauvegardées dans un disque dur externe.</strong></p>
-
+        <p>Pour créer les clés publiques et privées pour le protocole SSH, il faut suivre les étapes suivantes :</p>
         <ul>
-                <li><a target="_blank" href="https://www.lecoindunet.com/generer-cle-ssh-putty">Générer une
-                                clé SSH
-                                privée et publique avec PuTTY</a></li>
-                <li><a target="_blank"
-                                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-creating-ssh-keys?id=kb_article_view&sysparm_article=KB0064541#create-ssh-key">Comment
-                                créer et utiliser des clés d'authentification pour les connexions SSH aux instances
-                                Public Cloud
-                        </a></li>
-        </ul><br>
+                <li>Dans "Rechercher" de Windows, saisir : Windows PowerShell (terminal)</li>
+                <li>Saisir dans le terminal : ssh-keygen -h</li>
+                <ul>
+                        <li>ssh-keygen : programme qui génère les paires de clés SSH</li>
+                        <li>-h : option “help”</li>
+                        <li>Les clés sont générées dans le répertoire C:\users\LRCOM\.ssh</li>
+                </ul>
+                <li>Récupérer la clé publique, en saisissant dans le shell (terminal) : Get-Content
+                        "C:\Users\LRCOM\.ssh\id_ed25519.pub"</li>
+                <li>Copier la clé publique générée</li>
+        </ul>
+
+
 
         <!-- ****************** Chapitre II ****************** -->
         <h2><a target="_blank"
@@ -495,7 +488,10 @@
                 </table><br>
 
                 <li>Facturation : <strong>👉 pour une application test avec plus de flexibilité, choisir une facturation
-                                horaire</strong> </li>
+                                horaire.</strong><br> Ne pas hésiter à suspendre la facturation via l'icône des 3
+                        boutons verticales de la colonne <i>Actions</i> en sélectionnant l'instance ciblée, pour éviter
+                        de subir des
+                        frais non souhaités 😉(menu à gauche → partie "COMPUTE" → sous-partie "Instances").</li>
         </ul><br>
 
         <!-- ****************** Chapitre V ****************** -->
@@ -503,9 +499,35 @@
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
                         Se
                         connecter à l'instance</a></h2>
-
-        <p><i>Attendez l'état "Activé" dans Instances > tableau de bord. Connectez-vous via SSH : ssh
-                        ubuntu@IP_de_votre_instance (utilisateur = ubuntu pour Ubuntu)</i></p><br>
+        <strong>Pour se connecter à l'instance :</strong>
+        <ul>
+                <li>Après avoir sélectionné le projet, aller sur le menu à gauche → partie "COMPUTE" → sous-partie
+                        "Instances" (le statut doit être en mode "activé")</li>
+                <li>Noter le nom de l'instance : <strong>👉 ici c'est : d2-2-sbg5</strong> </li>
+                <li><strong>Noter l’IPv4 publique</strong> (colonne "IP Publique(s)" → 1ère ligne. La 2ème ligne
+                        concerne l'IPv6 publique)</li>
+                <li>Ouvrir Windows PowerShell et saisir ceci pour se connecter : <br>
+                        <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
+                </li>
+                <ul>
+                        <li><i>ssh -i $env:USERPROFILE\.ssh\id_ed25519</i> : indique la clé privée</li>
+                        <li><i>ubuntu</i> : utilisateur par défaut sur Ubuntu 22.04 OVH</li>
+                        <li><i>IPv4</i> : saisir l'adresse IPv4 de mon instance</li>
+                </ul>
+                <li>Dans Windows PowerShell, si la question suivante s'affiche : <i>“The authenticity of host ...”</i>,
+                        tapper <i>yes</i></li>
+                <li>Entrer la passphrase conservée dans Keypass</li>
+                <li>Un message suivant apparaît, confirmant que le port 22 répond bien : <i>Connection closed by IPv4
+                                port 22</i> (IPv4 : adresse IPv4 de mon instance)</li>
+                <li>Par la suite on doit avoir la ligne de commande suivante qui s'affiche : <i>ubuntu@d2-2-sbg5:~$</i>
+                </li>
+        </ul>
+        <strong>Pour une mise à jour de Linux :</strong>
+        <ul>
+                <li>Tapper ensuite dans le shell : <i>sudo apt update</i></li>
+                <li>Puis tapper ensuite dans le shell : <i>sudo apt upgrade</i></li>
+                <li>Si une demande de mise à jour est demandée, tapper <i>Y</i></li>
+        </ul>
 
 
         <!-- ****************** Chapitre VI ****************** -->
