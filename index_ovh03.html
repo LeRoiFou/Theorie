@@ -499,47 +499,124 @@
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
                         Se
                         connecter à l'instance</a></h2>
-        <strong>Pour se connecter à l'instance :</strong>
+
+        <p><strong>Pour une mise à jour de Linux :</strong></p>
         <ul>
-                <li>Après avoir sélectionné le projet, aller sur le menu à gauche → partie "COMPUTE" → sous-partie
-                        "Instances" (le statut doit être en mode "activé")</li>
-                <li>Noter le nom de l'instance : <strong>👉 ici c'est : d2-2-sbg5</strong> </li>
+                <li>Tapper d'abord dans le shell : <i>sudo apt update</i></li><br>
+                <li>Puis tapper ensuite dans le shell : <i>sudo apt upgrade</i></li><br>
+                <li>Si une demande de mise à jour est demandée, tapper <i>Y</i></li><br>
+        </ul>
+
+        <p><strong>Pour se connecter à l'instance :</strong></p>
+        <ul>
+                <li>Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche → partie "COMPUTE" →
+                        sous-partie "Instances" (le statut doit être en mode "activé")</li><br>
+                <li>Noter le nom de l'instance : <strong>👉 ici c'est : d2-2-sbg5</strong> </li><br>
                 <li><strong>Noter l’IPv4 publique</strong> (colonne "IP Publique(s)" → 1ère ligne. La 2ème ligne
-                        concerne l'IPv6 publique)</li>
+                        concerne l'IPv6 publique)</li><br>
                 <li>Ouvrir Windows PowerShell et saisir ceci pour se connecter : <br>
                         <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
                 </li>
                 <ul>
-                        <li><i>ssh -i $env:USERPROFILE\.ssh\id_ed25519</i> : indique la clé privée</li>
-                        <li><i>ubuntu</i> : utilisateur par défaut sur Ubuntu 22.04 OVH</li>
-                        <li><i>IPv4</i> : saisir l'adresse IPv4 de mon instance</li>
-                </ul>
-                <li>Dans Windows PowerShell, si la question suivante s'affiche : <i>“The authenticity of host ...”</i>,
-                        tapper <i>yes</i></li>
-                <li>Entrer la passphrase conservée dans Keypass</li>
+                        <li><i>ssh -i $env:USERPROFILE\.ssh\id_ed25519</i> → indique la clé privée</li>
+                        <li><i>ubuntu</i> → utilisateur par défaut sur Ubuntu 22.04 OVH</li>
+                        <li><i>IPv4</i> → saisir l'adresse IPv4 de mon instance</li>
+                </ul><br>
+                <li>Dans Windows PowerShell, si la question suivante s'affiche : <i>“The authenticity of host ...”</i>
+                        👉 tapper <i>yes</i></li><br>
+                <li>Entrer la passphrase conservée dans Keypass</li><br>
                 <li>Un message suivant apparaît, confirmant que le port 22 répond bien : <i>Connection closed by IPv4
-                                port 22</i> (IPv4 : adresse IPv4 de mon instance)</li>
-                <li>Par la suite on doit avoir la ligne de commande suivante qui s'affiche : <i>ubuntu@d2-2-sbg5:~$</i>
+                                port 22</i> (IPv4 : adresse IPv4 de mon instance)</li><br>
+                <li>Par la suite on doit avoir la ligne de commande suivante qui s'affiche, confirmant qu'on est bien
+                        dans le shell de la VM : <i>ubuntu@d2-2-sbg5:~$</i>
                 </li>
-        </ul>
-        <strong>Pour une mise à jour de Linux :</strong>
-        <ul>
-                <li>Tapper ensuite dans le shell : <i>sudo apt update</i></li>
-                <li>Puis tapper ensuite dans le shell : <i>sudo apt upgrade</i></li>
-                <li>Si une demande de mise à jour est demandée, tapper <i>Y</i></li>
-        </ul>
+        </ul><br>
 
 
         <!-- ****************** Chapitre VI ****************** -->
         <h2><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
-                        Premiers
-                        pas
-                </a></h2>
+                        Mise en place de l'application</a></h2>
 
-        <p><i>Définissez un mot de passe avec sudo passwd pour activer console VNC si besoin ; installez ensuite Docker
-                        pour
-                        votre projet Python</i></p>
+
+        <p><strong>Docker sur la VM OVH : </strong></p>
+        <ul>
+                <li>Vérifier si Docker a bien été installé sur la VM, en saisissant à partir du shell de la VM (la
+                        ligne de commande commence par exemple <i>ubuntu@d2-2-sbg5:~$</i>) :</li>
+                <ul>
+                        <li><strong>docker --version</strong> 👉 on aura une réponse du style : <i>Docker version
+                                        28.2.2, build
+                                        28.2.2-0ubuntu1~22.04.1</i></li>
+                        <li>à défaut, Docker n'est pas installé sur la VM, il faut donc saisir les instructions
+                                suivantes toujours dans le shell de la VM :</li>
+                        <ul>
+                                <li><strong>sudo apt install docker.io -y</strong></li>
+                                <li><strong>sudo usermod -aG docker ubuntu</strong></li><br>
+                        </ul>
+                </ul>
+                <li>Retourner en local dans le shell, puis saisir <strong>docker info</strong> pour être sûr d'avoir
+                        tous les conteneurs stockés dans l'application Docker Desktop</li><br>
+                <li>Toujours en local, saisir <strong>docker images</strong> pour récupérer les valeurs de l'image à
+                        importer dans les colonnes "REPOSITORY" et "TAG"</li><br>
+                <li> Exporter l’image en dossier archivé .tar sur le PC, en saisissant dans le shell en local 👉
+                        <strong>docker save REPOSITORY:TAG -o REPOSITORY.tar</strong> avec :
+                        <ul>
+                                <li>"REPOSITORY" → nom du repository de l'image à importer sur la VM</li>
+                                <li>"TAG" → nom du TAG de l'image à importer sur la VM</li>
+                        </ul><br>
+                </li>
+                <li>Vérifier que le dossier archivé .tar a bien été créé en local en saisissant dans le shell en local
+                        👉
+                        <strong>ls cloudprojet003.tar</strong>
+                </li><br>
+                <li>Copier le dossier archivé .tar vers la VM OVH en saissisant dans le shell en local 👉
+                        <strong>scp -i $env:USERPROFILE\.ssh\id_ed25519 REPOSITORY.tar
+                                ubuntu@IPv4:/home/ubuntu/</strong>
+
+                </li><br>
+                <li>Sur le terminal de la VM (<i>en saisissant préalablement ssh -i
+                                $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</i>), saisir ceci pour voir si le
+                        dossier archivé .tar a bien été transféré dans la VM 👉 <strong>ls -lh</strong></li><br>
+                <li>Charger l'image dans Docker sur la VM, en saissisant dans le terminal de la VM 👉
+                        <strong>docker load -i REPOSITORY.tar</strong>
+                </li><br>
+                <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant dans le shell de
+                        la VM 👉 <strong>docker images</strong></li><br>
+                <li>Lancer le conteneur sur la VM en saisissant dans le shell de la VM 👉
+                        <br><strong>docker run -d --name REPOSITORY-container -p PortReseau:PortReseau
+                                REPOSITORY:TAG</strong>
+                </li>
+                <ul>
+                        <li>"-d" → mode détaché (en arrière-plan)</li>
+                        <li>"-p PortReseau:PortReseau" → mappe le port PortReseau de la VM vers le port PortReseau
+                                dans le conteneur</li>
+                        <li>"PortReseau" → "8000" par exemple pour fastapi, les ports sont mentionnés dans l'application
+                                DockerDesktop</li>
+                        <li>"REPOSITORY:TAG" → mon image</li>
+                </ul><br>
+                <li>Vérifier que le conteneur tourne en saisissant dans le terminal de la VM 👉 <strong>docker
+                                ps</strong>
+                </li>
+        </ul><br>
+
+        <p><strong>Pour relancer une application suspendue :</strong></p>
+        <ul>
+                <li>Relancer l'instance via le site OVH</li><br>
+                <li>Se reconnecter en SSH dans le shell en saisissant 👉 <strong>ssh -i $env:USERPROFILE\.ssh\id_ed25519
+                                ubuntu@51.91.150.228</strong>
+                </li><br>
+                <li>Vérifier que l'image est encore là en saisissant dans le shell de la VM 👉 <strong>docker
+                                images</strong>
+                </li><br>
+                <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --name
+                                REPOSITORY-container -p PortReseau:PortReseau
+                                REPOSITORY:TAG</strong>
+                </li><br>
+                <li>Vérifier que le conteneur a bien été relancé en saissisant dans le shell de la VM 👉 <strong>docker
+                                ps</strong>
+                </li>
+        </ul>
+        </ul>
 
         <br><br>
         <a id='lien' href="./index.html">Retour au sommaire</a>
