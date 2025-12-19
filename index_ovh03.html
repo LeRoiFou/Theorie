@@ -583,11 +583,14 @@
                 <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant dans le shell de
                         la VM 👉 <strong>docker images</strong></li><br>
                 <li>Lancer le conteneur sur la VM en saisissant dans le shell de la VM 👉
-                        <br><strong>docker run -d --name REPOSITORY-container -p PortReseau:PortReseau
+                        <br><strong>docker run -d --restart unless-stopped --name REPOSITORY-container -p
+                                PortReseau:PortReseau
                                 REPOSITORY:TAG</strong>
                 </li>
                 <ul>
                         <li>"-d" → mode détaché (en arrière-plan)</li>
+                        <li>--restart unless-stopped → évite de supprimer le conteneur arrêté / suspendu et de le
+                                relancer</li>
                         <li>"-p PortReseau:PortReseau" → mappe le port PortReseau de la VM vers le port PortReseau
                                 dans le conteneur</li>
                         <li>"PortReseau" → "8000" par exemple pour fastapi, les ports sont mentionnés dans l'application
@@ -603,13 +606,26 @@
         <ul>
                 <li>Relancer l'instance via le site OVH</li><br>
                 <li>Se reconnecter en SSH dans le shell en saisissant 👉 <strong>ssh -i $env:USERPROFILE\.ssh\id_ed25519
-                                ubuntu@51.91.150.228</strong>
+                                ubuntu@IPv4</strong>
                 </li><br>
                 <li>Vérifier que l'image est encore là en saisissant dans le shell de la VM 👉 <strong>docker
                                 images</strong>
                 </li><br>
-                <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --name
-                                REPOSITORY-container -p PortReseau:PortReseau
+                <li>Vérifier que le conteneur n'a pas été arrêté en saisissant dans le shell de la VM 👉 <strong>docker
+                                ps-a </strong>→ si le statut est de type <i>Exited(...)</i> :
+                        <ul>
+                                <li>alors passer à l'étape
+                                        suivante : "supprimer le conteneur"</li>
+                                <li>sinon, sauter l'étape suivante pour "relancer le conteneur"</li>
+                        </ul>
+                </li><br>
+                <li>Supprimer le conteneur arrêté en saisissant dans le shell de la VM 👉 <strong>docker rm
+                                REPOSITORY-container
+                        </strong></li><br>
+
+                <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --restart
+                                unless-stopped --name REPOSITORY-container -p
+                                PortReseau:PortReseau
                                 REPOSITORY:TAG</strong>
                 </li><br>
                 <li>Vérifier que le conteneur a bien été relancé en saissisant dans le shell de la VM 👉 <strong>docker
