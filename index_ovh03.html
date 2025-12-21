@@ -582,26 +582,25 @@
                                 images</strong>
                 </li><br>
                 <li>Vérifier que le conteneur n'a pas été arrêté en saisissant dans le shell de la VM 👉 <strong>docker
-                                ps-a </strong>→ si le statut est de type <i>Exited(...)</i> :
-                        <ul>
-                                <li>alors passer à l'étape
-                                        suivante : "supprimer le conteneur"</li>
-                                <li>sinon, sauter l'étape suivante pour "relancer le conteneur"</li>
-                        </ul>
-                </li><br>
-                <li>Supprimer le conteneur arrêté en saisissant dans le shell de la VM 👉 <strong>docker rm
-                                REPOSITORY-container
-                        </strong></li><br>
+                                ps -a </strong><br><br>Si le statut est de type <i>Exited(...)</i> alors passer aux
+                        étapes
+                        suivantes:</li><br>
 
-                <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --restart
-                                unless-stopped --name REPOSITORY-container -p
-                                PortReseau:PortReseau
-                                REPOSITORY:TAG</strong>
-                </li><br>
-                <li>Vérifier que le conteneur a bien été relancé en saissisant dans le shell de la VM 👉 <strong>docker
-                                ps</strong>
-                </li>
-        </ul>
+                <ul>
+                        <li>Supprimer le conteneur arrêté en saisissant dans le shell de la VM 👉 <strong>docker rm
+                                        REPOSITORY-container
+                                </strong></li><br>
+
+                        <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --restart
+                                        unless-stopped --name REPOSITORY-container -p
+                                        PortReseau:PortReseau
+                                        REPOSITORY:TAG</strong>
+                        </li><br>
+                        <li>Vérifier que le conteneur a bien été relancé en saissisant dans le shell de la VM 👉
+                                <strong>docker
+                                        ps</strong>
+                        </li>
+                </ul>
         </ul>
 
         <br><br>
