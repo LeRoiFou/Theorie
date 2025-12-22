@@ -588,8 +588,12 @@
 
                 <ul>
                         <li>Supprimer le conteneur arrêté en saisissant dans le shell de la VM 👉 <strong>docker rm
-                                        REPOSITORY-container
-                                </strong></li><br>
+                                        REPOSITORY-container</strong><br>
+                                S'il faut forcer l'arrêt, saisir dans le shell de la VM 👉 <strong>docker rm -f
+                                        REPOSITORY-container</strong> (-f : <i>force l'arrêt notamment si le conteneur
+                                        est en cours d'exécution</i>
+                                )<br>
+                        </li><br>
 
                         <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --restart
                                         unless-stopped --name REPOSITORY-container -p
