@@ -14,8 +14,24 @@
                 <h1>Chapitre III : Comment créer une instance Public Cloud et s'y connecter</h1>
         </a><br>
 
+        <!-- *************** Menu ********************* -->
+        <hr>
+        <div>
+                <p><u><strong>Menu :</strong></u></p>
+                <ol id="menu" type="1">
+                        <li><a href="#chap1">Créer des clés SSH</a></li>
+                        <li><a href="#chap2">Importer les clés SSH</a></li>
+                        <li><a href="#chap3">Préparer la configuration réseau</a></li>
+                        <li><a href="#chap4">Créer l'instance (VM ⇄ compute)</a></li>
+                        <li><a href="#chap5">Se connecter à l'instance</a></li>
+                        <li><a href="#chap6">Mise en place de l'application</a></li>
+                        <li><a href="#chap7">Pour relancer une application suspendue</a></li>
+                </ol>
+        </div>
+        <hr>
+
         <!-- ****************** Chapitre I ****************** -->
-        <h2><a target="_blank"
+        <h2 id="chap1"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">1.
                         Créer des clés SSH</a></h2>
 
@@ -57,20 +73,22 @@
                 <li>Copier la clé publique générée</li>
         </ul>
 
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
 
         <!-- ****************** Chapitre II ****************** -->
-        <h2><a target="_blank"
+        <h2 id="chap2"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#import-ssh">2.
                         Importer les clés SSH</a></h2>
 
         <p>Dans l'espace client OVHcloud, section Public Cloud 👉 projet concerné 👉 Paramètres 👉 Clés SSH, ajouter
                 la clé publique en entrant un nom et la chaîne de clé. <br> Les caractères composant cette clé doivent
-                représenter une unique ligne pour être prise en compte par OVHCloud.</p><br>
+                représenter une unique ligne pour être prise en compte par OVHCloud.</p>
 
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <!-- ****************** Chapitre III ****************** -->
-        <h2><a target="_blank"
+        <h2 id="chap3"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">3.
                         Préparer la configuration réseau</a></h2>
 
@@ -140,9 +158,11 @@
                 </tbody>
         </table><br>
 
+        <i><a href="#menu">Retour au menu</a></i><br><br>
+
 
         <!-- ****************** Chapitre IV ****************** -->
-        <h2><a id="prio" target="_blank"
+        <h2 id="chap4"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
                         Créer
                         l'instance (VM ⇄ compute)</a></h2>
@@ -462,10 +482,12 @@
                         boutons verticales de la colonne <i>Actions</i> en sélectionnant l'instance ciblée, pour éviter
                         de subir des
                         frais non souhaités 😉(menu à gauche → partie "COMPUTE" → sous-partie "Instances").</li>
-        </ul><br>
+        </ul>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <!-- ****************** Chapitre V ****************** -->
-        <h2><a target="_blank"
+        <h2 id="chap5"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
                         Se
                         connecter à l'instance</a></h2>
@@ -500,18 +522,24 @@
                 <li>Par la suite on doit avoir la ligne de commande suivante qui s'affiche, confirmant qu'on est bien
                         dans le shell de la VM : <i>ubuntu@d2-2-sbg5:~$</i>
                 </li>
-        </ul><br>
+        </ul>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
 
         <!-- ****************** Chapitre VI ****************** -->
-        <h2><a target="_blank"
+        <h2 id="chap6"><a target="_blank"
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
                         Mise en place de l'application</a></h2>
 
 
         <p><strong>Docker sur la VM OVH : </strong></p>
         <ul>
-                <li>Vérifier si Docker a bien été installé sur la VM, en saisissant à partir du shell de la VM (la
+                <li>Saisir ceci pour se connecter dans la VM :
+                        ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</li><br>
+
+                <li>Vérifier si Docker a bien été installé sur la VM, en saisissant <u>à partir du shell de la VM</u>
+                        (la
                         ligne de commande commence par exemple <i>ubuntu@d2-2-sbg5:~$</i>) :</li>
                 <ul>
                         <li><strong>docker --version</strong> 👉 on aura une réponse du style : <i>Docker version
@@ -523,36 +551,46 @@
                                 <li><strong>sudo apt install docker.io -y</strong></li>
                                 <li><strong>sudo usermod -aG docker ubuntu</strong></li><br>
                         </ul>
-                </ul>
-                <li>Retourner en local dans le shell, puis saisir <strong>docker info</strong> pour être sûr d'avoir
+                </ul><br>
+                <li>Retourner en local dans le shell, en saisissant 👉 <strong>exit</strong></li><br>
+
+                <li><u>En local</u>, saisir 👉 <strong>docker info</strong> pour être sûr d'avoir
                         tous les conteneurs stockés dans l'application Docker Desktop</li><br>
-                <li>Toujours en local, saisir <strong>docker images</strong> pour récupérer les valeurs de l'image à
+                <li><u>Toujours en local,</u> saisir <strong>docker images</strong> pour récupérer les valeurs de
+                        l'image à
                         importer dans les colonnes "REPOSITORY" et "TAG"</li><br>
-                <li> Exporter l’image en dossier archivé .tar sur le PC, en saisissant dans le shell en local 👉
+                <li> Exporter l’image en dossier archivé .tar sur le PC, en saisissant <u>dans le shell en local</u> 👉
                         <strong>docker save REPOSITORY:TAG -o REPOSITORY.tar</strong> avec :
                         <ul>
                                 <li>"REPOSITORY" → nom du repository de l'image à importer sur la VM</li>
                                 <li>"TAG" → nom du TAG de l'image à importer sur la VM</li>
                         </ul><br>
                 </li>
-                <li>Vérifier que le dossier archivé .tar a bien été créé en local en saisissant dans le shell en local
+                <li>Vérifier que le dossier archivé .tar a bien été créé en local en saisissant <u>dans le shell en
+                                local</u>
                         👉
                         <strong>ls cloudprojet003.tar</strong>
                 </li><br>
-                <li>Copier le dossier archivé .tar vers la VM OVH en saissisant dans le shell en local 👉
+                <li>Copier le dossier archivé .tar vers la VM OVH en saissisant <u>dans le shell en local</u> 👉
                         <strong>scp -i $env:USERPROFILE\.ssh\id_ed25519 REPOSITORY.tar
                                 ubuntu@IPv4:/home/ubuntu/</strong>
 
                 </li><br>
-                <li>Sur le terminal de la VM (<i>en saisissant préalablement ssh -i
-                                $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</i>), saisir ceci pour voir si le
-                        dossier archivé .tar a bien été transféré dans la VM 👉 <strong>ls -lh</strong></li><br>
-                <li>Charger l'image dans Docker sur la VM, en saissisant dans le terminal de la VM 👉
+
+                <li>Saisir ceci pour se connecter dans la VM : <br>
+                        <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
+                </li><br>
+
+                <li><u>Dans le shell de la VM</u>, saisir ceci pour voir si le dossier archivé .tar a bien été transféré
+                        dans la VM 👉 <strong>ls -lh</strong></li><br>
+
+                <li>Charger l'image dans Docker sur la VM, en saissisant <u>dans le shell de la VM</u> 👉
                         <strong>docker load -i REPOSITORY.tar</strong>
                 </li><br>
-                <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant dans le shell de
-                        la VM 👉 <strong>docker images</strong></li><br>
-                <li>Lancer le conteneur sur la VM en saisissant dans le shell de la VM 👉
+                <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant <u>dans le shell de
+                                la VM</u> 👉 <strong>docker images</strong></li><br>
+                <li>Lancer l'application en saisissant <u>dans le shell de
+                                la VM</u> 👉
                         <br><strong>docker run -d --restart unless-stopped --name REPOSITORY-container -p
                                 PortReseau:PortReseau
                                 REPOSITORY:TAG</strong>
@@ -567,47 +605,59 @@
                                 DockerDesktop</li>
                         <li>"REPOSITORY:TAG" → mon image</li>
                 </ul><br>
-                <li>Vérifier que le conteneur tourne en saisissant dans le terminal de la VM 👉 <strong>docker
+                <li>Vérifier que l'application tourne en saisissant <u>dans le shell de
+                                la VM</u> 👉 <strong>docker
                                 ps</strong>
                 </li>
-        </ul><br>
+        </ul>
 
-        <p><strong>Pour relancer une application suspendue :</strong></p>
+        <i><a href="#menu">Retour au menu</a></i><br><br>
+
+        <!-- ***************** Chapitre VII -------------------- -->
+        <h2 id="chap7">7. Pour relancer une application suspendue</h2>
         <ul>
                 <li>Relancer l'instance via le site OVH</li><br>
-                <li>Se reconnecter en SSH dans le shell en saisissant 👉 <strong>ssh -i $env:USERPROFILE\.ssh\id_ed25519
+                <li>Se reconnecter en SSH dans le shell de la VM en saisissant 👉 <strong>ssh -i
+                                $env:USERPROFILE\.ssh\id_ed25519
                                 ubuntu@IPv4</strong>
                 </li><br>
-                <li>Vérifier que l'image est encore là en saisissant dans le shell de la VM 👉 <strong>docker
+                <li>Vérifier que l'image est encore là en saisissant <u>dans le shell de
+                                la VM</u> 👉 <strong>docker
                                 images</strong>
                 </li><br>
-                <li>Vérifier que le conteneur n'a pas été arrêté en saisissant dans le shell de la VM 👉 <strong>docker
+                <li>Vérifier que le conteneur n'a pas été arrêté en saisissant <u>dans le shell de
+                                la VM</u> 👉 <strong>docker
                                 ps -a </strong><br><br>Si le statut est de type <i>Exited(...)</i> alors passer aux
                         étapes
                         suivantes:</li><br>
 
                 <ul>
-                        <li>Supprimer le conteneur arrêté en saisissant dans le shell de la VM 👉 <strong>docker rm
+                        <li>Supprimer le conteneur arrêté en saisissant <u>dans le shell de
+                                        la VM</u> 👉 <strong>docker rm
                                         REPOSITORY-container</strong><br>
-                                S'il faut forcer l'arrêt, saisir dans le shell de la VM 👉 <strong>docker rm -f
+                                S'il faut forcer l'arrêt, saisir <u>dans le shell de
+                                        la VM</u> 👉 <strong>docker rm -f
                                         REPOSITORY-container</strong> (-f : <i>force l'arrêt notamment si le conteneur
                                         est en cours d'exécution</i>
                                 )<br>
                         </li><br>
 
-                        <li>Relancer le conteneur en saissant dans le shell de la VM 👉 <strong>docker run -d --restart
+                        <li>Relancer le conteneur en saissant <u>dans le shell de
+                                        la VM</u> 👉 <strong>docker run -d --restart
                                         unless-stopped --name REPOSITORY-container -p
                                         PortReseau:PortReseau
                                         REPOSITORY:TAG</strong>
                         </li><br>
-                        <li>Vérifier que le conteneur a bien été relancé en saissisant dans le shell de la VM 👉
+                        <li>Vérifier que le conteneur a bien été relancé en saissisant <u>dans le shell de
+                                        la VM</u> 👉
                                 <strong>docker
                                         ps</strong>
                         </li>
                 </ul>
         </ul>
 
-        <br><br>
+        <i><a href="#menu">Retour au menu</a></i><br><br>
+
         <a id='lien' href="./index.html">Retour au sommaire</a>
 </body>
 
