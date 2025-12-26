@@ -45,6 +45,26 @@ tr:nth-child(even) {
   background-color: #aaa;
 }
 
+label {
+  width: 150px;
+  display: inline-block;
+}
+
+input {
+  width: 300px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+button[type="submit"] {
+  display: block;
+  margin: 10px auto;
+  padding: 5px 0px;
+  width: 100px;
+  border-radius: 10px;
+  background-color: cornflowerblue;
+}
+
 #prio {
   background-color: rgb(166, 210, 210);
   display: inline;

@@ -492,7 +492,7 @@
                         Se
                         connecter à l'instance</a></h2>
 
-        <p><strong>Pour une mise à jour de Linux :</strong></p>
+        <p><strong>Pour une mise à jour de Linux, <u>en local</u> :</strong></p>
         <ul>
                 <li>Tapper d'abord dans le shell : <i>sudo apt update</i></li><br>
                 <li>Puis tapper ensuite dans le shell : <i>sudo apt upgrade</i></li><br>
@@ -532,133 +532,255 @@
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
                         Mise en place de l'application</a></h2>
 
+        <label for="key">Nom de la clé privée</label>
+        <input type="text" name="key" id="key" value="id_ed25519"
+                title="Nom par défaut de la clé privée attribué par OVH"><br>
 
-        <p><strong>Docker sur la VM OVH : </strong></p>
-        <ul>
-                <li>Saisir ceci pour se connecter dans la VM :
-                        ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</li><br>
+        <label for="ipv4">Adresse IPv4</label>
+        <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
 
-                <li>Vérifier si Docker a bien été installé sur la VM, en saisissant <u>à partir du shell de la VM</u>
-                        (la
-                        ligne de commande commence par exemple <i>ubuntu@d2-2-sbg5:~$</i>) :</li>
-                <ul>
-                        <li><strong>docker --version</strong> 👉 on aura une réponse du style : <i>Docker version
-                                        28.2.2, build
-                                        28.2.2-0ubuntu1~22.04.1</i></li>
-                        <li>à défaut, Docker n'est pas installé sur la VM, il faut donc saisir les instructions
-                                suivantes toujours dans le shell de la VM :</li>
-                        <ul>
-                                <li><strong>sudo apt install docker.io -y</strong></li>
-                                <li><strong>sudo usermod -aG docker ubuntu</strong></li><br>
-                        </ul>
-                </ul><br>
-                <li>Retourner en local dans le shell, en saisissant 👉 <strong>exit</strong></li><br>
+        <label for="repository">REPOSITORY</label>
+        <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
 
-                <li><u>En local</u>, saisir 👉 <strong>docker info</strong> pour être sûr d'avoir
-                        tous les conteneurs stockés dans l'application Docker Desktop</li><br>
-                <li><u>Toujours en local,</u> saisir <strong>docker images</strong> pour récupérer les valeurs de
-                        l'image à
-                        importer dans les colonnes "REPOSITORY" et "TAG"</li><br>
-                <li> Exporter l’image en dossier archivé .tar sur le PC, en saisissant <u>dans le shell en local</u> 👉
-                        <strong>docker save REPOSITORY:TAG -o REPOSITORY.tar</strong> avec :
-                        <ul>
-                                <li>"REPOSITORY" → nom du repository de l'image à importer sur la VM</li>
-                                <li>"TAG" → nom du TAG de l'image à importer sur la VM</li>
-                        </ul><br>
-                </li>
-                <li>Vérifier que le dossier archivé .tar a bien été créé en local en saisissant <u>dans le shell en
-                                local</u>
-                        👉
-                        <strong>ls cloudprojet003.tar</strong>
-                </li><br>
-                <li>Copier le dossier archivé .tar vers la VM OVH en saissisant <u>dans le shell en local</u> 👉
-                        <strong>scp -i $env:USERPROFILE\.ssh\id_ed25519 REPOSITORY.tar
-                                ubuntu@IPv4:/home/ubuntu/</strong>
+        <label for="tag">TAG</label>
+        <input type="text" name="tag" id="tag" placeholder="Version de l'image"
+                title="Par défaut, le nom de la version de l'image est latest"><br>
 
-                </li><br>
+        <label for="network">Port réseau</label>
+        <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
 
-                <li>Saisir ceci pour se connecter dans la VM : <br>
-                        <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
-                </li><br>
+        <button type="submit" id="btn">Valider</button>
 
-                <li><u>Dans le shell de la VM</u>, saisir ceci pour voir si le dossier archivé .tar a bien été transféré
-                        dans la VM 👉 <strong>ls -lh</strong></li><br>
+        <p><strong>Ouvrir Windows PowerShell pour saisir les instructions suivantes, afin de se connecter au serveur OVH
+                        :</strong></p>
 
-                <li>Charger l'image dans Docker sur la VM, en saissisant <u>dans le shell de la VM</u> 👉
-                        <strong>docker load -i REPOSITORY.tar</strong>
-                </li><br>
-                <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant <u>dans le shell de
-                                la VM</u> 👉 <strong>docker images</strong></li><br>
-                <li>Lancer l'application en saisissant <u>dans le shell de
-                                la VM</u> 👉
-                        <br><strong>docker run -d --restart unless-stopped --name REPOSITORY-container -p
-                                PortReseau:PortReseau
-                                REPOSITORY:TAG</strong>
-                </li>
-                <ul>
-                        <li>"-d" → mode détaché (en arrière-plan)</li>
-                        <li>--restart unless-stopped → évite de supprimer le conteneur arrêté / suspendu et de le
-                                relancer</li>
-                        <li>"-p PortReseau:PortReseau" → mappe le port PortReseau de la VM vers le port PortReseau
-                                dans le conteneur</li>
-                        <li>"PortReseau" → "8000" par exemple pour fastapi, les ports sont mentionnés dans l'application
-                                DockerDesktop</li>
-                        <li>"REPOSITORY:TAG" → mon image</li>
-                </ul><br>
-                <li>Vérifier que l'application tourne en saisissant <u>dans le shell de
-                                la VM</u> 👉 <strong>docker
-                                ps</strong>
-                </li>
-        </ul>
+        <table>
+                <thead>
+                        <tr>
+                                <th width="70px">Shell</th>
+                                <th width="300px">Script</th>
+                                <th>Motif</th>
+                                <th>Explications</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                <td>Local</td>
+                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response1">IPv4</span>
+                                </td>
+                                <td>Connexion au shell de la VM</td>
+                                <td>-i <br><i>Quel fichier de clé privée utiliser pour l’authentification</i></td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker --version</td>
+                                <td>Vérifier si Docker a bien été installé sur la VM</td>
+                                <td>Dans l'affirmative, on aura une réponse du style <i>Docker version 28.2.2, build
+                                                28.2.2-0ubuntu1~22.04.1</i></td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Si Docker n'est pas installé :
+                                        <ul>
+                                                <li>sudo apt install docker.io -y</li>
+                                                <li>sudo usermod -aG docker ubuntu</li>
+                                        </ul>
+                                </td>
+                                <td>Installation de Docker dans la VM</td>
+                                <td>-</td>
+
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Exit</td>
+                                <td>Retour dans le shell en local</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>docker info</td>
+                                <td>Pour être sûr d'avoir tous les conteneurs stockés dans l'application Docker Desktop
+                                </td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>docker images</td>
+                                <td>Pour récupérer les valeurs de l'image à importer dans les colonnes "REPOSITORY" et
+                                        "TAG"</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>docker save <span id="repoResponse1">REPOSITORY</span>:<span
+                                                id="tagResponse1">TAG</span> -o <span
+                                                id="repoResponse2">REPOSITORY</span>.tar</td>
+                                <td>Exportation de l'image ciblée en dossier archivé .tar sur le PC</td>
+                                <td>-o <br><i>Signifie output</i></td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>ls <span id="repoResponse3">REPOSITORY</span>.tar</td>
+                                <td>Vérifier que le dossier archivé .tar a bien été créé en local</td>
+                                <td>ls <br><i>Signifie “list” : elle sert à lister les fichiers et dossiers d’un
+                                                répertoire</i></td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>scp -i $env:USERPROFILE\.ssh\<span id="keyResponse2">id_ed25519</span> <span
+                                                id="repoResponse4">REPOSITORY</span>.tar ubuntu@<span
+                                                id="ipv4Response2">IPv4</span>:/home/ubuntu/
+                                </td>
+                                <td>Copier le dossier archivé .tar vers la VM OVH</td>
+                                <td>scp <br><i>Signifie Secure Copy Protocol. C’est la commande qui permet
+                                                de copier des fichiers de façon sécurisée entre le PC et la VM en
+                                                utilisant le protocole SSH (chiffrement, même port 22)</i></td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response3">IPv4</span>
+                                </td>
+                                <td>Connexion au shell de la VM</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>ls (<i>ou autrement :</i> ls -lh)</td>
+                                <td>Permet de voir si le dossier archivé .tar a bien été transféré dans la VM</td>
+                                <td>ls -lh <br><i>Liste détaillée avec tailles lisibles (Mo, Go, etc.)</i></td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
+                                <td>Chargement de l'image dans Docker sur la VM</td>
+                                <td>-i <br><i>Signifie input : elle indique à Docker de quel
+                                                fichier .tar il doit lire
+                                                l’image à importer
+                                        </i></td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker images</td>
+                                <td>Vérifier que l'image dans Docker a bien été chargée sur la VM</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker run -d --restart unless-stopped --name <span
+                                                id="repoResponse6">REPOSITORY</span>-container -p
+                                        <span id="networkResponse1">PortReseau:PortReseau</span> <span
+                                                id="repoResponse7">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
+                                </td>
+                                <td>Lancement de l'application</td>
+                                <td>
+                                        <ul>
+                                                <li>-d <br><i>Mode détaché (en arrière-plan)</i></li>
+                                                <li>--restart unless-stopped <br><i>Evite de supprimer le conteneur
+                                                                arrêté / suspendu et de le relancer</i></li>
+                                                <li>-p <span id="networkResponse2">PortReseau:PortReseau</span>
+                                                        <br><i>Mappe le port réseau de la VM vers
+                                                                le port réseau dans le conteneur</i>
+                                                </li>
+                                        </ul>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker ps</td>
+                                <td>Vérifier que l'application tourne</td>
+                                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
+                                                affiche l’état des processus en cours, et Docker a repris ce nom pour
+                                                afficher l’état des conteneurs</i></td>
+                        </tr>
+                </tbody>
+        </table><br>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <!-- ***************** Chapitre VII -------------------- -->
         <h2 id="chap7">7. Pour relancer une application suspendue</h2>
-        <ul>
-                <li>Relancer l'instance via le site OVH</li><br>
-                <li>Se reconnecter en SSH dans le shell de la VM en saisissant 👉 <strong>ssh -i
-                                $env:USERPROFILE\.ssh\id_ed25519
-                                ubuntu@IPv4</strong>
-                </li><br>
-                <li>Vérifier que l'image est encore là en saisissant <u>dans le shell de
-                                la VM</u> 👉 <strong>docker
-                                images</strong>
-                </li><br>
-                <li>Vérifier que le conteneur n'a pas été arrêté en saisissant <u>dans le shell de
-                                la VM</u> 👉 <strong>docker
-                                ps -a </strong><br><br>Si le statut est de type <i>Exited(...)</i> alors passer aux
-                        étapes
-                        suivantes:</li><br>
 
-                <ul>
-                        <li>Supprimer le conteneur arrêté en saisissant <u>dans le shell de
-                                        la VM</u> 👉 <strong>docker rm
-                                        REPOSITORY-container</strong><br>
-                                S'il faut forcer l'arrêt, saisir <u>dans le shell de
-                                        la VM</u> 👉 <strong>docker rm -f
-                                        REPOSITORY-container</strong> (-f : <i>force l'arrêt notamment si le conteneur
-                                        est en cours d'exécution</i>
-                                )<br>
-                        </li><br>
-
-                        <li>Relancer le conteneur en saissant <u>dans le shell de
-                                        la VM</u> 👉 <strong>docker run -d --restart
-                                        unless-stopped --name REPOSITORY-container -p
-                                        PortReseau:PortReseau
-                                        REPOSITORY:TAG</strong>
-                        </li><br>
-                        <li>Vérifier que le conteneur a bien été relancé en saissisant <u>dans le shell de
-                                        la VM</u> 👉
-                                <strong>docker
-                                        ps</strong>
-                        </li>
-                </ul>
-        </ul>
+        <table>
+                <thead>
+                        <tr>
+                                <th width="70px">Shell</th>
+                                <th width="300px">Script</th>
+                                <th>Motif</th>
+                                <th>Explications</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                                <td colspan="4">Relancer l'instance via le site OVH</td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse4">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response4">IPv4</span>
+                                </td>
+                                <td>Se reconnecter dans le shell de la VM</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker images</td>
+                                <td>Vérifier que l'image est encore là</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker ps -a</td>
+                                <td>Vérifier que le conteneur n'a pas été arrêté</td>
+                                <td>-a <br><i>Signifie 'all'. Docker ps ne montre que les conteneurs encore en cours
+                                                d’exécution, alors que docker ps -a montre aussi ceux qui se sont
+                                                arrêtés. Pour vérifier qu’un conteneur n’a pas été arrêté, il faut donc
+                                                regarder la vue complète avec -a</i></td>
+                        </tr>
+                        <tr>
+                                <td colspan="4">Si le statut est de type <i>Exited(...)</i>
+                                        alors passer aux étapes suivantes:</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker rm <span id="repoResponse8">REPOSITORY</span>-container</td>
+                                <td>Supprimer le conteneur arrêté</td>
+                                <td>rm<br><i>Signifie remove, cela veut littéralement dire “supprimer ce conteneur”</i>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker rm -f <span id="repoResponse9">REPOSITORY</span>-container</td>
+                                <td>S'il faut forcer l'arrêt</td>
+                                <td>-f <br><i>Force l'arrêt notamment si le conteneur est en cours d'exécution</i></td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker run -d --restart unless-stopped --name <span
+                                                id="repoResponse10">REPOSITORY</span>-container -p
+                                        <span id="networkResponse3">PortReseau:PortReseau</span> <span
+                                                id="repoResponse11">REPOSITORY</span>:<span id="tagResponse3">TAG</span>
+                                </td>
+                                <td>Relancer l'application</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>docker ps</td>
+                                <td>Vérifier que l'application tourne</td>
+                                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
+                                                affiche l’état des processus en cours, et Docker a repris ce nom pour
+                                                afficher l’état des conteneurs</i></td>
+                        </tr>
+                </tbody>
+        </table><br>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <a id='lien' href="./index.html">Retour au sommaire</a>
+
+        <script src="script_ovh3.js"></script>
 </body>
 
 </html>

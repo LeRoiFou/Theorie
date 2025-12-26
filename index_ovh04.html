@@ -15,7 +15,8 @@
     <hr>
 
     <ul>
-        <li id="prio">Site web sécurisé avec HTTPS</li>
+        <li id="prio">Monitoring</li>
+        <li>Site web sécurisé avec HTTPS</li>
         <li>Nom de domaine à la place d'une adresse IP</li>
         <li>Accès limite au site par adresse IP</li>
         <li>OVHcloud SecNumCloud ?</li>
@@ -27,7 +28,7 @@
         <p><u><strong>Menu :</strong></u></p>
         <ol id="menu" type="1">
             <li><a href="#chap1">Mise à jour de l'application</a></li>
-            <li><a href="#chap2">Site web sécurisé avec HTTPS</a></li>
+            <li><a href="#chap2">Monitoring</a></li>
             <li></li>
         </ol>
     </div>
@@ -36,75 +37,154 @@
     <!-- Chapitre I -->
     <h2 id="chap1">1. Mise à jour de l'application</h2>
 
-    <ul>
-        <li>Modifier le script python</li><br>
+    <label for="network">Port réseau</label>
+    <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
 
-        <li>Dockériser à nouveau le script via <i>docker build --no-cache -t nomImage .</i> </li><br>
+    <label for="repository">REPOSITORY</label>
+    <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
 
-        <li> Exporter l’image en dossier archivé .tar sur le PC, en saisissant <u>dans le shell en local</u> 👉
-            <strong>docker save REPOSITORY:TAG -o REPOSITORY.tar</strong> avec :
-            <ul>
-                <li>"REPOSITORY" → nom du repository de l'image à importer sur la VM</li>
-                <li>"TAG" → nom du TAG de l'image à importer sur la VM</li>
-            </ul><br>
-        </li>
-        <li>Vérifier que le dossier archivé .tar a bien été créé en local en saisissant <u>dans le shell en local</u>
-            👉 <strong>ls REPOSITORY.tar</strong>
-        </li><br>
+    <label for="tag">TAG</label>
+    <input type="text" name="tag" id="tag" placeholder="à compléter"><br>
 
-        <li>Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche → partie "COMPUTE" →
-            sous-partie "Instances" (le statut doit être en mode "activé")</li><br>
+    <label for="container">CONTAINER ID</label>
+    <input type="text" name="container" id="container" placeholder="ID du conteneur"><br>
 
-        <li>Copier le dossier archivé .tar vers la VM OVH en saissisant <u>dans le shell en local</u> 👉
-            <strong>scp -i $env:USERPROFILE\.ssh\id_ed25519 REPOSITORY.tar
-                ubuntu@IPv4:/home/ubuntu/</strong>
-        </li><br>
+    <label for="image">IMAGE</label>
+    <input type="text" name="image" id="image" placeholder="Approfondissement image du conteur"><br>
 
-        <li>Saisir ceci pour se connecter dans la VM : <br>
-            <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
-        </li><br>
+    <button type="submit" id="btn">Valider</button><br>
 
-        <li>Charger l'image dans Docker sur la VM, en saissisant <u>dans le shell de la VM</u> 👉
-            <strong>docker load -i REPOSITORY.tar</strong>
-        </li><br>
-
-        <li>Vérifier que l'image dans Docker a bien été chargée sur la VM en saisissant <u>dans le shell de la VM</u> 👉
-            <strong>docker images</strong>
-        </li><br>
-
-        <li>Supprimer le conteneur arrêté en saisissant <u>dans le shell de la VM</u> 👉 <strong>docker rm -f
-                REPOSITORY-container</strong> (-f : <i>force l'arrêt notamment si le conteneur
-                est en cours d'exécution</i>
-            ).<br><br>
-            ⚠️ <i>Si l'ancien conteneur est toujours présent dans la VM malgré l'instruction saisie ci-avant, ce
-                conteneur
-                est une image orpheline qu'il faut supprimer
-                en saissant <u>dans le shell de la VM</u> 👉</i> <strong>docker image prune -f </strong>
-        </li><br>
-
-        <li>Lancer l'application en saissant <u>dans le shell de la VM</u> 👉 <strong>docker run -d --restart
-                unless-stopped --name REPOSITORY-container -p
-                PortReseau:PortReseau
-                REPOSITORY:TAG</strong>
-        </li><br>
-        <li>Vérifier que l'application a bien été relancée en saissisant <u>dans le shell de la VM</u> 👉
-            <strong>docker ps</strong>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th width="70px">Shell</th>
+                <th width="300px">Script</th>
+                <th>Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4"><i>Dockériser à nouveau le script</i></td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>docker save <span id="repoResponse1">REPOSITORY</span>:<span id="tagResponse1">TAG</span> -o <span
+                        id="repoResponse2">REPOSITORY</span>.tar
+                </td>
+                <td>Exporter l’image en dossier archivé .tar sur le PC</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>ls <span id="repoResponse3">REPOSITORY</span>.tar</td>
+                <td>Vérifier que le dossier archivé .tar a bien été créé en local</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="4">Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche →
+                    partie "COMPUTE" → sous-partie "Instances" (le statut doit être en mode "activé")</td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="repoResponse4">REPOSITORY</span>.tar
+                    ubuntu@IPv4:/home/ubuntu/</td>
+                <td>Copier le dossier archivé .tar vers la VM OVH</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</td>
+                <td>Connexion au shell de la VM</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
+                <td>Charger l'image dans Docker sur la VM</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker images</td>
+                <td>Vérifier que l'image dans Docker a bien été chargée sur la VM</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span>-new -p 8001:8001 <span
+                        id="repoResponse7">REPOSITORY</span>:latest
+                </td>
+                <td>Lancer le nouveau conteneur sur un port différent (comme par exemple 8001 au lieu de 8000)</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker ps</td>
+                <td>Tester que les deux conteneurs tournent</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker rm -f <span id="contResponse">CONTAINER ID</span></td>
+                <td>Suppression forcée de l'ancien conteneur</td>
+                <td>rm -f <br>Suppression forcée</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker stop <span id="repoResponse8">REPOSITORY</span>-new</td>
+                <td>Arrêt du nouveau conteneur</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker rm <span id="repoResponse9">REPOSITORY</span>-new</td>
+                <td>Suppresion du nouveau conteneur</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker run -d --restart unless-stopped --name <span id="repoResponse10">REPOSITORY</span>-container
+                    -p <span id="networkResponse2">PortReseau:PortReseau</span>
+                    <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
+                </td>
+                <td>Lancement de l'application</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker ps</td>
+                <td>Vérifier que l'application a bien été lancée</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker rmi <span id="imageResponse">IMAGE</span></td>
+                <td>Nettoyer l'ancienne image</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>docker ps -a</td>
+                <td>Vérifier que l'ancienne image a bien été supprimée</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table><br>
 
     <p><strong><i>NB : on copie le nouveau conteneur modifié sur la VM <u>AVANT</u> de supprimer le précédent conteneur
                 afin d'éviter tout risque de panne, et notamment que le précédent conteneur continue toujours de
-                s'exécuter si le conteneur modifié ne s'installe pas correctement dans la VM</i></strong></p>
-
-    <i><a href="#menu">Retour au menu</a></i><br><br>
+                s'exécuter si le conteneur modifié ne s'installe pas correctement dans la VM</i></strong></p><br>
 
     <!-- Chapitre II -->
-    <h2 id="chap2">2. Site web sécurisé avec HTTPS</h2>
-
+    <h2 id="chap2">2. Monitoring</h2><br>
 
 
     <i><a href="#menu">Retour au menu</a></i><br><br>
 
     <a id='lien' href="./index.html">Retour au sommaire</a>
+
+    <script src="script_ovh4.js"></script>
 </body>
 
 </html>
