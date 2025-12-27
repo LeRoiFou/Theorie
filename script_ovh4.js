@@ -1,7 +1,5 @@
 // IDs retrieved
-let key = document.getElementById("key");
-let ipv4 = document.getElementById("ipv4");
-let network = document.getElementById("network");
+let newNetwork = document.getElementById("new");
 let repo = document.getElementById("repository");
 let tag = document.getElementById("tag");
 let container = document.getElementById("container");
@@ -11,15 +9,8 @@ let button = document.getElementById("btn");
 let result = document.getElementById("result");
 
 button.addEventListener("click", () => {
-  // Private key changed
-  keyResponse1.textContent = key.value;
-
-  // IPv4 changed
-  ipv4Response1.textContent = ipv4.value;
-
-  // Network port changed
-  networkResponse1.textContent = `${network.value}:${network.value}`;
-  networkResponse2.textContent = `${network.value}:${network.value}`;
+  // New network port changd
+  newResponse1.textContent = `${newNetwork.value}:${newNetwork.value}`;
 
   // Repository value changed
   repoResponse1.textContent = repo.value;

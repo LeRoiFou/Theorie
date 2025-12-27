@@ -37,14 +37,15 @@
     <!-- Chapitre I -->
     <h2 id="chap1">1. Mise à jour de l'application</h2>
 
-    <label for="network">Port réseau</label>
-    <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+    <label for="new">Nouveau port réseau</label>
+    <input type="text" name="new" id="new" placeholder="Par exemple 8001 pour fastapi, 8051 pour dash"><br>
 
     <label for="repository">REPOSITORY</label>
     <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
 
     <label for="tag">TAG</label>
-    <input type="text" name="tag" id="tag" placeholder="à compléter"><br>
+    <input type="text" name="tag" id="tag" placeholder="Version de l'image"
+        title="Par défaut, le nom de la version de l'image est latest"><br>
 
     <label for="container">CONTAINER ID</label>
     <input type="text" name="container" id="container" placeholder="ID du conteneur"><br>
@@ -58,7 +59,7 @@
         <thead>
             <tr>
                 <th width="70px">Shell</th>
-                <th width="300px">Script</th>
+                <th width="300px">Commande</th>
                 <th>Motif</th>
                 <th>Explications</th>
             </tr>
@@ -72,14 +73,15 @@
                 <td>docker save <span id="repoResponse1">REPOSITORY</span>:<span id="tagResponse1">TAG</span> -o <span
                         id="repoResponse2">REPOSITORY</span>.tar
                 </td>
-                <td>Exporter l’image en dossier archivé .tar sur le PC</td>
-                <td>-</td>
+                <td>Exporter l’image modifiée en dossier archivé .tar sur le PC</td>
+                <td>-o <br><i>Signifie output</i></td>
             </tr>
             <tr>
                 <td>Local</td>
                 <td>ls <span id="repoResponse3">REPOSITORY</span>.tar</td>
                 <td>Vérifier que le dossier archivé .tar a bien été créé en local</td>
-                <td>-</td>
+                <td>ls<br><i>Signifie “list” : elle sert à lister les fichiers et dossiers d’un
+                        répertoire</i></td>
             </tr>
             <tr>
                 <td colspan="4">Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche →
@@ -90,7 +92,15 @@
                 <td>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="repoResponse4">REPOSITORY</span>.tar
                     ubuntu@IPv4:/home/ubuntu/</td>
                 <td>Copier le dossier archivé .tar vers la VM OVH</td>
-                <td>-</td>
+                <td>
+                    <ul>
+                        <li>scp <br><i>Signifie Secure Copy Protocol. C’est la commande qui permet
+                                de copier des fichiers de façon sécurisée entre le PC et la VM en
+                                utilisant le protocole SSH (chiffrement, même port 22)</i></li>
+                        <li>-i <br><i>Signifie quel fichier de clé privée utiliser pour l’authentification></li>
+                    </ul>
+                </td>
+                </td>
             </tr>
             <tr>
                 <td>Local</td>
@@ -102,7 +112,10 @@
                 <td>VM</td>
                 <td>docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
                 <td>Charger l'image dans Docker sur la VM</td>
-                <td>-</td>
+                <td>-i <br><i>Signifie input : elle indique à Docker de quel
+                        fichier .tar il doit lire
+                        l’image à importer
+                    </i></td>
             </tr>
             <tr>
                 <td>VM</td>
@@ -112,17 +125,28 @@
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span>-new -p 8001:8001 <span
+                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span>-new -p <span
+                        id="newResponse1">NouveauPort:NouveauPort</span> <span
                         id="repoResponse7">REPOSITORY</span>:latest
                 </td>
-                <td>Lancer le nouveau conteneur sur un port différent (comme par exemple 8001 au lieu de 8000)</td>
-                <td>-</td>
+                <td>Lancer le nouveau conteneur sur un port différent</td>
+                <td>
+                    <ul>
+                        <li>-d <br><i>Mode détaché (en arrière-plan)</i></li>
+                        <li>-p <span id="networkResponse2">PortReseau:PortReseau</span>
+                            <br><i>Mappe le port réseau de la VM vers
+                                le port réseau dans le conteneur</i>
+                        </li>
+                    </ul>
+                </td>
             </tr>
             <tr>
                 <td>VM</td>
                 <td>docker ps</td>
                 <td>Tester que les deux conteneurs tournent</td>
-                <td>-</td>
+                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
+                        affiche l’état des processus en cours, et Docker a repris ce nom pour
+                        afficher l’état des conteneurs</i></td>
             </tr>
             <tr>
                 <td>VM</td>

@@ -558,7 +558,7 @@
                 <thead>
                         <tr>
                                 <th width="70px">Shell</th>
-                                <th width="300px">Script</th>
+                                <th width="300px">Commande</th>
                                 <th>Motif</th>
                                 <th>Explications</th>
                         </tr>
@@ -570,7 +570,8 @@
                                                 id="ipv4Response1">IPv4</span>
                                 </td>
                                 <td>Connexion au shell de la VM</td>
-                                <td>-i <br><i>Quel fichier de clé privée utiliser pour l’authentification</i></td>
+                                <td>-i <br><i>Signifie quel fichier de clé privée utiliser pour l’authentification</i>
+                                </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
@@ -593,15 +594,8 @@
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>Exit</td>
+                                <td>exit</td>
                                 <td>Retour dans le shell en local</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>docker info</td>
-                                <td>Pour être sûr d'avoir tous les conteneurs stockés dans l'application Docker Desktop
-                                </td>
                                 <td>-</td>
                         </tr>
                         <tr>
@@ -609,7 +603,35 @@
                                 <td>docker images</td>
                                 <td>Pour récupérer les valeurs de l'image à importer dans les colonnes "REPOSITORY" et
                                         "TAG"</td>
-                                <td>-</td>
+                                <td>Docker images permet d'avoir la taille des images <i>(colonne SIZE)</i></td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>docker ps -a</td>
+                                <td>Permet d'afficher la liste des conteneurs exécutés / arrêtés, avec les statuts
+                                        suivants :
+                                        <ul>
+                                                <li>Exited (0) : <i>aucune erreur</i></li>
+                                                <li>Exited (1) : <i>au moins une erreur présente</i></li>
+                                                <li>Exited (137) : <i>conteneur arrêté / forcé / manque de mémoire</i>
+                                                </li>
+                                        </ul>
+                                </td>
+                                <td>
+                                        <ul>
+                                                <li>ps<br>
+                                                        Vient de “process status”. Historiquement, ps est une commande
+                                                        Unix qui affiche l’état des processus en cours, et Docker a
+                                                        repris ce nom pour afficher l’état des conteneurs</li>
+                                                <li>-a<br>Signifie 'all'</li>
+                                        </ul>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td colspan="4"><i>Si un des conteneurs a le statut Exited (1) ou Exited (137), saisir
+                                                la
+                                                commande :</i> docker logs CONTAINER ID
+                                </td>
                         </tr>
                         <tr>
                                 <td>Local</td>
@@ -739,7 +761,7 @@
                                                 regarder la vue complète avec -a</i></td>
                         </tr>
                         <tr>
-                                <td colspan="4">Si le statut est de type <i>Exited(...)</i>
+                                <td colspan="4">Si le statut n'est pas de type <i>Exited (0)</i>
                                         alors passer aux étapes suivantes:</td>
                         </tr>
                         <tr>
