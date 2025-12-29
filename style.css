@@ -71,6 +71,10 @@ button[type="submit"] {
 }
 
 @media screen and (max-width: 780px) {
+  table {
+    width: auto;
+  }
+
   .col1 {
     width: 50%;
   }
