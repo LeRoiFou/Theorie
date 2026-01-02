@@ -37,21 +37,35 @@
     <!-- Chapitre I -->
     <h2 id="chap1">1. Mise à jour de l'application</h2>
 
-    <label for="new">Nouveau port réseau</label>
-    <input type="text" name="new" id="new" placeholder="Par exemple 8001 pour fastapi, 8051 pour dash"><br>
+    <div class="questions">
+        <label for="network">Ancien port réseau</label>
+        <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
 
-    <label for="repository">REPOSITORY</label>
-    <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
+        <label for="new">Nouveau port réseau</label>
+        <input type="text" name="new" id="new" placeholder="Par exemple 8001 pour fastapi, 8051 pour dash"><br>
 
-    <label for="tag">TAG</label>
-    <input type="text" name="tag" id="tag" placeholder="Version de l'image"
-        title="Par défaut, le nom de la version de l'image est latest"><br>
+        <label for="repository">REPOSITORY</label>
+        <input type="text" name="repository" id="repository"
+            placeholder="Nom de la nouvelle image à charger (en local : docker images)"
+            title="Charger préalablement docker desktop"><br>
 
-    <label for="container">CONTAINER ID</label>
-    <input type="text" name="container" id="container" placeholder="ID du conteneur"><br>
+        <label for="tag">TAG</label>
+        <input type="text" name="tag" id="tag"
+            placeholder="Version de la nouvelle image à charger  (en local : docker images)"
+            title="Par défaut, le nom de la version de l'image est latest"><br>
 
-    <label for="image">IMAGE</label>
-    <input type="text" name="image" id="image" placeholder="Approfondissement image du conteur"><br>
+        <label for="container">CONTAINER ID</label>
+        <input type="text" name="container" id="container"
+            placeholder="ID du conteneur à supprimer (en VM : docker ps-a)"><br>
+
+        <label for="image">IMAGE</label>
+        <input type="text" name="image" id="image"
+            placeholder="Suppression de l'ancienne image (en VM : docker ps)"><br>
+
+        <label for="ipv4">Adresse IPv4</label>
+        <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
+
+    </div>
 
     <button type="submit" id="btn">Valider</button><br>
 
@@ -90,7 +104,7 @@
             <tr>
                 <td>Local</td>
                 <td>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="repoResponse4">REPOSITORY</span>.tar
-                    ubuntu@IPv4:/home/ubuntu/</td>
+                    ubuntu@<span id="ipv4Response1">IPv4</span>:/home/ubuntu/</td>
                 <td>Copier le dossier archivé .tar vers la VM OVH</td>
                 <td>
                     <ul>
@@ -104,7 +118,7 @@
             </tr>
             <tr>
                 <td>Local</td>
-                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</td>
+                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@<span id="ipv4Response2">IPv4</span></td>
                 <td>Connexion au shell de la VM</td>
                 <td>-</td>
             </tr>
@@ -163,13 +177,13 @@
             <tr>
                 <td>VM</td>
                 <td>docker rm <span id="repoResponse9">REPOSITORY</span>-new</td>
-                <td>Suppresion du nouveau conteneur</td>
+                <td>Suppression du nouveau conteneur</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>VM</td>
                 <td>docker run -d --restart unless-stopped --name <span id="repoResponse10">REPOSITORY</span>-container
-                    -p <span id="networkResponse2">PortReseau:PortReseau</span>
+                    -p <span id="networkResponse1">PortReseau:PortReseau</span>
                     <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
                 </td>
                 <td>Lancement de l'application</td>

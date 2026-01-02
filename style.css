@@ -45,13 +45,18 @@ tr:nth-child(even) {
   background-color: #aaa;
 }
 
+.questions {
+  margin: 0px auto;
+  width: 600px;
+}
+
 label {
   width: 150px;
   display: inline-block;
 }
 
 input {
-  width: 300px;
+  width: 400px;
   margin-bottom: 10px;
   text-align: center;
 }

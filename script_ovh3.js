@@ -3,6 +3,7 @@ let key = document.getElementById("key");
 let ipv4 = document.getElementById("ipv4");
 let repo = document.getElementById("repository");
 let tag = document.getElementById("tag");
+let network = document.getElementById("network");
 
 let button = document.getElementById("btn");
 let result = document.getElementById("result");

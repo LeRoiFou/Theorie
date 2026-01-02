@@ -532,22 +532,26 @@
                         href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
                         Mise en place de l'application</a></h2>
 
-        <label for="key">Nom de la clé privée</label>
-        <input type="text" name="key" id="key" value="id_ed25519"
-                title="Nom par défaut de la clé privée attribué par OVH"><br>
+        <div class="questions">
 
-        <label for="ipv4">Adresse IPv4</label>
-        <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
+                <label for="key">Nom de la clé privée</label>
+                <input type="text" name="key" id="key" value="id_ed25519"
+                        title="Nom par défaut de la clé privée attribué par OVH"><br>
 
-        <label for="repository">REPOSITORY</label>
-        <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
+                <label for="ipv4">Adresse IPv4</label>
+                <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
 
-        <label for="tag">TAG</label>
-        <input type="text" name="tag" id="tag" placeholder="Version de l'image"
-                title="Par défaut, le nom de la version de l'image est latest"><br>
+                <label for="repository">REPOSITORY</label>
+                <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
 
-        <label for="network">Port réseau</label>
-        <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+                <label for="tag">TAG</label>
+                <input type="text" name="tag" id="tag" placeholder="Version de l'image"
+                        title="Par défaut, le nom de la version de l'image est latest"><br>
+
+                <label for="network">Port réseau</label>
+                <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+
+        </div>
 
         <button type="submit" id="btn">Valider</button>
 

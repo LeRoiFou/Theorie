@@ -1,14 +1,19 @@
 // IDs retrieved
+let network = document.getElementById("network");
 let newNetwork = document.getElementById("new");
 let repo = document.getElementById("repository");
 let tag = document.getElementById("tag");
 let container = document.getElementById("container");
 let image = document.getElementById("image");
+let ipv4 = document.getElementById("ipv4");
 
 let button = document.getElementById("btn");
 let result = document.getElementById("result");
 
 button.addEventListener("click", () => {
+  // Previous network port changed
+  networkResponse1.textContent = `${network.value}:${network.value}`;
+
   // New network port changd
   newResponse1.textContent = `${newNetwork.value}:${newNetwork.value}`;
 
@@ -34,4 +39,8 @@ button.addEventListener("click", () => {
 
   // Previous image value changed
   imageResponse.textContent = image.value;
+
+  // IPv4 changed
+  ipv4Response1.textContent = ipv4.value;
+  ipv4Response2.textContent = ipv4.value;
 });
