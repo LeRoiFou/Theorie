@@ -15,11 +15,18 @@
     <hr>
 
     <ul>
-        <li id="prio">Monitoring</li>
-        <li>Site web sécurisé avec HTTPS</li>
-        <li>Nom de domaine à la place d'une adresse IP</li>
-        <li>Accès limite au site par adresse IP</li>
-        <li>OVHcloud SecNumCloud ?</li>
+        <li>
+            <p id="prio">Site web sécurisé avec HTTPS</p>
+        </li>
+        <li>
+            <p>Nom de domaine à la place d'une adresse IP</p>
+        </li>
+        <li>
+            <p>Accès limite au site par adresse IP</p>
+        </li>
+        <li>
+            <p>OVHcloud SecNumCloud ?</p>
+        </li>
     </ul>
 
     <!-- *************** Menu ********************* -->
@@ -29,14 +36,13 @@
         <ol id="menu" type="1">
             <li><a href="#chap1">Mise à jour de l'application</a></li>
             <li><a href="#chap2">Monitoring</a></li>
+            <li><a href="#chap3">Site web sécurisé avec HTTPS</a></li>
             <li></li>
         </ol>
     </div>
     <hr>
 
-    <!-- Chapitre I -->
-    <h2 id="chap1">1. Mise à jour de l'application</h2>
-
+    <!-- Zone de saisie -->
     <div class="questions">
         <label for="network">Ancien port réseau</label>
         <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
@@ -68,6 +74,9 @@
     </div>
 
     <button type="submit" id="btn">Valider</button><br>
+
+    <!-- Chapitre I -->
+    <h2 id="chap1">1. Mise à jour de l'application</h2>
 
     <table>
         <thead>
@@ -139,7 +148,7 @@
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span>-new -p <span
+                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span> -p <span
                         id="newResponse1">NouveauPort:NouveauPort</span> <span
                         id="repoResponse7">REPOSITORY</span>:latest
                 </td>
@@ -166,17 +175,18 @@
                 <td>VM</td>
                 <td>docker rm -f <span id="contResponse">CONTAINER ID</span></td>
                 <td>Suppression forcée de l'ancien conteneur</td>
-                <td>rm -f <br>Suppression forcée</td>
+                <td>rm -f <br>Suppression forcée <br><br><strong>On ne peut plus se connecter sur l'application</strong>
+                </td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker stop <span id="repoResponse8">REPOSITORY</span>-new</td>
+                <td>docker stop <span id="repoResponse8">REPOSITORY</span></td>
                 <td>Arrêt du nouveau conteneur</td>
                 <td>-</td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker rm <span id="repoResponse9">REPOSITORY</span>-new</td>
+                <td>docker rm <span id="repoResponse9">REPOSITORY</span></td>
                 <td>Suppression du nouveau conteneur</td>
                 <td>-</td>
             </tr>
@@ -187,7 +197,7 @@
                     <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
                 </td>
                 <td>Lancement de l'application</td>
-                <td>-</td>
+                <td><strong>On peut se reconnecter à nouveau sur l'application</strong></td>
             </tr>
             <tr>
                 <td>VM</td>
@@ -210,12 +220,127 @@
         </tbody>
     </table><br>
 
-    <p><strong><i>NB : on copie le nouveau conteneur modifié sur la VM <u>AVANT</u> de supprimer le précédent conteneur
-                afin d'éviter tout risque de panne, et notamment que le précédent conteneur continue toujours de
-                s'exécuter si le conteneur modifié ne s'installe pas correctement dans la VM</i></strong></p><br>
+    <p><strong><i>NB : pour éviter toute rupture de connexion lors de la mise à jour de l'application, il est préférable
+                de recourir à la fonctionnalité "load balancer"</i></strong></p><br>
 
     <!-- Chapitre II -->
-    <h2 id="chap2">2. Monitoring</h2><br>
+    <h2 id="chap2">2. Monitoring</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Outil</th>
+                <th>Shell</th>
+                <th>Commande</th>
+                <th>Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>OVH</td>
+                <td colspan="4">Cliquer sur le nom de l'instance (couleur bleue) pour afficher les données statistiques
+                    (menu à gauche → partie "COMPUTE" → sous-partie "Instances") <br>
+                    <i>NB : certaines instances comme le modèle "Discovery" ne permettent pas d'afficher les
+                        graphiques</i>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="7">Shell</td>
+                <td>Local</td>
+                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@<span id="ipv4Response3">IPv4</span></td>
+                <td>Connexion au shell de la VM</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="4"><strong><i>Si c'est la première fois que les données statistiques sont analysées pour
+                            cette
+                            instance :</i></strong></td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>sudo apt update</td>
+                <td>Mise à jour des paquets disponibles</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>sudo apt install nload -y</td>
+                <td>Installation du paquet nload</td>
+                <td>-y <br><i>L’option -y signifie “assume yes” : elle répond automatiquement “yes” à toutes les
+                        questions posées par apt pendant l’installation</i></td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>nload</td>
+                <td>Accès aux données statistiques</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="4"><strong><i>Si ce n'est pas la première que les données statistiques sont effectuées pour
+                            cette
+                            instance : </i></strong></td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>nload</td>
+                <td>Accès aux données statistiques</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <p><b>Données restituées dans le shell : </b></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Élément</th>
+                <th>Rôle</th>
+                <th>Détail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Incoming</td>
+                <td>Trafic entrant</td>
+                <td>Données qui arrivent sur la VM (requêtes HTTP, téléchargements, flux depuis Internet, etc.). </td>
+            </tr>
+            <tr>
+                <td>Outgoing</td>
+                <td>Trafic sortant</td>
+                <td>Données qui partent de la VM (réponses HTTP, envoi de fichiers, etc.). </td>
+            </tr>
+            <tr>
+                <td>Curr</td>
+                <td>Débit instantané</td>
+                <td>Débit mesuré au dernier rafraîchissement, en kBit/s ou MBit/s selon la valeur.</td>
+            </tr>
+            <tr>
+                <td>Avg</td>
+                <td>Débit moyen</td>
+                <td>Moyenne du débit sur une fenêtre de temps récente (par défaut ≈ 5 minutes). </td>
+            </tr>
+            <tr>
+                <td>Min</td>
+                <td>Débit minimum</td>
+                <td>Plus faible débit observé pendant la session en cours de nload. </td>
+            </tr>
+            <tr>
+                <td>Max</td>
+                <td>Débit maximum</td>
+                <td>Pic de débit observé pendant la session en cours de nload. </td>
+            </tr>
+            <tr>
+                <td>Ttl</td>
+                <td>Volume total</td>
+                <td>Quantité totale de données transférées depuis le lancement de nload, en kByte/MByte/GByte. </td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <!-- Chapitre III -->
+    <h2 id="chap3">3. Site web sécurisé avec HTTPS</h2>
 
 
     <i><a href="#menu">Retour au menu</a></i><br><br>

@@ -43,4 +43,5 @@ button.addEventListener("click", () => {
   // IPv4 changed
   ipv4Response1.textContent = ipv4.value;
   ipv4Response2.textContent = ipv4.value;
+  ipv4Response3.textContent = ipv4.value;
 });
