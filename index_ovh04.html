@@ -9,342 +9,253 @@
 </head>
 
 <body>
-    <h1>Chapitre IV : Approfondissement</h1>
+    <h1>Chapitre IV : DNS</h1>
     <br>
 
-    <hr>
-
-    <ul>
-        <li>
-            <p id="prio">Site web sécurisé avec HTTPS</p>
-        </li>
-        <li>
-            <p>Accès limite au site par adresse IP</p>
-        </li>
-        <li>
-            <p>OVHcloud SecNumCloud ?</p>
-        </li>
-    </ul>
+    <p><b>❗Cette fiche est à suivre une fois qu'un nom de domaine a été acheté</b></p>
 
     <!-- *************** Menu ********************* -->
     <hr>
     <div>
         <p><u><strong>Menu :</strong></u></p>
         <ol id="menu" type="1">
-            <li><a href="#chap1">Mise à jour de l'application</a></li>
-            <li><a href="#chap2">Monitoring</a></li>
-            <li><a href="#chap3">Site web sécurisé avec HTTPS</a></li>
-            <li></li>
+            <li><a href="#chap1">Création du site Web</a></li>
+            <li><a href="#chap2">Mise à jour future du site web</a></li>
         </ol>
+
+        <a id='lien' href="./index.html">Retour au sommaire</a>
     </div>
     <hr>
 
-    <!-- Zone de saisie -->
+
+    <!-- *************** Zone de saisie *************** -->
     <div class="questions">
-        <label for="network">Ancien port réseau</label>
-        <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
 
-        <label for="new">Nouveau port réseau</label>
-        <input type="text" name="new" id="new" placeholder="Par exemple 8001 pour fastapi, 8051 pour dash"><br>
-
-        <label for="repository">REPOSITORY</label>
-        <input type="text" name="repository" id="repository"
-            placeholder="Nom de la nouvelle image à charger (en local : docker images)"
-            title="Charger préalablement docker desktop"><br>
-
-        <label for="tag">TAG</label>
-        <input type="text" name="tag" id="tag"
-            placeholder="Version de la nouvelle image à charger  (en local : docker images)"
-            title="Par défaut, le nom de la version de l'image est latest"><br>
-
-        <label for="container">CONTAINER ID</label>
-        <input type="text" name="container" id="container"
-            placeholder="ID du conteneur à supprimer (en VM : docker ps-a)"><br>
-
-        <label for="image">IMAGE</label>
-        <input type="text" name="image" id="image"
-            placeholder="Suppression de l'ancienne image (en VM : docker ps)"><br>
+        <label for="key">Nom de la clé privée</label>
+        <input type="text" name="key" id="key" value="id_ed25519"
+            title="Nom par défaut de la clé privée attribué par OVH"><br>
 
         <label for="ipv4">Adresse IPv4</label>
-        <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
+        <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du domaine rattaché"><br>
+
+        <label for="domain">Nom du domaine</label>
+        <input type="text" name="domain" id="domain">
+
+        <label for="directory">Répertoire cible</label>
+        <input type="text" name="directory" id="directory" placeholder="Fichiers HTML, CSS à récupérer en local">
+
+        <label for="htmlFile">Nom du fichier HTML</label>
+        <input type="text" name="htmlFile" id="htmlFile">
+
+        <label for="cssFile">Nom du fichier CSS</label>
+        <input type="text" name="cssFile" id="cssFile">
 
     </div>
 
     <button type="submit" id="btn">Valider</button><br>
 
     <!-- Chapitre I -->
-    <h2 id="chap1">1. Mise à jour de l'application</h2>
+    <h2 id="chap1">1. Création du site Web</h2>
 
     <table>
         <thead>
             <tr>
                 <th width="70px">Shell</th>
-                <th width="300px">Commande</th>
                 <th>Motif</th>
                 <th>Explications</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td colspan="4"><i>Dockériser à nouveau le script</i></td>
-            </tr>
-            <tr>
-                <td>Local</td>
-                <td>docker save <span id="repoResponse1">REPOSITORY</span>:<span id="tagResponse1">TAG</span> -o <span
-                        id="repoResponse2">REPOSITORY</span>.tar
-                </td>
-                <td>Exporter l’image modifiée en dossier archivé .tar sur le PC</td>
-                <td>-o <br><i>Signifie output</i></td>
-            </tr>
-            <tr>
-                <td>Local</td>
-                <td>ls <span id="repoResponse3">REPOSITORY</span>.tar</td>
-                <td>Vérifier que le dossier archivé .tar a bien été créé en local</td>
-                <td>ls<br><i>Signifie “list” : elle sert à lister les fichiers et dossiers d’un
-                        répertoire</i></td>
-            </tr>
-            <tr>
-                <td colspan="4">Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche →
-                    partie "COMPUTE" → sous-partie "Instances" (le statut doit être en mode "activé")</td>
-            </tr>
-            <tr>
-                <td>Local</td>
-                <td>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="repoResponse4">REPOSITORY</span>.tar
-                    ubuntu@<span id="ipv4Response1">IPv4</span>:/home/ubuntu/</td>
-                <td>Copier le dossier archivé .tar vers la VM OVH</td>
-                <td>
-                    <ul>
-                        <li>scp <br><i>Signifie Secure Copy Protocol. C’est la commande qui permet
-                                de copier des fichiers de façon sécurisée entre le PC et la VM en
-                                utilisant le protocole SSH (chiffrement, même port 22)</i></li>
-                        <li>-i <br><i>Signifie quel fichier de clé privée utiliser pour l’authentification></li>
-                    </ul>
-                </td>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">id_ed25519</span> ubuntu@<span id="ipv4Response1">IPv4</span></code></pre>
                 </td>
             </tr>
             <tr>
                 <td>Local</td>
-                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@<span id="ipv4Response2">IPv4</span></td>
-                <td>Connexion au shell de la VM</td>
+                <td>Connexion à la VM</td>
                 <td>-</td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
-                <td>Charger l'image dans Docker sur la VM</td>
-                <td>-i <br><i>Signifie input : elle indique à Docker de quel
-                        fichier .tar il doit lire
-                        l’image à importer
-                    </i></td>
-            </tr>
-            <tr>
-                <td>VM</td>
-                <td>docker images</td>
-                <td>Vérifier que l'image dans Docker a bien été chargée sur la VM</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>VM</td>
-                <td>docker run -d --name <span id="repoResponse6">REPOSITORY</span> -p <span
-                        id="newResponse1">NouveauPort:NouveauPort</span> <span
-                        id="repoResponse7">REPOSITORY</span>:latest
+                <td colspan="3">
+                    <pre><code>sudo mkdir -p /var/www/<span id="domainResponse1">NomDomaine</span></code></pre>
                 </td>
-                <td>Lancer le nouveau conteneur sur un port différent</td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>Création du dossier comprenant les fichiers HTML, CSS...</td>
                 <td>
                     <ul>
-                        <li>-d <br><i>Mode détaché (en arrière-plan)</i></li>
-                        <li>-p <span id="networkResponse2">PortReseau:PortReseau</span>
-                            <br><i>Mappe le port réseau de la VM vers
-                                le port réseau dans le conteneur</i>
-                        </li>
+                        <li><b>mkdir</b> : <i>A compléter</i></li>
+                        <li><b>p</b> : <i>A compléter</i></li>
+                        <li><b>/var/</b> : <i>A compléter</i></li>
                     </ul>
                 </td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>docker ps</td>
-                <td>Tester que les deux conteneurs tournent</td>
-                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
-                        affiche l’état des processus en cours, et Docker a repris ce nom pour
-                        afficher l’état des conteneurs</i></td>
+                <td colspan="3">
+                    <pre><code>cd <span id="directoryResponse1">RepertoireCible</span></code></pre>
+                </td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>docker rm -f <span id="contResponse">CONTAINER ID</span></td>
-                <td>Suppression forcée de l'ancien conteneur</td>
-                <td>rm -f <br>Suppression forcée <br><br><strong>On ne peut plus se connecter sur l'application</strong>
+                <td>
+                    Local
+                </td>
+                <td>Accès au dossier contenant les fichiers HTML, CSS... à récupérer</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>scp <span id="htmlFileResponse1">FichierHTML</span>.html <span id="cssFileResponse1">fichierCSS</span>.css ubuntu@<span id="ipv4Response2">IPv4</span>:/tmp/</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Envoie des fichiers HTML, CSS... sur la VM</td>
+                <td><b>/tmp/</b> : <i>A compléter</i></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse2">id_ed25519</span> ubuntu@<span id="ipv4Response3">IPv4</span></code></pre>
                 </td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker stop <span id="repoResponse8">REPOSITORY</span></td>
-                <td>Arrêt du nouveau conteneur</td>
+                <td>Connexion à la VM</td>
                 <td>-</td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>docker rm <span id="repoResponse9">REPOSITORY</span></td>
-                <td>Suppression du nouveau conteneur</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>VM</td>
-                <td>docker run -d --restart unless-stopped --name <span id="repoResponse10">REPOSITORY</span>-container
-                    -p <span id="networkResponse1">PortReseau:PortReseau</span>
-                    <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
+                <td colspan="3">
+                    <pre><code>sudo mv /tmp/<span id="htmlFileResponse2">FichierHTML</span>.html /var/www/<span id="domainResponse2">NomDomaine</span>/</code></pre>
+                    <pre><code>sudo mv /tmp/<span id="cssFileResponse2">fichierCSS</span>.css /var/www/<span id="domainResponse3">NomDomaine</span>/</code></pre>
                 </td>
-                <td>Lancement de l'application</td>
-                <td><strong>On peut se reconnecter à nouveau sur l'application</strong></td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker ps</td>
-                <td>Vérifier que l'application a bien été lancée</td>
-                <td>-</td>
+                <td>Déplacement des fichiers sur la VM au bon endroit</td>
+                <td><b>sudo mv</b> : <i>A compléter</i></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse4">NomDomaine</span>.fr</code></pre>
+                </td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker rmi <span id="imageResponse">IMAGE</span></td>
-                <td>Nettoyer l'ancienne image</td>
-                <td>-</td>
+                <td>Configuration du paquet Nginx pour le domaine</td>
+                <td><i>A compléter</i></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>server {
+    listen 80;
+    server_name <span id="domainResponse5">NomDomaine</span>.fr www.<span id="domainResponse6">NomDomaine</span>.fr;
+
+    root /var/www/<span id="domainResponse7">NomDomaine</span>;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre> Puis : <br>
+                    CTRL + O (Entrer la commande) <br>
+                    CTRL + X (Quitter la commande)
+                </td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>docker ps -a</td>
-                <td>Vérifier que l'ancienne image a bien été supprimée</td>
-                <td>-</td>
+                <td>A compléter</td>
+                <td><i>A compléter</i></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse8">NomDomaine</span>.fr /etc/nginx/sites-enabled/ 2>/dev/null || true sudo nginx -t sudo systemctl restart nginx
+</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>Active et redémarre le site web</td>
+                <td>A compléter</td>
+            </tr>
+            <tr>
+                <td colspan="3">Dans OVHcloud → Web Cloud → Noms de domaine → <span
+                        id="domainResponse9">NomDomaine</span>.fr → Zone DNS :
+                    <ul> Verifier que :
+                        <li><span id="domainResponse10">NomDomaine</span>.fr → type A → cible <span
+                                id="ipv4Response4">IPv4</span></li>
+                        <li>www → type A → cible <span id="ipv4Response5">IPv4</span></li>
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table><br>
 
-    <p><strong><i>NB : pour éviter toute rupture de connexion lors de la mise à jour de l'application, il est préférable
-                de recourir à la fonctionnalité "load balancer"</i></strong></p><br>
+    <i><a href="#menu">Retour au menu</a></i><br><br>
 
     <!-- Chapitre II -->
-    <h2 id="chap2">2. Monitoring</h2>
+    <h2 id="chap2">2. Mise à jour future du site web</h2>
 
     <table>
         <thead>
             <tr>
-                <th>Outil</th>
-                <th>Shell</th>
-                <th>Commande</th>
+                <th width="70px">Shell</th>
                 <th>Motif</th>
                 <th>Explications</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>OVH</td>
-                <td colspan="4">Cliquer sur le nom de l'instance (couleur bleue) pour afficher les données statistiques
-                    (menu à gauche → partie "COMPUTE" → sous-partie "Instances") <br>
-                    <i>NB : certaines instances comme le modèle "Discovery" ne permettent pas d'afficher les
-                        graphiques</i>
+                <td colspan="3">
+                    <pre><code>cd <span id="directoryResponse2">RepertoireCible</span></code></pre>
                 </td>
             </tr>
             <tr>
-                <td rowspan="7">Shell</td>
                 <td>Local</td>
-                <td>ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@<span id="ipv4Response3">IPv4</span></td>
-                <td>Connexion au shell de la VM</td>
+                <td>Accès au dossier contenant les fichiers HTML, CSS... à récupérer</td>
                 <td>-</td>
             </tr>
             <tr>
-                <td colspan="4"><strong><i>Si c'est la première fois que les données statistiques sont analysées pour
-                            cette
-                            instance :</i></strong></td>
+                <td colspan="3">
+                    <pre><code>scp <span id="htmlFileResponse3">FichierHTML</span>.html <span id="cssFileResponse3">fichierCSS</span>.css ubuntu@<span id="ipv4Response6">IPv4</span>:/tmp/</code></pre>
+                </td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>sudo apt update</td>
-                <td>Mise à jour des paquets disponibles</td>
+                <td>Local</td>
+                <td>Envoie des fichiers HTML, CSS... sur la VM</td>
+                <td><b>/tmp/</b> : <i>A compléter</i></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span id="ipv4Response7">IPv4</span></code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Connexion à la VM</td>
                 <td>-</td>
             </tr>
             <tr>
-                <td>VM</td>
-                <td>sudo apt install nload -y</td>
-                <td>Installation du paquet nload</td>
-                <td>-y <br><i>L’option -y signifie “assume yes” : elle répond automatiquement “yes” à toutes les
-                        questions posées par apt pendant l’installation</i></td>
+                <td colspan="3">
+                    <pre><code>sudo mv /tmp/<span id="htmlFileResponse4">FichierHTML</span>.html /var/www/<span id="domainResponse11">NomDomaine</span>/</code></pre>
+                    <pre><code>sudo mv /tmp/<span id="cssFileResponse4">fichierCSS</span>.css /var/www/<span id="domainResponse12">NomDomaine</span>/</code></pre>
+                </td>
             </tr>
             <tr>
                 <td>VM</td>
-                <td>nload</td>
-                <td>Accès aux données statistiques</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td colspan="4"><strong><i>Si ce n'est pas la première que les données statistiques sont effectuées pour
-                            cette
-                            instance : </i></strong></td>
-            </tr>
-            <tr>
-                <td>VM</td>
-                <td>nload</td>
-                <td>Accès aux données statistiques</td>
-                <td>-</td>
+                <td>Déplacement des fichiers sur la VM au bon endroit</td>
+                <td><b>sudo mv</b> : <i>A compléter</i></td>
             </tr>
         </tbody>
     </table><br>
-
-    <p><b>Données restituées dans le shell : </b></p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Élément</th>
-                <th>Rôle</th>
-                <th>Détail</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Incoming</td>
-                <td>Trafic entrant</td>
-                <td>Données qui arrivent sur la VM (requêtes HTTP, téléchargements, flux depuis Internet, etc.). </td>
-            </tr>
-            <tr>
-                <td>Outgoing</td>
-                <td>Trafic sortant</td>
-                <td>Données qui partent de la VM (réponses HTTP, envoi de fichiers, etc.). </td>
-            </tr>
-            <tr>
-                <td>Curr</td>
-                <td>Débit instantané</td>
-                <td>Débit mesuré au dernier rafraîchissement, en kBit/s ou MBit/s selon la valeur.</td>
-            </tr>
-            <tr>
-                <td>Avg</td>
-                <td>Débit moyen</td>
-                <td>Moyenne du débit sur une fenêtre de temps récente (par défaut ≈ 5 minutes). </td>
-            </tr>
-            <tr>
-                <td>Min</td>
-                <td>Débit minimum</td>
-                <td>Plus faible débit observé pendant la session en cours de nload. </td>
-            </tr>
-            <tr>
-                <td>Max</td>
-                <td>Débit maximum</td>
-                <td>Pic de débit observé pendant la session en cours de nload. </td>
-            </tr>
-            <tr>
-                <td>Ttl</td>
-                <td>Volume total</td>
-                <td>Quantité totale de données transférées depuis le lancement de nload, en kByte/MByte/GByte. </td>
-            </tr>
-        </tbody>
-    </table><br>
-
-    <!-- Chapitre III -->
-    <h2 id="chap3">3. Site web sécurisé avec HTTPS</h2>
-
 
     <i><a href="#menu">Retour au menu</a></i><br><br>
 
     <a id='lien' href="./index.html">Retour au sommaire</a>
 
     <script src="script_ovh4.js"></script>
+
 </body>
 
 </html>

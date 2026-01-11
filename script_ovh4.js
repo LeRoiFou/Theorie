@@ -1,47 +1,55 @@
 // IDs retrieved
-let network = document.getElementById("network");
-let newNetwork = document.getElementById("new");
-let repo = document.getElementById("repository");
-let tag = document.getElementById("tag");
-let container = document.getElementById("container");
-let image = document.getElementById("image");
+let key = document.getElementById("key");
 let ipv4 = document.getElementById("ipv4");
+let domain = document.getElementById("domain");
+let directory = document.getElementById("directory");
+let htmlFile = document.getElementById("htmlFile");
+let cssFile = document.getElementById("cssFile");
 
 let button = document.getElementById("btn");
-let result = document.getElementById("result");
 
 button.addEventListener("click", () => {
-  // Previous network port changed
-  networkResponse1.textContent = `${network.value}:${network.value}`;
-
-  // New network port changd
-  newResponse1.textContent = `${newNetwork.value}:${newNetwork.value}`;
-
-  // Repository value changed
-  repoResponse1.textContent = repo.value;
-  repoResponse2.textContent = repo.value;
-  repoResponse3.textContent = repo.value;
-  repoResponse4.textContent = repo.value;
-  repoResponse5.textContent = repo.value;
-  repoResponse6.textContent = repo.value;
-  repoResponse7.textContent = repo.value;
-  repoResponse8.textContent = repo.value;
-  repoResponse9.textContent = repo.value;
-  repoResponse10.textContent = repo.value;
-  repoResponse11.textContent = repo.value;
-
-  // TAG value changed
-  tagResponse1.textContent = tag.value;
-  tagResponse2.textContent = tag.value;
-
-  // CONTAINER ID value changed
-  contResponse.textContent = container.value;
-
-  // Previous image value changed
-  imageResponse.textContent = image.value;
+  // Private key changed
+  keyResponse1.textContent = key.value;
+  keyResponse2.textContent = key.value;
+  keyResponse3.textContent = key.value;
 
   // IPv4 changed
   ipv4Response1.textContent = ipv4.value;
   ipv4Response2.textContent = ipv4.value;
   ipv4Response3.textContent = ipv4.value;
+  ipv4Response4.textContent = ipv4.value;
+  ipv4Response5.textContent = ipv4.value;
+  ipv4Response6.textContent = ipv4.value;
+  ipv4Response7.textContent = ipv4.value;
+
+  // Domain changed
+  domainResponse1.textContent = domain.value;
+  domainResponse2.textContent = domain.value;
+  domainResponse3.textContent = domain.value;
+  domainResponse4.textContent = domain.value;
+  domainResponse5.textContent = domain.value;
+  domainResponse6.textContent = domain.value;
+  domainResponse7.textContent = domain.value;
+  domainResponse8.textContent = domain.value;
+  domainResponse9.textContent = domain.value;
+  domainResponse10.textContent = domain.value;
+  domainResponse11.textContent = domain.value;
+  domainResponse12.textContent = domain.value;
+
+  // Directory changed
+  directoryResponse1.textContent = directory.value;
+  directoryResponse1.textContent = directory.value;
+
+  // HTML file changed
+  htmlFileResponse1.textContent = htmlFile.value;
+  htmlFileResponse2.textContent = htmlFile.value;
+  htmlFileResponse3.textContent = htmlFile.value;
+  htmlFileResponse4.textContent = htmlFile.value;
+
+  // CSS file changed
+  cssFileResponse1.textContent = cssFile.value;
+  cssFileResponse2.textContent = cssFile.value;
+  cssFileResponse3.textContent = cssFile.value;
+  cssFileResponse4.textContent = cssFile.value;
 });

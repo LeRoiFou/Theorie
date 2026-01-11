@@ -27,6 +27,8 @@
                         <li><a href="#chap6">Mise en place de l'application</a></li>
                         <li><a href="#chap7">Pour relancer une application suspendue</a></li>
                 </ol>
+
+                <a id='lien' href="./index.html">Retour au sommaire</a>
         </div>
         <hr>
 
@@ -563,56 +565,79 @@
                 <thead>
                         <tr>
                                 <th width="70px">Shell</th>
-                                <th width="300px">Commande</th>
                                 <th>Motif</th>
                                 <th>Explications</th>
                         </tr>
                 </thead>
                 <tbody>
                         <tr>
-                                <td>Local</td>
-                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response1">IPv4</span>
+                                <td colspan="3">
+                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response1">IPv4</span></code></pre>
                                 </td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
                                 <td>Connexion au shell de la VM</td>
-                                <td>-i <br><i>Signifie quel fichier de clé privée utiliser pour l’authentification</i>
+                                <td><b>-i</b> : <i>signifie quel fichier de clé privée utiliser pour
+                                                l’authentification</i>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker --version</code></pre>
                                 </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>docker --version</td>
-                                <td>Vérifier si Docker a bien été installé sur la VM</td>
+                                <td>Permet de vérifier si Docker a bien été installé sur la VM</td>
                                 <td>Dans l'affirmative, on aura une réponse du style <i>Docker version 28.2.2, build
                                                 28.2.2-0ubuntu1~22.04.1</i></td>
                         </tr>
+                        </tr>
+                        <td colspan="3">
+                                <ul>
+                                        <li>
+                                                <pre><code>sudo apt install docker.io -y</code></pre>
+                                        </li>
+                                        <li>
+                                                <pre><code>sudo usermod -aG docker ubuntu</code></pre>
+                                        </li>
+                                </ul>
+                        </td>
                         <tr>
                                 <td>VM</td>
-                                <td>Si Docker n'est pas installé :
-                                        <ul>
-                                                <li>sudo apt install docker.io -y</li>
-                                                <li>sudo usermod -aG docker ubuntu</li>
-                                        </ul>
-                                </td>
+                                <td>Si Docker n'est pas installé</td>
                                 <td>Mise à jour des paquets disponibles + installation de Docker dans la VM</td>
-                                <td>-</td>
-
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>exit</code></pre>
+                                </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>exit</td>
                                 <td>Retour dans le shell en local</td>
                                 <td>-</td>
                         </tr>
                         <tr>
+                                <td colspan="3">
+                                        <pre><code>docker images</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
                                 <td>Local</td>
-                                <td>docker images</td>
                                 <td>Pour récupérer les valeurs de l'image à importer dans les colonnes "REPOSITORY" et
                                         "TAG"</td>
                                 <td>Docker images permet d'avoir la taille des images <i>(colonne SIZE)</i></td>
                         </tr>
                         <tr>
+                                <td colspan="3">
+                                        <pre><code>docker ps -a</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
                                 <td>Local</td>
-                                <td>docker ps -a</td>
                                 <td>Permet d'afficher la liste des conteneurs exécutés / arrêtés, avec les statuts
                                         suivants :
                                         <ul>
@@ -624,100 +649,144 @@
                                 </td>
                                 <td>
                                         <ul>
-                                                <li>ps<br>
-                                                        Vient de “process status”. Historiquement, ps est une commande
-                                                        Unix qui affiche l’état des processus en cours, et Docker a
-                                                        repris ce nom pour afficher l’état des conteneurs</li>
-                                                <li>-a<br>Signifie 'all'</li>
+                                                <li><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une
+                                                                commande
+                                                                Unix qui affiche l’état des processus en cours, et
+                                                                Docker a
+                                                                repris ce nom pour afficher l’état des conteneurs</i>
+                                                </li>
+                                                <li><b>-a</b> : <i>signifie 'all'</i> </li>
                                         </ul>
                                 </td>
                         </tr>
                         <tr>
-                                <td colspan="4"><i>Si un des conteneurs a le statut Exited (1) ou Exited (137), saisir
-                                                la
-                                                commande :</i> docker logs CONTAINER ID
+                                <td colspan="3">
+                                        <pre><code>docker logs CONTAINER ID</code></pre>
                                 </td>
                         </tr>
                         <tr>
                                 <td>Local</td>
-                                <td>docker save <span id="repoResponse1">REPOSITORY</span>:<span
+                                <td>Si un des conteneurs a le statut Exited (1) ou Exited (137)</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker save <span id="repoResponse1">REPOSITORY</span>:<span
                                                 id="tagResponse1">TAG</span> -o <span
-                                                id="repoResponse2">REPOSITORY</span>.tar</td>
-                                <td>Exportation de l'image ciblée en dossier archivé .tar sur le PC</td>
-                                <td>-o <br><i>Signifie output</i></td>
+                                                id="repoResponse2">REPOSITORY</span>.tar</code></pre>
+                                </td>
                         </tr>
                         <tr>
                                 <td>Local</td>
-                                <td>ls <span id="repoResponse3">REPOSITORY</span>.tar</td>
-                                <td>Vérifier que le dossier archivé .tar a bien été créé en local</td>
-                                <td>ls <br><i>Signifie “list” : elle sert à lister les fichiers et dossiers d’un
+                                <td>Exportation de l'image ciblée en dossier archivé .tar sur le PC</td>
+                                <td><b>-o</b> : <i>signifie output</i></td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>ls <span id="repoResponse3">REPOSITORY</span>.tar</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>Vérifie que le dossier archivé .tar a bien été créé en local</td>
+                                <td><b>ls</b> : <i>signifie “list” : elle sert à lister les fichiers et dossiers d’un
                                                 répertoire</i></td>
                         </tr>
                         <tr>
-                                <td>Local</td>
-                                <td>scp -i $env:USERPROFILE\.ssh\<span id="keyResponse2">id_ed25519</span> <span
+                                <td colspan="3">
+                                        <pre><code>scp -i $env:USERPROFILE\.ssh\<span id="keyResponse2">id_ed25519</span> <span
                                                 id="repoResponse4">REPOSITORY</span>.tar ubuntu@<span
-                                                id="ipv4Response2">IPv4</span>:/home/ubuntu/
+                                                id="ipv4Response2">IPv4</span>:/home/ubuntu/</code></pre>
                                 </td>
-                                <td>Copier le dossier archivé .tar vers la VM OVH</td>
-                                <td>scp <br><i>Signifie Secure Copy Protocol. C’est la commande qui permet
+                        </tr>
+                        <tr>
+                                <td>Local</td>
+                                <td>Copie le dossier archivé .tar vers la VM OVH</td>
+                                <td><b>scp</b> : <i>signifie Secure Copy Protocol. C’est la commande qui permet
                                                 de copier des fichiers de façon sécurisée entre le PC et la VM en
                                                 utilisant le protocole SSH (chiffrement, même port 22)</i></td>
                         </tr>
                         <tr>
-                                <td>Local</td>
-                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response3">IPv4</span>
+                                <td colspan="3">
+                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response3">IPv4</span></code></pre>
                                 </td>
+                        </tr>
+                        <tr>
+                                <td>Local</td>
                                 <td>Connexion au shell de la VM</td>
                                 <td>-</td>
                         </tr>
                         <tr>
-                                <td>VM</td>
-                                <td>ls (<i>ou autrement :</i> ls -lh)</td>
-                                <td>Permet de voir si le dossier archivé .tar a bien été transféré dans la VM</td>
-                                <td>ls -lh <br><i>Liste détaillée avec tailles lisibles (Mo, Go, etc.)</i></td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
-                                <td>Chargement de l'image dans Docker sur la VM</td>
-                                <td>-i <br><i>Signifie input : elle indique à Docker de quel
-                                                fichier .tar il doit lire
-                                                l’image à importer
-                                        </i></td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>docker images</td>
-                                <td>Vérifier que l'image dans Docker a bien été chargée sur la VM</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>docker run -d --restart unless-stopped --name <span
-                                                id="repoResponse6">REPOSITORY</span>-container -p
-                                        <span id="networkResponse1">PortReseau:PortReseau</span> <span
-                                                id="repoResponse7">REPOSITORY</span>:<span id="tagResponse2">TAG</span>
-                                </td>
-                                <td>Lancement de l'application</td>
-                                <td>
+                                <td colspan="3">
                                         <ul>
-                                                <li>-d <br><i>Mode détaché (en arrière-plan)</i></li>
-                                                <li>--restart unless-stopped <br><i>Evite de supprimer le conteneur
-                                                                arrêté / suspendu et de le relancer</i></li>
-                                                <li>-p <span id="networkResponse2">PortReseau:PortReseau</span>
-                                                        <br><i>Mappe le port réseau de la VM vers
-                                                                le port réseau dans le conteneur</i>
+                                                <li>
+                                                        <pre><code>ls</code></pre>
+                                                </li>
+                                                ou
+                                                <li>
+                                                        <pre><code>ls -lh</code></pre>
                                                 </li>
                                         </ul>
                                 </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>docker ps</td>
-                                <td>Vérifier que l'application tourne</td>
-                                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
+                                <td>Permet de voir si le dossier archivé .tar a bien été transféré dans la VM</td>
+                                <td><b>ls -lh</b> : <i>liste détaillée avec tailles lisibles (Mo, Go, etc.)</i></td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Chargement de l'image dans Docker sur la VM</td>
+                                <td><b>-i</b> : <i>signifie input : elle indique à Docker de quel
+                                                fichier .tar il doit lire
+                                                l’image à importer
+                                        </i></td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker images</code></pre>
+                                </td>
+                        </tr>
+
+                        <tr>
+                                <td>VM</td>
+                                <td>Vérifie que l'image dans Docker a bien été chargée sur la VM</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker run -d --restart unless-stopped --name <span id="repoResponse6">REPOSITORY</span>-container -p <span id="networkResponse1">PortReseau:PortReseau</span> <span id="repoResponse7">REPOSITORY</span>:<span id="tagResponse2">TAG</span></code></pre>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Lancement de l'application</td>
+                                <td>
+                                        <ul>
+                                                <li><b>-d</b> : <i>mode détaché (en arrière-plan)</i></li>
+                                                <li><b>--restart unless-stopped</b> : <i>évite de supprimer le conteneur
+                                                                arrêté / suspendu et de le relancer</i></li>
+                                                <li><b>-p : <span id="networkResponse2">PortReseau:PortReseau</span></b>
+                                                        : <i>mappe le port réseau de la VM vers
+                                                                le port réseau dans le conteneur</i>
+                                                </li>
+                                        </ul>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker ps</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Vérifie que l'application tourne</td>
+                                <td><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une commande Unix
+                                                qui
                                                 affiche l’état des processus en cours, et Docker a repris ce nom pour
                                                 afficher l’état des conteneurs</i></td>
                         </tr>
@@ -733,70 +802,96 @@
                 <thead>
                         <tr>
                                 <th width="70px">Shell</th>
-                                <th width="300px">Script</th>
                                 <th>Motif</th>
                                 <th>Explications</th>
                         </tr>
                 </thead>
                 <tbody>
                         <tr>
-                                <td colspan="4">Relancer l'instance via le site OVH</td>
+                                <td colspan="3">Relancer l'instance via le site OVH</td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse4">id_ed25519</span> ubuntu@<span
+                                                id="ipv4Response4">IPv4</span></code></pre>
+                                </td>
                         </tr>
                         <tr>
                                 <td>Local</td>
-                                <td>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse4">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response4">IPv4</span>
-                                </td>
                                 <td>Se reconnecter dans le shell de la VM</td>
                                 <td>-</td>
                         </tr>
                         <tr>
-                                <td>VM</td>
-                                <td>docker images</td>
-                                <td>Vérifier que l'image est encore là</td>
-                                <td>-</td>
+                                <td colspan="3">
+                                        <pre><code>docker images</code></pre>
+                                </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>docker ps -a</td>
-                                <td>Vérifier que le conteneur n'a pas été arrêté</td>
-                                <td>-a <br><i>Signifie 'all'. Docker ps ne montre que les conteneurs encore en cours
+                                <td>Vérifie que l'image est encore là</td>
+                                <td>-</td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker ps -a</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
+                                <td>Vérifie que le conteneur n'a pas été arrêté</td>
+                                <td><b>-a</b> : <i>signifie 'all'. Docker ps ne montre que les conteneurs encore en
+                                                cours
                                                 d’exécution, alors que docker ps -a montre aussi ceux qui se sont
                                                 arrêtés. Pour vérifier qu’un conteneur n’a pas été arrêté, il faut donc
                                                 regarder la vue complète avec -a</i></td>
                         </tr>
                         <tr>
-                                <td colspan="4">Si le statut n'est pas de type <i>Exited (0)</i>
-                                        alors passer aux étapes suivantes:</td>
+                                <td colspan="3"><b>Si le statut n'est pas de type <i>Exited (0)</i>
+                                                alors passer aux étapes suivantes :</b></td>
                         </tr>
                         <tr>
-                                <td>VM</td>
-                                <td>docker rm <span id="repoResponse8">REPOSITORY</span>-container</td>
-                                <td>Supprimer le conteneur arrêté</td>
-                                <td>rm<br><i>Signifie remove, cela veut littéralement dire “supprimer ce conteneur”</i>
+                                <td colspan="3">
+                                        <pre><code>docker rm <span id="repoResponse8">REPOSITORY</span>-container</code></pre>
                                 </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>docker rm -f <span id="repoResponse9">REPOSITORY</span>-container</td>
+                                <td>Supprime le conteneur arrêté</td>
+                                <td><b>rm</b> : <i>signifie remove, cela veut littéralement dire “supprimer ce
+                                                conteneur”</i>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker rm -f <span id="repoResponse9">REPOSITORY</span>-container</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td>VM</td>
                                 <td>S'il faut forcer l'arrêt</td>
-                                <td>-f <br><i>Force l'arrêt notamment si le conteneur est en cours d'exécution</i></td>
+                                <td><b>-f</b> : <i>force l'arrêt notamment si le conteneur est en cours d'exécution</i>
+                                </td>
+                        </tr>
+                        <tr>
+                                <td colspan="3">
+                                        <pre><code>docker run -d --restart unless-stopped --name <span id="repoResponse10">REPOSITORY</span>-container -p<span id="networkResponse3">PortReseau:PortReseau</span> <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse3">TAG</span></code></pre>
+                                </td>
                         </tr>
                         <tr>
                                 <td>VM</td>
-                                <td>docker run -d --restart unless-stopped --name <span
-                                                id="repoResponse10">REPOSITORY</span>-container -p
-                                        <span id="networkResponse3">PortReseau:PortReseau</span> <span
-                                                id="repoResponse11">REPOSITORY</span>:<span id="tagResponse3">TAG</span>
-                                </td>
-                                <td>Relancer l'application</td>
+                                <td>Relance l'application</td>
                                 <td>-</td>
                         </tr>
                         <tr>
+                                <td colspan="3">
+                                        <pre><code>docker ps</code></pre>
+                                </td>
+                        </tr>
+                        <tr>
                                 <td>VM</td>
-                                <td>docker ps</td>
-                                <td>Vérifier que l'application tourne</td>
-                                <td>ps <br><i>Vient de “process status”. Historiquement, ps est une commande Unix qui
+                                <td>Vérifie que l'application tourne</td>
+                                <td><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une commande Unix
+                                                qui
                                                 affiche l’état des processus en cours, et Docker a repris ce nom pour
                                                 afficher l’état des conteneurs</i></td>
                         </tr>
