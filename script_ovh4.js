@@ -39,7 +39,7 @@ button.addEventListener("click", () => {
 
   // Directory changed
   directoryResponse1.textContent = directory.value;
-  directoryResponse1.textContent = directory.value;
+  directoryResponse2.textContent = directory.value;
 
   // HTML file changed
   htmlFileResponse1.textContent = htmlFile.value;

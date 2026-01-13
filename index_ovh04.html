@@ -267,14 +267,22 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse8">NomDomaine</span>.fr /etc/nginx/sites-enabled/ 2>/dev/null || true sudo nginx -t sudo systemctl restart nginx
+                    <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse8">NomDomaine</span>.fr /etc/nginx/sites-enabled/ 2>/dev/null || true <br>
+                        sudo nginx -t <br>
+                        sudo systemctl restart nginx
 </code></pre>
                 </td>
             </tr>
             <tr>
                 <td>VM</td>
                 <td>Active et redémarre le site web</td>
-                <td>A compléter</td>
+                <td><i>
+                        <ul>
+                            <li>1ère ligne : activation du site</li>
+                            <li>2ème ligne : test de la configuration du paquet Nginx</li>
+                            <li>3ème ligne : redémarrage du paquet Nginx</li>
+                        </ul>
+                    </i></td>
             </tr>
             <tr>
                 <td colspan="3">Dans OVHcloud → Web Cloud → Noms de domaine → <span
@@ -321,7 +329,7 @@
             <tr>
                 <td>Local</td>
                 <td>Envoie des fichiers HTML, CSS... sur la VM</td>
-                <td><b>/tmp/</b> : <i>A compléter</i></td>
+                <td><b>/tmp/</b> : <i>répertoire temporaire standard de Linux</i></td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -342,7 +350,7 @@
             <tr>
                 <td>VM</td>
                 <td>Déplacement des fichiers sur la VM au bon endroit</td>
-                <td><b>sudo mv</b> : <i>A compléter</i></td>
+                <td><b>sudo mv</b> : <i>Déplacement (mv) en tant qu'administrateur (sudo)</i></td>
             </tr>
         </tbody>
     </table><br>
