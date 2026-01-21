@@ -22,6 +22,7 @@ button.addEventListener("click", () => {
   ipv4Response5.textContent = ipv4.value;
   ipv4Response6.textContent = ipv4.value;
   ipv4Response7.textContent = ipv4.value;
+  ipv4Response8.textContent = ipv4.value;
 
   // Domain changed
   domainResponse1.textContent = domain.value;
@@ -40,6 +41,7 @@ button.addEventListener("click", () => {
   // Directory changed
   directoryResponse1.textContent = directory.value;
   directoryResponse2.textContent = directory.value;
+  directoryResponse3.textContent = directory.value;
 
   // HTML file changed
   htmlFileResponse1.textContent = htmlFile.value;

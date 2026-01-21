@@ -300,7 +300,7 @@
     <i><a href="#menu">Retour au menu</a></i><br><br>
 
     <!-- Chapitre II -->
-    <h2 id="chap2">2. Mise à jour future du site web</h2>
+    <h2 id="chap2">2. Mise à jour du site web</h2>
 
     <table>
         <thead>
@@ -313,27 +313,20 @@
         <tbody>
             <tr>
                 <td colspan="3">
-                    <pre><code>cd <span id="directoryResponse2">RepertoireCible</span></code></pre>
+                    <pre><code>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="directoryResponse2">RepertoireCible</span>\<span id="htmlFileResponse3">FichierHTML</span>.html ubuntu@<span id="ipv4Response6">IPv4</span>:/tmp/
+                    </code></pre>
+                    <pre><code>scp -i $env:USERPROFILE\.ssh\id_ed25519 <span id="directoryResponse3">RepertoireCible</span>\<span id="cssFileResponse3">FichierCSS</span>.html ubuntu@<span id="ipv4Response7">IPv4</span>:/tmp/
+                    </code></pre>
                 </td>
             </tr>
             <tr>
                 <td>Local</td>
-                <td>Accès au dossier contenant les fichiers HTML, CSS... à récupérer</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <pre><code>scp <span id="htmlFileResponse3">FichierHTML</span>.html <span id="cssFileResponse3">fichierCSS</span>.css ubuntu@<span id="ipv4Response6">IPv4</span>:/tmp/</code></pre>
-                </td>
-            </tr>
-            <tr>
-                <td>Local</td>
-                <td>Envoie des fichiers HTML, CSS... sur la VM</td>
+                <td>Copie des fichiers HTML, CSS... sur la VM</td>
                 <td><b>/tmp/</b> : <i>répertoire temporaire standard de Linux</i></td>
             </tr>
             <tr>
                 <td colspan="3">
-                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span id="ipv4Response7">IPv4</span></code></pre>
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span id="ipv4Response8">IPv4</span></code></pre>
                 </td>
             </tr>
             <tr>
