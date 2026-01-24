@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déploiement FastAPI + Nginx + HTTPS</title>
+    <link rel="stylesheet" href="index_ovhXX1.css">
+</head>
+
+<body>
+
+    <h1>🚀 Déploiement d'une application sur VPS OVH avec le paquet Nginx + HTTPS</h1>
+
+    <div class="diagram">
+        ARCHITECTURE :
+        → Docker (PC)
+        → SCP (transfert)
+        → VPS Ubuntu 22.04
+        → Nginx (reverse proxy)
+        → HTTPS (Let's Encrypt)
+    </div>
+
+    <!-- ZONE DE SAISIE -->
+    <div class="section-title">ZONE DE SAISIE DES DONNEES</div>
+
+    <label for="key">Nom de la clé privée</label>
+    <input type="text" name="key" id="key" value="id_ed25519"
+        title="Nom par défaut de la clé privée attribué par OVH"><br>
+
+    <label for="ipv4">Adresse IPv4</label>
+    <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
+
+    <label for="container">CONTAINER ID</label>
+    <input type="text" name="container" id="container"
+        placeholder="ID du conteneur à supprimer (en VM : docker ps-a)"><br>
+
+    <label for="repository">REPOSITORY</label>
+    <input type="text" name="repository" id="repository"
+        placeholder="Nom de l'image à charger (en local : docker images)"
+        title="Charger préalablement docker desktop"><br>
+
+    <label for="tag">TAG</label>
+    <input type="text" name="tag" id="tag" placeholder="Version de l'image à charger  (en local : docker images)"
+        title="Par défaut, le nom de la version de l'image est latest"><br>
+
+    <label for="network">Port réseau</label>
+    <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+
+    <label for="domain">Sous-domaine</label>
+    <input type="text" name="domain" id="domain" placeholder="Nom du sous-domaine (par exempe test.datacofi)"><br>
+
+    <button type="submit" id="btn">Valider</button>
+
+    <!-- BLOC 1 : DOCKER & TRANSFERT -->
+    <div class="section-title">📦 BLOC 1 : Préparation Docker & Transfert vers VPS</div>
+    <table>
+        <thead>
+            <tr>
+                <th width="80px">Shell</th>
+                <th width="400px">Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">CLE</span> ubuntu@<span
+                                                id="ipv4Response1">IPv4</span></code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Se connecter au VPS en SSH</td>
+                <td>Tu entres maintenant dans le shell du VPS</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker --version</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>Permet de vérifier si Docker a bien été installé sur la VM</td>
+                <td>Dans l'affirmative, on aura une réponse du style <i>Docker version 28.2.2, build
+                        28.2.2-0ubuntu1~22.04.1</i></td>
+            </tr>
+            </tr>
+            <td colspan="3">
+                <ul>
+                    <li>
+                        <pre><code>sudo apt install docker.io -y</code></pre>
+                    </li>
+                    <li>
+                        <pre><code>sudo usermod -aG docker ubuntu</code></pre>
+                    </li>
+                </ul>
+            </td>
+            <tr>
+                <td>VM</td>
+                <td>Si Docker n'est pas installé</td>
+                <td>Mise à jour des paquets disponibles + installation de Docker dans la VM</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>exit</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>VM</td>
+                <td>Retour dans le shell en local</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker images</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Récupérer REPOSITORY et TAG de ton image</td>
+                <td>Affiche toutes les images disponibles
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker ps -a</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Permet d'afficher la liste des conteneurs exécutés / arrêtés, avec les statuts
+                    suivants :
+                    <ul>
+                        <li>Exited (0) : <i>aucune erreur</i></li>
+                        <li>Exited (1) : <i>au moins une erreur présente</i></li>
+                        <li>Exited (137) : <i>conteneur arrêté / forcé / manque de mémoire</i>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li><b>ps</b> : vient de “process status”. Historiquement, ps est une
+                            commande
+                            Unix qui affiche l’état des processus en cours, et
+                            Docker a
+                            repris ce nom pour afficher l’état des conteneurs
+                        </li>
+                        <li><b>-a</b> : signifie 'all'</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker logs <span id="containerResponse1">CONTAINER_ID</span></code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Si un des conteneurs a le statut Exited (1) ou Exited (137)</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker save <span id="repoResponse1">REPOSITORY</span>:<span id="tagResponse1">TAG</span> -o <span id="repoResponse2">REPOSITORY</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Exporter l'image en fichier .tar</td>
+                <td><strong>-o</strong> : output
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ls -lh <span id="repoResponse3">REPOSITORY</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Vérifier que le .tar existe</td>
+                <td><strong>ls -lh</strong> : liste détaillée avec taille lisible (Mo, Go). Si absent, l'export a
+                    échoué
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>scp -i $env:USERPROFILE\.ssh\<span id="keyResponse2">CLE</span> <span id="repoResponse4">REPOSITORY</span>.tar ubuntu@<span
+                                                id="ipv4Response2">IPV4</span>:/home/ubuntu/</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Copier le fichier .tar vers le VPS</td>
+                <td><strong>scp</strong> : Secure Copy via SSH</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">CLE</span> ubuntu@<span
+                                                id="ipv4Response3">IPV4</span></code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Se connecter au VPS en SSH</td>
+                <td>Tu entres maintenant dans le shell du VPS</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ls -lh <span id="repoResponse5">REPOSITORY</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Vérifier la réception du fichier</td>
+                <td>Si le fichier apparaît, le transfert SCP a réussi ✅</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker load -i <span id="repoResponse6">REPOSITORY</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Charger l'image Docker dans le VPS</td>
+                <td>Crée l'image Docker localement sur le VPS
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker images</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Vérifier que l'image est chargée</td>
+                <td>Ton image doit apparaître dans la liste ✅</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker run -d --restart unless-stopped --name <span id="domainResponse1">SOUS_DOMAINE</span> -p <span id="networkResponse1">PORT_RESEAU:PORT_RESEAU</span> <span id="repoResponse7">REPOSITORY</span>:<span id="tagResponse2">TAG</span></code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Lancer le conteneur Docker</td>
+                <td><strong>-d</strong> : mode détaché (arrière-plan) <br>
+                    <strong>--restart unless-stopped</strong> :
+                    relance auto si crash <br>
+                    <strong>-p 8000:8000</strong> : mappe port interne au port VPS <br>
+                    <strong>--name fastapi-app</strong> : nom du conteneur pour le retrouver facilement
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker ps</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Vérifier que le conteneur tourne</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- BLOC 2 : INSTALLATION NGINX + CERTBOT -->
+    <div class="section-title">🔧 BLOC 2 : Installation des paquets Nginx + Certbot</div>
+    <table>
+        <thead>
+            <tr>
+                <th width="80px">Shell</th>
+                <th width="400px">Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Mettre à jour les paquets</td>
+                <td><strong>sudo</strong> : mode administrateur <br>
+                    <strong>apt update</strong> : récupère les listes de paquets <br>
+                    <strong>apt upgrade</strong> : installe les mises à jour <br>
+                    <strong>-y</strong> : répondre "oui" automatiquement <br>
+                    ⏱️ 1-3 min
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo apt install nginx certbot python3-certbot-nginx ufw -y</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Installer les paquets Nginx + Certbot + UFW</td>
+                <td><strong>nginx</strong> : reverse proxy <br>
+                    <strong>certbot</strong> : gestion certificat SSL <br>
+                    <strong>python3-certbot-nginx</strong> : plugin Certbot pour Nginx <br>
+                    <strong>ufw</strong> : firewall <br>
+                    ⏱️ 1-2 min
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo ufw allow 'Nginx Full' && sudo ufw allow 'OpenSSH' && sudo ufw enable</code></pre>
+                </td>
+            </tr>
+            <tr class="critical">
+                <td>VPS</td>
+                <td>Configurer le firewall UFW</td>
+                <td><strong>CRITIQUE :</strong> Ajoute OpenSSH AVANT d'activer le firewall ! Sinon tu seras bloqué. <br>
+                    <strong>Nginx Full</strong> : autorise ports 80 + 443 (HTTP+HTTPS) <br>
+                    <strong>OpenSSH</strong> : autorise SSH (port 22)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo systemctl start nginx && sudo systemctl enable nginx</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Démarrer Nginx</td>
+                <td><strong>start</strong> : lance le service immédiatement <br>
+                    <strong>enable</strong> : le redémarre automatiquement au boot du VPS
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo systemctl status nginx</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Vérifier que Nginx fonctionne</td>
+                <td>Doit afficher
+                    <pre><code>active (running)</code> en vert ✅. Appuie sur <strong>Q</strong> pour quitter</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- BLOC 3 : CONFIGURATION NGINX -->
+    <div class="section-title">⚙️ BLOC 3 : Configuration Nginx Reverse Proxy</div>
+    <table>
+        <thead>
+            <tr>
+                <th width="80px">Shell</th>
+                <th width="400px">Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse2">SOUS_DOMAINE</span>.fr</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Créer le fichier de config Nginx</td>
+                <td><strong>nano</strong> : éditeur texte simple. Ouvre un fichier vierge pour édition</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name <span id="domainResponse3">SOUS_DOMAINE</span>.fr;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
+}</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Contenu à coller dans nano</td>
+                <td><strong>listen 80</strong> : écoute HTTP port 80 <br>
+                    <strong>server_name app.datacofi.fr</strong> :
+                    répondra à ce domaine <br>
+                    <strong>proxy_pass http://127.0.0.1:8000</strong> : redirige vers Docker sur
+                    port 8000 <br>
+                    <strong>proxy_set_header</strong> : transmet infos client <br>
+                    <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
+                    ➜ Clic droit = coller, puis <strong>Ctrl+X</strong> → <strong>Y</strong> → <strong>Enter</strong>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse4">SOUS_DOMAINE</span>.fr /etc/nginx/sites-enabled/</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Activer le site dans Nginx</td>
+                <td><strong>ln -s</strong> : crée un lien symbolique (raccourci). Nginx lit les configs de
+                    sites-enabled/ au démarrage</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+            </tr>
+    </table>
+
+    <!-- BLOC 4 : GÉNÉRATION CERTIFICAT SSL -->
+    <div class="section-title">🔒 BLOC 4 : Génération Certificat SSL Let's Encrypt</div>
+    <table>
+        <thead>
+            <tr>
+                <th width="80px">Shell</th>
+                <th width="400px">Motif</th>
+                <th>Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre>de>sudo nginx -t</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Tester la syntaxe Nginx</td>
+                <td>Doit afficher "syntax is ok" et "test is successful" ✅ Si erreur, le config Nginx a
+                    un problème.</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>de>sudo systemctl reload nginx</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Recharger Nginx avec le nouveau config</td>
+                <td>Applique le reverse proxy pour le sous-domaine. Sans erreur = ✅</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>de>sudo certbot --nginx -d <span id="domainResponse5">SOUS_DOMAINE</span>.fr</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Générer certificat SSL Let's Encrypt</td>
+                <td><strong>--nginx</strong> : Certbot configure auto Nginx avec HTTPS <br>
+                    <strong>-d <span id="domainResponse6">SOUS_DOMAINE</span>.fr</strong> : domaine à sécuriser <br><br>
+                    Certbot va : <br>
+                    1) Vérifier que le domaine pointe bien sur ce VPS, <br>
+                    2) Générer un certificat valide 90 jours, <br>
+                    3) Modifier le config Nginx pour activer HTTPS <br><br>
+                    ⏱️ 1-2 min : tu verra des prompts - accepte les conditions Let's Encrypt.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>de>sudo certbot renew --dry-run</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VPS</td>
+                <td>Tester le renouvellement automatique</td>
+                <td><strong>--dry-run</strong> : teste le renouvellement sans le faire vraiment <br><br>
+                    Doit afficher "Congratulations" ✅ Certbot renouvellera auto 30 jours avant expiration via
+                    cron</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>de>curl https://<span id="domainResponse7">SOUS_DOMAINE</span>.fr</code></pre>
+                </td>
+            </tr>
+            <tr class="safe">
+                <td>VPS</td>
+                <td>Tester HTTPS depuis le VPS</td>
+                <td>Si aucune erreur SSL, le certificat fonctionne ✅ <br><br>
+                    Tu peux aussi ouvrir
+                    https://<span id="domainResponse8">SOUS_DOMAINE</span>.fr dans ton navigateur (cadenas vert =
+                    certificat valide).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="index_ovhXX1.js"></script>
+</body>
+
+</html>
