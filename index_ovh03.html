@@ -4,905 +4,579 @@
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>OVH - Chapitre III</title>
-        <link rel="stylesheet" href="./style.css">
+        <title>Instance Public Cloud</title>
+        <link rel="stylesheet" href="styleOVH.css">
 </head>
 
 <body>
-        <a target="_blank"
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">
-                <h1>Chapitre III : Comment créer une instance Public Cloud et s'y connecter</h1>
-        </a><br>
+        <div class="container">
+                <a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">
+                        <h1>⚙️ Comment créer une instance Public Cloud et s'y connecter</h1>
+                </a>
 
-        <!-- *************** Menu ********************* -->
-        <hr>
-        <div>
-                <p><u><strong>Menu :</strong></u></p>
-                <ol id="menu" type="1">
-                        <li><a href="#chap1">Créer des clés SSH</a></li>
-                        <li><a href="#chap2">Importer les clés SSH</a></li>
-                        <li><a href="#chap3">Préparer la configuration réseau</a></li>
-                        <li><a href="#chap4">Créer l'instance (VM ⇄ compute)</a></li>
-                        <li><a href="#chap5">Se connecter à l'instance</a></li>
-                        <li><a href="#chap6">Mise en place de l'application</a></li>
-                        <li><a href="#chap7">Pour relancer une application suspendue</a></li>
-                </ol>
+                <h2 id="menu">👨‍🍳 Menu</h2>
+                <div class="diagram">
+                        🔑 <a href="#part1">Créer des clés SSH</a><br>
+                        🛒 <a href="#part2">Importer les clés SSH</a><br>
+                        🍳 <a href="#part3">Préparer la configuration réseau</a><br>
+                        🏠 <a href="#part4">Créer l'instance (VM ⇄ compute)</a><br>
+                </div><br>
 
-                <a id='lien' href="./index.html">Retour au sommaire</a>
-        </div>
-        <hr>
+                <!-- Partie I -->
+                <div class="section-title" id="part1">🔑 Créer des clés SSH</div>
 
-        <!-- ****************** Chapitre I ****************** -->
-        <h2 id="chap1"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">1.
-                        Créer des clés SSH</a></h2>
-
-        <p>Les clés publiques et privées SSH forment une paire asymétrique utilisée pour sécuriser l'authentification
-                lors
-                des connexions à distance, sans mot de passe. <br>
-                La clé privée reste secrète sur votre machine (client), tandis que
-                la clé publique est partagée avec le serveur distant, qui l'utilise pour vérifier votre identité via un
-                défi
-                cryptographique. Cela repose sur la cryptographie à clé publique, comme RSA (initiales des 3 inventeurs)
-                ou ECDSA, où la clé publique
-                chiffre
-                un message que seule la clé privée peut déchiffrer.</p>
-        <ul>
-                <li><a target="_blank"
-                                href="https://www.it-connect.fr/chapitres/quest-ce-que-ssh/#google_vignette">Qu’est-ce
-                                que SSH ?
-                        </a></li>
-                <li><a target="_blank" href="https://www.youtube.com/watch?v=gxQKw7A6qDM">Le protocole SSH pour
-                                les débutants</a></li>
-                <li><a target="_blank"
-                                href="https://drane.ac-lyon.fr/spip/IMG/scenari/ubuntu2diapo/co/reseau_openssh.html?mode=html">SSH
-                                -
-                                autre définition</a></li>
-        </ul>
-
-        <h3>Création de clés SSH via Windows PowerShell</h3>
-
-        <p>Pour créer les clés publiques et privées pour le protocole SSH, il faut suivre les étapes suivantes :</p>
-        <ul>
-                <li>Dans "Rechercher" de Windows, saisir : Windows PowerShell (terminal)</li>
-                <li>Saisir dans le terminal : ssh-keygen -h</li>
+                <a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#create-ssh">Documentation
+                        OVH</a>
+                <p>Les clés publiques et privées SSH forment une paire asymétrique utilisée pour sécuriser
+                        l'authentification
+                        lors
+                        des connexions à distance, sans mot de passe. <br>
+                        La clé privée reste secrète sur votre machine (client), tandis que
+                        la clé publique est partagée avec le serveur distant, qui l'utilise pour vérifier votre identité
+                        via un
+                        défi
+                        cryptographique. Cela repose sur la cryptographie à clé publique, comme RSA (initiales des 3
+                        inventeurs)
+                        ou ECDSA, où la clé publique
+                        chiffre
+                        un message que seule la clé privée peut déchiffrer.</p>
                 <ul>
-                        <li>ssh-keygen : programme qui génère les paires de clés SSH</li>
-                        <li>-h : option “help”</li>
-                        <li>Les clés sont générées dans le répertoire C:\users\LRCOM\.ssh</li>
+                        <li><a target="_blank"
+                                        href="https://www.it-connect.fr/chapitres/quest-ce-que-ssh/#google_vignette">Qu’est-ce
+                                        que SSH ?
+                                </a></li>
+                        <li><a target="_blank" href="https://www.youtube.com/watch?v=gxQKw7A6qDM">Le protocole SSH pour
+                                        les débutants</a></li>
+                        <li><a target="_blank"
+                                        href="https://drane.ac-lyon.fr/spip/IMG/scenari/ubuntu2diapo/co/reseau_openssh.html?mode=html">SSH
+                                        -
+                                        autre définition</a></li>
                 </ul>
-                <li>Récupérer la clé publique, en saisissant dans le shell (terminal) : Get-Content
-                        "C:\Users\LRCOM\.ssh\id_ed25519.pub"</li>
-                <li>Copier la clé publique générée</li>
-        </ul>
 
-        <i><a href="#menu">Retour au menu</a></i><br><br>
+                <h3>Création de clés SSH via Windows PowerShell</h3>
 
+                <p>Pour créer les clés publiques et privées pour le protocole SSH, il faut suivre les étapes suivantes :
+                </p>
+                <ul>
+                        <li>Dans "Rechercher" de Windows, saisir : Windows PowerShell (terminal)</li>
+                        <li>Saisir dans le terminal : ssh-keygen -h</li>
+                        <ul>
+                                <li>ssh-keygen : programme qui génère les paires de clés SSH</li>
+                                <li>-h : option “help”</li>
+                                <li>Les clés sont générées dans le répertoire C:\users\LRCOM\.ssh</li>
+                        </ul>
+                        <li>Récupérer la clé publique, en saisissant dans le shell (terminal) : Get-Content
+                                "C:\Users\LRCOM\.ssh\id_ed25519.pub"</li>
+                        <li>Copier la clé publique générée</li>
+                </ul><br>
 
-        <!-- ****************** Chapitre II ****************** -->
-        <h2 id="chap2"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#import-ssh">2.
-                        Importer les clés SSH</a></h2>
+                <!-- Partie II -->
+                <div class="section-title" id="part2">🛒 Importer les clés SSH</div>
 
-        <p>Dans l'espace client OVHcloud, section Public Cloud 👉 projet concerné 👉 Paramètres 👉 Clés SSH, ajouter
-                la clé publique en entrant un nom et la chaîne de clé. <br> Les caractères composant cette clé doivent
-                représenter une unique ligne pour être prise en compte par OVHCloud.</p>
+                <a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011#import-ssh">Documentation
+                        OVH</a>
 
-        <i><a href="#menu">Retour au menu</a></i><br><br>
-
-        <!-- ****************** Chapitre III ****************** -->
-        <h2 id="chap3"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">3.
-                        Préparer la configuration réseau (ne concerne que les réseaux internes)</a></h2>
-
-        <p>Pour un mini projet simple, opter pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans
-                réseau privé initial ; passer directement à l'étape suivante si pas de vRack nécessaire.</p>
-
-        <table>
-                <thead>
-                        <tr>
-                                <th>Notion</th>
-                                <th>Définition simple</th>
-                                <th>Rôle avec vRack / OVHcloud</th>
-                        </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                                <td>vRack</td>
-                                <td>Réseau privé OVHcloud qui relie tes serveurs et services entre eux, sans passer par
-                                        Internet public.</td>
-                                <td>Permet de faire circuler tes données sensibles entre tes ressources (serveurs
-                                        dédiés, Public Cloud, etc.) sur un réseau isolé des autres clients OVH et du web
-                                        public, tant que tu n’exposes pas toi‑même ces services via une IP publique ou
-                                        une mauvaise config.</td>
-                        </tr>
-                        <tr>
-                                <td>LAN isolé</td>
-                                <td>Réseau local (comme chez toi derrière ta box) où seules les machines raccordées à ce
-                                        réseau peuvent se parler.</td>
-                                <td>Le vRack se comporte comme un LAN isolé hébergé chez OVHcloud : seul ton parc de
-                                        machines raccordées y a accès.</td>
-                        </tr>
-                        <tr>
-                                <td>Switch virtuel</td>
-                                <td>Équivalent logiciel d’un switch physique (multiprise réseau) qui relie plusieurs
-                                        machines sur un même réseau local.</td>
-                                <td>Le vRack fonctionne comme un gros switch virtuel : tu “branches” tes
-                                        serveurs/instances dessus via leurs interfaces privées.</td>
-                        </tr>
-                        <tr>
-                                <td>VLAN privé</td>
-                                <td>“Sous‑réseau” logique à l’intérieur d’un switch, séparé des autres VLAN, réservé à
-                                        un usage précis.</td>
-                                <td>Dans le vRack, tu peux créer plusieurs VLAN privés (prod, préprod, BDD, etc.) pour
-                                        segmenter ton réseau tout en restant sur l’infra vRack.</td>
-                        </tr>
-                        <tr>
-                                <td>Cluster</td>
-                                <td>Groupe de machines qui travaillent ensemble pour fournir un service (BDD,
-                                        Kubernetes, serveurs applicatifs…).</td>
-                                <td>La communication interne du cluster passe typiquement par un réseau privé comme le
-                                        vRack, pour limiter l’exposition au public.</td>
-                        </tr>
-                        <tr>
-                                <td>VLAN de prod / VLAN de préprod</td>
-                                <td>Deux environnements séparés : prod (réel, pour les utilisateurs) et préprod (tests
-                                        avancés avant mise en ligne).</td>
-                                <td>On crée par exemple un VLAN “prod” et un VLAN “préprod” dans le même vRack pour
-                                        isoler les flux tout en gardant une administration centralisée.</td>
-                        </tr>
-                        <tr>
-                                <td>Confidentialité des données</td>
-                                <td>Seules tes ressources rattachées au vRack voient le trafic qui y circule ; les
-                                        autres clients OVH et Internet n’y ont pas accès directement.</td>
-                                <td>Le vRack fournit un fort niveau d’isolation réseau, mais la confidentialité dépend
-                                        aussi de ta configuration (pare‑feu, IP publiques, comptes, etc.).</td>
-                        </tr>
-                </tbody>
-        </table><br>
-
-        <i><a href="#menu">Retour au menu</a></i><br><br>
-
-
-        <!-- ****************** Chapitre IV ****************** -->
-        <h2 id="chap4"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">4.
-                        Créer
-                        l'instance (VM ⇄ compute)</a></h2>
-
-        <ul>
-                <li>Sélectionnez le modèle (flavor) <strong>👉 un petit modèle comme "Discovery" pour des tests
-                                :</strong>
-                        <a target="_blank" href="(https://www.ovhcloud.com/fr/public-cloud/prices/)">[1]</a>
-                        <a target="_blank" href="(https://www.ovhcloud.com/en/public-cloud/virtual-instances/)">[2]</a>
-                        <a target="_blank"
-                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[3]</a>
-                </li><br>
-
-                <table>
-                        <thead>
-                                <tr>
-                                        <th>Caractéristique</th>
-                                        <th>Ce que c’est</th>
-                                        <th>Ce que ça implique pour mon petit projet FastAPI</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                        <td>2 Go de RAM</td>
-                                        <td>Mémoire vive utilisée par l’OS, FastAPI, le serveur web (Uvicorn/Gunicorn),
-                                                et éventuellement un peu de cache.</td>
-                                        <td>Largement suffisant pour un petit service FastAPI avec menu déroulant, sans
-                                                traitements lourds ni grande base en mémoire.</td>
-                                </tr>
-                                <tr>
-                                        <td>1 vCore (≈ 2 GHz)</td>
-                                        <td>Cœur CPU virtuel qui exécute le code (Python, FastAPI, OS).</td>
-                                        <td>Adapte très bien pour un site quasi statique ou une API légère avec peu de
-                                                trafic simultané.</td>
-                                </tr>
-                                <tr>
-                                        <td>25 Go NVMe</td>
-                                        <td>Disque système rapide (SSD NVMe) pour l’OS, le code FastAPI, les logs et
-                                                quelques fichiers. C'est le stockage (I/O)</td>
-                                        <td>Suffisant pour mon projet (code + dépendances + logs). Limite seulement si
-                                                je stocke de gros fichiers ou beaucoup de données.</td>
-                                </tr>
-                                <tr>
-                                        <td>100 Mbit/s</td>
-                                        <td>Débit réseau maximal théorique d’environ 100 Mégabits par seconde vers
-                                                Internet.</td>
-                                        <td>Très largement suffisant pour servir un petit site/API avec des réponses
-                                                légères en JSON/HTML.</td>
-                                </tr>
-                                <tr>
-                                        <td>Région 1-AZ</td>
-                                        <td>Région géographique (ex. GRA en France) avec au moins une “zone de
-                                                disponibilité” gérée par OVHcloud.</td>
-                                        <td>Je choisis une région proche (ex. GRA) pour la latence. Pour un petit projet
-                                                perso, je n'ai pas besoin de gérer moi-même plusieurs AZ.</td>
-                                </tr>
-                                <tr>
-                                        <td>Modèle D2-2 (Discovery)</td>
-                                        <td>Petite instance de test avec ressources partagées (1 vCPU, 2 Go RAM, 25 Go
-                                                NVMe).</td>
-                                        <td>Très adaptée pour mon FastAPI simple de validation de menu déroulant, avec
-                                                un coût horaire faible tant que j'éteins/supprimes quand je n’en ai pas
-                                                besoin. </td>
-                                </tr>
-                        </tbody>
-                </table><br>
-
-                <li>
-                        <p><a target="_blank"
-                                        href="https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031">Choisissez
-                                        une région proche</a> <strong>👉 région 1-AZ pour un petit modèle</strong></p>
-                </li><br>
-
-                <table>
-                        <thead>
-                                <tr>
-                                        <th>Mode / notion</th>
-                                        <th>Définition</th>
-                                        <th>Avantages principaux</th>
-                                        <th>Limites</th>
-                                        <th>Cas d’usage typiques</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                        <td>AZ (Availability Zone)</td>
-                                        <td>Unité d’infrastructure composée d’un ou plusieurs datacenters isolés dans
-                                                une région géographique où sont hébergés les services Public Cloud.</td>
-                                        <td>Isolation des pannes locales, redondance interne (alimentation, réseau,
-                                                refroidissement).</td>
-                                        <td>Une seule AZ ne protège pas contre une panne de zone ou de région entière.
-                                        </td>
-                                        <td>Brique de base pour construire des régions 1-AZ, 3-AZ ou des Local Zones.
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>Région 1-AZ</td>
-                                        <td>Région constituée d’une seule AZ, elle-même composée de un ou plusieurs
-                                                datacenters interconnectés.</td>
-                                        <td>Coût optimisé, simplicité opérationnelle, redondance locale (erasure coding
-                                                / réplication interne), adaptée aux besoins généraux.</td>
-                                        <td>Pas de redondance multi-AZ, vulnérable à une panne totale de la zone, pas de
-                                                protection inter-régions.</td>
-                                        <td>Dev, environnements de transition, sauvegardes, applications non critiques
-                                                ou sensibles au coût. </td>
-                                </tr>
-                                <tr>
-                                        <td>Région 3-AZ</td>
-                                        <td>Région composée de trois AZ indépendantes, séparées géographiquement (≈ 30
-                                                km) avec infrastructures isolées.</td>
-                                        <td>Haute disponibilité, isolation des pannes entre zones, réplication
-                                                inter-zones possible, faible latence entre AZ, meilleure résilience.
-                                        </td>
-                                        <td>Coût plus élevé, plus complexe à concevoir et opérer, ne protège pas contre
-                                                une panne régionale complète.</td>
-                                        <td>Applications critiques, e-commerce, services essentiels, scénarios de
-                                                reprise après sinistre, charges de travail nécessitant une haute dispo.
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>Local Zones</td>
-                                        <td>AZ unique déployée au plus près d’une zone géographique spécifique, avec un
-                                                ensemble limité de services (Compute / Storage).</td>
-                                        <td>Latence très faible pour les utilisateurs proches, traitement et stockage
-                                                localisés, aide à la conformité réglementaire.</td>
-                                        <td>Pas de redondance inter-zones, vulnérable à une panne locale, périmètre de
-                                                services et capacité plus restreints.</td>
-                                        <td>Jeux en ligne, temps réel, flux vidéo, edge computing, workloads qui exigent
-                                                une localisation stricte des données. </td>
-                                </tr>
-                                <tr>
-                                        <td>Comparaison rapide</td>
-                                        <td>1-AZ : 1 zone / 3-AZ : 3 zones / Local Zone : 1 zone proche des
-                                                utilisateurs.</td>
-                                        <td>1-AZ : coût bas ; 3-AZ : résilience et haute dispo ; Local Zones : latence
-                                                minimale.</td>
-                                        <td>1-AZ : risque sur panne de zone ; 3-AZ : coût + complexité ; Local Zones :
-                                                peu de services, pas de multi-AZ.</td>
-                                        <td>Choix selon priorité : coût (1-AZ), disponibilité (3-AZ), latence/proximité
-                                                (Local Zones). </td>
-                                </tr>
-                        </tbody>
-                </table><br>
-
-                <li>
-                        <p>Sélectionner une image (OS) + clé publique SSH à ajouter : <strong>👉 dans tous les cas,
-                                        prendre l'OS Ubuntu
-                                        22.04</strong></p>
-                </li>
-                <li>Configurer son instance : <strong>👉 pour un petit modèle : 1 instance, pas de script
-                                post-installation et pas de sauvegarde automatisée</strong> </li><br>
-
-                <table>
-                        <thead>
-                                <tr>
-                                        <th>Élément</th>
-                                        <th>Ce que c’est</th>
-                                        <th>Ce que ça implique pour toi maintenant</th>
-                                        <th>Quand ça devient utile plus tard</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                        <td>Nombre d’instances à créer</td>
-                                        <td>C’est le nombre de VM identiques qu’OVHcloud va lancer d’un coup avec la
-                                                même configuration (même flavor, même image, même clé SSH, etc.). <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
-                                                <a target="_blank"
-                                                        href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
-                                                </a>
-                                        </td>
-
-                                        <td>Pour ton projet FastAPI/Dash actuel, tu mets une instance. Une seule VM
-                                                suffit
-                                                largement pour héberger ton app et apprendre le cloud sans complexité de
-                                                “scaling” ni de préprod. <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
-                                        </td>
-                                        <td>Quand tu feras du <strong>scaling horizontal</strong> (plusieurs instances
-                                                derrière un <strong>load balancer</strong>) ou que tu voudras créer d’un
-                                                coup plusieurs environnements
-                                                identiques (ex. 3 instances FastAPI pour tests de charge), tu pourras
-                                                augmenter ce nombre. <br><br>
-                                                <u>Exemples :</u> <br>
-                                                - Création d'une deuxième instance pour une version bêta <br>
-                                                - Quand le nombre de clients et de requêtes explose, on ajoute des
-                                                instances pour partager la charge, au lieu de “gonfler” une seule
-                                                machine à l’infini. Et dans ce cas là, le load balancer sera mis devant
-                                                pour répartir les requêtes entre les 2 instances (puis 3, 4, etc. si
-                                                besoin)
-                                                <a target="_blank"
-                                                        href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
-                                                </a>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031)">[3]</a>
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>Script de post-installation (user-data)</td>
-                                        <td>Petit script (souvent shell ou cloud-init) exécuté automatiquement au
-                                                premier démarrage de la VM : installation de paquets, création
-                                                d’utilisateurs, configuration de base, etc. <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
-                                        </td>
-                                        <td>À ton niveau actuel, tu peux laisser ce champ vide. Tu feras à la main les
-                                                étapes d’installation Python, FastAPI, Dash, Uvicorn, etc., une fois
-                                                connecté en SSH. Ça te permet de comprendre ce que tu fais, étape par
-                                                étape. <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
-                                        </td>
-                                        <td>Plus tard, quand tu automatiseras tes déploiements, tu pourras y mettre un
-                                                script qui installe automatiquement Python, ton environnement virtuel,
-                                                tes dépendances, crée un user “app”, déploie ton code et démarre ton
-                                                service FastAPI/Dash dès la création de l’instance. <br><br>
-                                                Mais étant donné qu'on a recours à une image Docker, cet élément aura
-                                                peu d'importance.
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started-instance?id=kb_article_view&sysparm_article=KB0050764)">[5]</a>
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>Sauvegarde automatisée des instances</td>
-                                        <td>Service OVHcloud qui crée régulièrement des snapshots (copies) complets de
-                                                ta VM pour pouvoir la restaurer ou cloner facilement en cas de problème
-                                                (erreur, crash, suppression accidentelle). <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051162)">[7]</a>
-                                        </td>
-                                        <td>Ce n’est pas indispensable pour un petit environnement de test et ça a un
-                                                coût supplémentaire. Tu peux commencer sans sauvegarde auto, à condition
-                                                de garder ton code versionné (Git) et ta config documentée. <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
-                                        </td>
-                                        <td>Utile quand ton instance héberge une app importante ou des données que tu ne
-                                                veux pas perdre : tu peux restaurer rapidement après un incident ou
-                                                revenir à un état “propre” connu (avant une grosse mise à jour par
-                                                exemple). <br>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
-                                                <a target="_blank"
-                                                        href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-create-restore-virtual-server-from-backup?id=kb_article_view&sysparm_article=KB0050670)">[8]</a>
-                                        </td>
-                                </tr>
-                        </tbody>
-                </table><br>
-
-                <strong>Vocabulaire</strong><br>
-
-                <table>
-                        <thead>
-                                <tr>
-                                        <th>Concept</th>
-                                        <th>Définition</th>
-                                </tr>
-                        </thead>
-                        <tbody>
-                                <tr>
-                                        <td>Scaling horizontal ("scale out")</td>
-                                        <td>Consiste à ajouter des machines (instances) identiques pour partager la
-                                                charge, au lieu de rendre une seule machine toujours plus grosse</td>
-                                </tr>
-                                <tr>
-                                        <td>Load balancer</td>
-                                        <td>Composant qui se place devant plusieurs instances et répartit les requêtes
-                                                entre elles</td>
-                                </tr>
-                        </tbody>
-                </table><br>
-
-
-                <li>Confirmez votre réseau : <strong> 👉 choisir le mode public pour publier une application</strong>
-                </li>
+                <p>Dans l'espace client OVHcloud, section Public Cloud 👉 projet concerné 👉 Paramètres 👉 Clés SSH,
+                        ajouter
+                        la clé publique en entrant un nom et la chaîne de clé. <br> Les caractères composant cette clé
+                        doivent
+                        représenter une unique ligne pour être prise en compte par OVHCloud.</p>
                 <br>
 
+
+                <!-- Partie III -->
+                <div class="section-title" id="part3">🍳 Préparer la configuration réseau (ne concerne que les réseaux
+                        internes)</div>
+
+                <a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">Documentation
+                        OVH</a>
+
+                <p>Pour un mini projet simple, opter pour le mode Public (exposition directe IPv4/IPv6 à Internet) sans
+                        réseau privé initial ; passer directement à l'étape suivante si pas de vRack nécessaire.</p>
+
                 <table>
                         <thead>
                                 <tr>
-                                        <th>Mode réseau</th>
-                                        <th>Définition</th>
-                                        <th>Exemple concret</th>
+                                        <th>Notion</th>
+                                        <th>Définition simple</th>
+                                        <th>Rôle avec vRack / OVHcloud</th>
                                 </tr>
                         </thead>
                         <tbody>
                                 <tr>
-                                        <td>Mode public</td>
-                                        <td>L’instance reçoit une adresse IP publique et est directement accessible
-                                                depuis Internet si les ports sont ouverts. </td>
-                                        <td>Instance Ubuntu avec FastAPI exposée sur une IP publique, mais tu limites
-                                                l’accès au dashboard en autorisant uniquement ton adresse IP (firewall
-                                                OVH). </td>
+                                        <td>vRack</td>
+                                        <td>Réseau privé OVHcloud qui relie tes serveurs et services entre eux, sans
+                                                passer par
+                                                Internet public.</td>
+                                        <td>Permet de faire circuler tes données sensibles entre tes ressources
+                                                (serveurs
+                                                dédiés, Public Cloud, etc.) sur un réseau isolé des autres clients OVH
+                                                et du web
+                                                public, tant que tu n’exposes pas toi‑même ces services via une IP
+                                                publique ou
+                                                une mauvaise config.</td>
                                 </tr>
                                 <tr>
-                                        <td>Mode privé</td>
-                                        <td>L’instance n’a pas d’IP publique : elle est joignable uniquement via un
-                                                réseau privé (vRack / Private Network) et, éventuellement, via une
-                                                Gateway, un Load Balancer ou un VPN. </td>
-                                        <td>Comme un réseau interne d’entreprise : plusieurs serveurs (API, BDD) se
-                                                parlent entre eux dans un réseau privé, sans être exposés directement
-                                                sur Internet, seul un reverse proxy / LB public fait l’interface. </td>
+                                        <td>LAN isolé</td>
+                                        <td>Réseau local (comme chez toi derrière ta box) où seules les machines
+                                                raccordées à ce
+                                                réseau peuvent se parler.</td>
+                                        <td>Le vRack se comporte comme un LAN isolé hébergé chez OVHcloud : seul ton
+                                                parc de
+                                                machines raccordées y a accès.</td>
+                                </tr>
+                                <tr>
+                                        <td>Switch virtuel</td>
+                                        <td>Équivalent logiciel d’un switch physique (multiprise réseau) qui relie
+                                                plusieurs
+                                                machines sur un même réseau local.</td>
+                                        <td>Le vRack fonctionne comme un gros switch virtuel : tu “branches” tes
+                                                serveurs/instances dessus via leurs interfaces privées.</td>
+                                </tr>
+                                <tr>
+                                        <td>VLAN privé</td>
+                                        <td>“Sous‑réseau” logique à l’intérieur d’un switch, séparé des autres VLAN,
+                                                réservé à
+                                                un usage précis.</td>
+                                        <td>Dans le vRack, tu peux créer plusieurs VLAN privés (prod, préprod, BDD,
+                                                etc.) pour
+                                                segmenter ton réseau tout en restant sur l’infra vRack.</td>
+                                </tr>
+                                <tr>
+                                        <td>Cluster</td>
+                                        <td>Groupe de machines qui travaillent ensemble pour fournir un service (BDD,
+                                                Kubernetes, serveurs applicatifs…).</td>
+                                        <td>La communication interne du cluster passe typiquement par un réseau privé
+                                                comme le
+                                                vRack, pour limiter l’exposition au public.</td>
+                                </tr>
+                                <tr>
+                                        <td>VLAN de prod / VLAN de préprod</td>
+                                        <td>Deux environnements séparés : prod (réel, pour les utilisateurs) et préprod
+                                                (tests
+                                                avancés avant mise en ligne).</td>
+                                        <td>On crée par exemple un VLAN “prod” et un VLAN “préprod” dans le même vRack
+                                                pour
+                                                isoler les flux tout en gardant une administration centralisée.</td>
+                                </tr>
+                                <tr>
+                                        <td>Confidentialité des données</td>
+                                        <td>Seules tes ressources rattachées au vRack voient le trafic qui y circule ;
+                                                les
+                                                autres clients OVH et Internet n’y ont pas accès directement.</td>
+                                        <td>Le vRack fournit un fort niveau d’isolation réseau, mais la confidentialité
+                                                dépend
+                                                aussi de ta configuration (pare‑feu, IP publiques, comptes, etc.).</td>
                                 </tr>
                         </tbody>
                 </table><br>
 
-                <li>Facturation : <strong>👉 pour une application test avec plus de flexibilité, choisir une facturation
-                                horaire.</strong><br> Ne pas hésiter à suspendre la facturation via l'icône des 3
-                        boutons verticales de la colonne <i>Actions</i> en sélectionnant l'instance ciblée, pour éviter
-                        de subir des
-                        frais non souhaités 😉(menu à gauche → partie "COMPUTE" → sous-partie "Instances").</li>
-        </ul>
-
-        <i><a href="#menu">Retour au menu</a></i><br><br>
-
-        <!-- ****************** Chapitre V ****************** -->
-        <h2 id="chap5"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">5.
-                        Se
-                        connecter à l'instance</a></h2>
-
-        <p><strong>Pour une mise à jour des paquets, <u>en local</u> :</strong></p>
-        <ul>
-                <li>Tapper d'abord dans le shell : <i>sudo apt update</i></li><br>
-                <li>Puis tapper ensuite dans le shell : <i>sudo apt upgrade</i></li><br>
-                <li>Si une demande de mise à jour est demandée, tapper <i>Y</i></li><br>
-        </ul>
-
-        <p><strong>Pour se connecter à l'instance :</strong></p>
-        <ul>
-                <li>Sur le site OVH, après avoir sélectionné le projet, aller sur le menu à gauche → partie "COMPUTE" →
-                        sous-partie "Instances" (le statut doit être en mode "activé")</li><br>
-                <li>Noter le nom de l'instance : <strong>👉 ici c'est : d2-2-sbg5</strong> </li><br>
-                <li><strong>Noter l’IPv4 publique</strong> (colonne "IP Publique(s)" → 1ère ligne. La 2ème ligne
-                        concerne l'IPv6 publique)</li><br>
-                <li>Ouvrir Windows PowerShell et saisir ceci pour se connecter : <br>
-                        <strong> ssh -i $env:USERPROFILE\.ssh\id_ed25519 ubuntu@IPv4</strong>
-                </li>
+                <!-- Partie IV -->
+                <div class="section-title" id="part4">Créer l'instance (VM ⇄ compute)</div>
+                <a target="_blank"
+                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">Documentation
+                        OVH</a><br><br>
                 <ul>
-                        <li><i>ssh -i $env:USERPROFILE\.ssh\id_ed25519</i> → indique la clé privée</li>
-                        <li><i>ubuntu</i> → utilisateur par défaut sur Ubuntu 22.04 OVH</li>
-                        <li><i>IPv4</i> → saisir l'adresse IPv4 de mon instance</li>
+                        <li>Sélectionnez le modèle (flavor) <strong>👉 un petit modèle comme "Discovery" pour des tests
+                                        :</strong>
+                                <a target="_blank" href="(https://www.ovhcloud.com/fr/public-cloud/prices/)">[1]</a>
+                                <a target="_blank"
+                                        href="(https://www.ovhcloud.com/en/public-cloud/virtual-instances/)">[2]</a>
+                                <a target="_blank"
+                                        href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[3]</a>
+                        </li>
+
+                        <table>
+                                <thead>
+                                        <tr>
+                                                <th>Caractéristique</th>
+                                                <th>Ce que c’est</th>
+                                                <th>Ce que ça implique pour mon petit projet FastAPI</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td>2 Go de RAM</td>
+                                                <td>Mémoire vive utilisée par l’OS, FastAPI, le serveur web
+                                                        (Uvicorn/Gunicorn),
+                                                        et éventuellement un peu de cache.</td>
+                                                <td>Largement suffisant pour un petit service FastAPI avec menu
+                                                        déroulant, sans
+                                                        traitements lourds ni grande base en mémoire.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>1 vCore (≈ 2 GHz)</td>
+                                                <td>Cœur CPU virtuel qui exécute le code (Python, FastAPI, OS).</td>
+                                                <td>Adapte très bien pour un site quasi statique ou une API légère avec
+                                                        peu de
+                                                        trafic simultané.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>25 Go NVMe</td>
+                                                <td>Disque système rapide (SSD NVMe) pour l’OS, le code FastAPI, les
+                                                        logs et
+                                                        quelques fichiers. C'est le stockage (I/O)</td>
+                                                <td>Suffisant pour mon projet (code + dépendances + logs). Limite
+                                                        seulement si
+                                                        je stocke de gros fichiers ou beaucoup de données.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>100 Mbit/s</td>
+                                                <td>Débit réseau maximal théorique d’environ 100 Mégabits par seconde
+                                                        vers
+                                                        Internet.</td>
+                                                <td>Très largement suffisant pour servir un petit site/API avec des
+                                                        réponses
+                                                        légères en JSON/HTML.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>Région 1-AZ</td>
+                                                <td>Région géographique (ex. GRA en France) avec au moins une “zone de
+                                                        disponibilité” gérée par OVHcloud.</td>
+                                                <td>Je choisis une région proche (ex. GRA) pour la latence. Pour un
+                                                        petit projet
+                                                        perso, je n'ai pas besoin de gérer moi-même plusieurs AZ.</td>
+                                        </tr>
+                                        <tr>
+                                                <td>Modèle D2-2 (Discovery)</td>
+                                                <td>Petite instance de test avec ressources partagées (1 vCPU, 2 Go RAM,
+                                                        25 Go
+                                                        NVMe).</td>
+                                                <td>Très adaptée pour mon FastAPI simple de validation de menu
+                                                        déroulant, avec
+                                                        un coût horaire faible tant que j'éteins/supprimes quand je n’en
+                                                        ai pas
+                                                        besoin. </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+                        <li>
+                                <p><a target="_blank"
+                                                href="https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031">Choisissez
+                                                une région proche</a> <strong>👉 région 1-AZ pour un petit
+                                                modèle</strong></p>
+                        </li>
+
+                        <table>
+                                <thead>
+                                        <tr>
+                                                <th>Mode / notion</th>
+                                                <th>Définition</th>
+                                                <th>Avantages principaux</th>
+                                                <th>Limites</th>
+                                                <th>Cas d’usage typiques</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td>AZ (Availability Zone)</td>
+                                                <td>Unité d’infrastructure composée d’un ou plusieurs datacenters isolés
+                                                        dans
+                                                        une région géographique où sont hébergés les services Public
+                                                        Cloud.</td>
+                                                <td>Isolation des pannes locales, redondance interne (alimentation,
+                                                        réseau,
+                                                        refroidissement).</td>
+                                                <td>Une seule AZ ne protège pas contre une panne de zone ou de région
+                                                        entière.
+                                                </td>
+                                                <td>Brique de base pour construire des régions 1-AZ, 3-AZ ou des Local
+                                                        Zones.
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Région 1-AZ</td>
+                                                <td>Région constituée d’une seule AZ, elle-même composée de un ou
+                                                        plusieurs
+                                                        datacenters interconnectés.</td>
+                                                <td>Coût optimisé, simplicité opérationnelle, redondance locale (erasure
+                                                        coding
+                                                        / réplication interne), adaptée aux besoins généraux.</td>
+                                                <td>Pas de redondance multi-AZ, vulnérable à une panne totale de la
+                                                        zone, pas de
+                                                        protection inter-régions.</td>
+                                                <td>Dev, environnements de transition, sauvegardes, applications non
+                                                        critiques
+                                                        ou sensibles au coût. </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Région 3-AZ</td>
+                                                <td>Région composée de trois AZ indépendantes, séparées géographiquement
+                                                        (≈ 30
+                                                        km) avec infrastructures isolées.</td>
+                                                <td>Haute disponibilité, isolation des pannes entre zones, réplication
+                                                        inter-zones possible, faible latence entre AZ, meilleure
+                                                        résilience.
+                                                </td>
+                                                <td>Coût plus élevé, plus complexe à concevoir et opérer, ne protège pas
+                                                        contre
+                                                        une panne régionale complète.</td>
+                                                <td>Applications critiques, e-commerce, services essentiels, scénarios
+                                                        de
+                                                        reprise après sinistre, charges de travail nécessitant une haute
+                                                        dispo.
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Local Zones</td>
+                                                <td>AZ unique déployée au plus près d’une zone géographique spécifique,
+                                                        avec un
+                                                        ensemble limité de services (Compute / Storage).</td>
+                                                <td>Latence très faible pour les utilisateurs proches, traitement et
+                                                        stockage
+                                                        localisés, aide à la conformité réglementaire.</td>
+                                                <td>Pas de redondance inter-zones, vulnérable à une panne locale,
+                                                        périmètre de
+                                                        services et capacité plus restreints.</td>
+                                                <td>Jeux en ligne, temps réel, flux vidéo, edge computing, workloads qui
+                                                        exigent
+                                                        une localisation stricte des données. </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Comparaison rapide</td>
+                                                <td>1-AZ : 1 zone / 3-AZ : 3 zones / Local Zone : 1 zone proche des
+                                                        utilisateurs.</td>
+                                                <td>1-AZ : coût bas ; 3-AZ : résilience et haute dispo ; Local Zones :
+                                                        latence
+                                                        minimale.</td>
+                                                <td>1-AZ : risque sur panne de zone ; 3-AZ : coût + complexité ; Local
+                                                        Zones :
+                                                        peu de services, pas de multi-AZ.</td>
+                                                <td>Choix selon priorité : coût (1-AZ), disponibilité (3-AZ),
+                                                        latence/proximité
+                                                        (Local Zones). </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+                        <li>
+                                <p>Sélectionner une image (OS) + clé publique SSH à ajouter : <strong>👉 dans tous les
+                                                cas,
+                                                prendre l'OS Ubuntu
+                                                22.04</strong></p>
+                        </li>
+                        <li>Configurer son instance : <strong>👉 pour un petit modèle : 1 instance, pas de script
+                                        post-installation et pas de sauvegarde automatisée</strong> </li>
+
+                        <table>
+                                <thead>
+                                        <tr>
+                                                <th>Élément</th>
+                                                <th>Ce que c’est</th>
+                                                <th>Ce que ça implique pour toi maintenant</th>
+                                                <th>Quand ça devient utile plus tard</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td>Nombre d’instances à créer</td>
+                                                <td>C’est le nombre de VM identiques qu’OVHcloud va lancer d’un coup
+                                                        avec la
+                                                        même configuration (même flavor, même image, même clé SSH,
+                                                        etc.). <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                        <a target="_blank"
+                                                                href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
+                                                        </a>
+                                                </td>
+
+                                                <td>Pour ton projet FastAPI/Dash actuel, tu mets une instance. Une seule
+                                                        VM
+                                                        suffit
+                                                        largement pour héberger ton app et apprendre le cloud sans
+                                                        complexité de
+                                                        “scaling” ni de préprod. <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                </td>
+                                                <td>Quand tu feras du <strong>scaling horizontal</strong> (plusieurs
+                                                        instances
+                                                        derrière un <strong>load balancer</strong>) ou que tu voudras
+                                                        créer d’un
+                                                        coup plusieurs environnements
+                                                        identiques (ex. 3 instances FastAPI pour tests de charge), tu
+                                                        pourras
+                                                        augmenter ce nombre. <br><br>
+                                                        <u>Exemples :</u> <br>
+                                                        - Création d'une deuxième instance pour une version bêta <br>
+                                                        - Quand le nombre de clients et de requêtes explose, on ajoute
+                                                        des
+                                                        instances pour partager la charge, au lieu de “gonfler” une
+                                                        seule
+                                                        machine à l’infini. Et dans ce cas là, le load balancer sera mis
+                                                        devant
+                                                        pour répartir les requêtes entre les 2 instances (puis 3, 4,
+                                                        etc. si
+                                                        besoin)
+                                                        <a target="_blank"
+                                                                href="(https://www.ovhcloud.com/fr/public-cloud/virtual-instances/)">[2]
+                                                        </a>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-deployments-modes?id=kb_article_view&sysparm_article=KB0066031)">[3]</a>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Script de post-installation (user-data)</td>
+                                                <td>Petit script (souvent shell ou cloud-init) exécuté automatiquement
+                                                        au
+                                                        premier démarrage de la VM : installation de paquets, création
+                                                        d’utilisateurs, configuration de base, etc. <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
+                                                </td>
+                                                <td>À ton niveau actuel, tu peux laisser ce champ vide. Tu feras à la
+                                                        main les
+                                                        étapes d’installation Python, FastAPI, Dash, Uvicorn, etc., une
+                                                        fois
+                                                        connecté en SSH. Ça te permet de comprendre ce que tu fais,
+                                                        étape par
+                                                        étape. <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011)">[1]</a>
+                                                </td>
+                                                <td>Plus tard, quand tu automatiseras tes déploiements, tu pourras y
+                                                        mettre un
+                                                        script qui installe automatiquement Python, ton environnement
+                                                        virtuel,
+                                                        tes dépendances, crée un user “app”, déploie ton code et démarre
+                                                        ton
+                                                        service FastAPI/Dash dès la création de l’instance. <br><br>
+                                                        Mais étant donné qu'on a recours à une image Docker, cet élément
+                                                        aura
+                                                        peu d'importance.
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-launch-script-at-instance-creation?id=kb_article_view&sysparm_article=KB0050924)">[4]</a>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started-instance?id=kb_article_view&sysparm_article=KB0050764)">[5]</a>
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Sauvegarde automatisée des instances</td>
+                                                <td>Service OVHcloud qui crée régulièrement des snapshots (copies)
+                                                        complets de
+                                                        ta VM pour pouvoir la restaurer ou cloner facilement en cas de
+                                                        problème
+                                                        (erreur, crash, suppression accidentelle). <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051162)">[7]</a>
+                                                </td>
+                                                <td>Ce n’est pas indispensable pour un petit environnement de test et ça
+                                                        a un
+                                                        coût supplémentaire. Tu peux commencer sans sauvegarde auto, à
+                                                        condition
+                                                        de garder ton code versionné (Git) et ta config documentée. <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                                </td>
+                                                <td>Utile quand ton instance héberge une app importante ou des données
+                                                        que tu ne
+                                                        veux pas perdre : tu peux restaurer rapidement après un incident
+                                                        ou
+                                                        revenir à un état “propre” connu (avant une grosse mise à jour
+                                                        par
+                                                        exemple). <br>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/fr-public-cloud-compute-back-up-instance?id=kb_article_view&sysparm_article=KB0051155)">[6]</a>
+                                                        <a target="_blank"
+                                                                href="(https://help.ovhcloud.com/csm/en-public-cloud-compute-create-restore-virtual-server-from-backup?id=kb_article_view&sysparm_article=KB0050670)">[8]</a>
+                                                </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+                        <strong>Vocabulaire</strong><br>
+
+                        <table>
+                                <thead>
+                                        <tr>
+                                                <th>Concept</th>
+                                                <th>Définition</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td>Scaling horizontal ("scale out")</td>
+                                                <td>Consiste à ajouter des machines (instances) identiques pour partager
+                                                        la
+                                                        charge, au lieu de rendre une seule machine toujours plus grosse
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Load balancer</td>
+                                                <td>Composant qui se place devant plusieurs instances et répartit les
+                                                        requêtes
+                                                        entre elles</td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+                        <li>Confirmez votre réseau : <strong> 👉 choisir le mode public pour publier une
+                                        application</strong>
+                        </li>
+
+                        <table>
+                                <thead>
+                                        <tr>
+                                                <th>Mode réseau</th>
+                                                <th>Définition</th>
+                                                <th>Exemple concret</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr>
+                                                <td>Mode public</td>
+                                                <td>L’instance reçoit une adresse IP publique et est directement
+                                                        accessible
+                                                        depuis Internet si les ports sont ouverts. </td>
+                                                <td>Instance Ubuntu avec FastAPI exposée sur une IP publique, mais tu
+                                                        limites
+                                                        l’accès au dashboard en autorisant uniquement ton adresse IP
+                                                        (firewall
+                                                        OVH). </td>
+                                        </tr>
+                                        <tr>
+                                                <td>Mode privé</td>
+                                                <td>L’instance n’a pas d’IP publique : elle est joignable uniquement via
+                                                        un
+                                                        réseau privé (vRack / Private Network) et, éventuellement, via
+                                                        une
+                                                        Gateway, un Load Balancer ou un VPN. </td>
+                                                <td>Comme un réseau interne d’entreprise : plusieurs serveurs (API, BDD)
+                                                        se
+                                                        parlent entre eux dans un réseau privé, sans être exposés
+                                                        directement
+                                                        sur Internet, seul un reverse proxy / LB public fait
+                                                        l’interface. </td>
+                                        </tr>
+                                </tbody>
+                        </table>
+
+                        <li>Facturation : <strong>👉 pour une application test avec plus de flexibilité, choisir une
+                                        facturation
+                                        horaire.</strong><br> Ne pas hésiter à suspendre la facturation via l'icône des
+                                3
+                                boutons verticales de la colonne <i>Actions</i> en sélectionnant l'instance ciblée, pour
+                                éviter
+                                de subir des
+                                frais non souhaités 😉(menu à gauche → partie "COMPUTE" → sous-partie "Instances").</li>
                 </ul><br>
-                <li>Dans Windows PowerShell, si la question suivante s'affiche : <i>“The authenticity of host ...”</i>
-                        👉 tapper <i>yes</i></li><br>
-                <li>Entrer la passphrase conservée dans Keypass</li><br>
-                <li>Un message suivant apparaît, confirmant que le port 22 répond bien : <i>Connection closed by IPv4
-                                port 22</i> (IPv4 : adresse IPv4 de mon instance)</li><br>
-                <li>Par la suite on doit avoir la ligne de commande suivante qui s'affiche, confirmant qu'on est bien
-                        dans le shell de la VM : <i>ubuntu@d2-2-sbg5:~$</i>
-                </li>
-        </ul>
+                <hr>
 
-        <i><a href="#menu">Retour au menu</a></i><br><br>
+                <i><a href="#menu">Retour au menu</a></i><br><br>
 
-
-        <!-- ****************** Chapitre VI ****************** -->
-        <h2 id="chap6"><a target="_blank"
-                        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-getting-started?id=kb_article_view&sysparm_article=KB0051011">6.
-                        Mise en place de l'application</a></h2>
-
-        <div class="questions">
-
-                <label for="key">Nom de la clé privée</label>
-                <input type="text" name="key" id="key" value="id_ed25519"
-                        title="Nom par défaut de la clé privée attribué par OVH"><br>
-
-                <label for="ipv4">Adresse IPv4</label>
-                <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
-
-                <label for="repository">REPOSITORY</label>
-                <input type="text" name="repository" id="repository" placeholder="Nom de l'image"><br>
-
-                <label for="tag">TAG</label>
-                <input type="text" name="tag" id="tag" placeholder="Version de l'image"
-                        title="Par défaut, le nom de la version de l'image est latest"><br>
-
-                <label for="network">Port réseau</label>
-                <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+                <a id='lien' href="./index.html">Retour au sommaire</a>
 
         </div>
-
-        <button type="submit" id="btn">Valider</button>
-
-        <p><strong>Ouvrir Windows PowerShell pour saisir les instructions suivantes, afin de se connecter au serveur OVH
-                        :</strong></p>
-
-        <table>
-                <thead>
-                        <tr>
-                                <th width="70px">Shell</th>
-                                <th>Motif</th>
-                                <th>Explications</th>
-                        </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse1">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response1">IPv4</span></code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Connexion au shell de la VM</td>
-                                <td><b>-i</b> : <i>signifie quel fichier de clé privée utiliser pour
-                                                l’authentification</i>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker --version</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Permet de vérifier si Docker a bien été installé sur la VM</td>
-                                <td>Dans l'affirmative, on aura une réponse du style <i>Docker version 28.2.2, build
-                                                28.2.2-0ubuntu1~22.04.1</i></td>
-                        </tr>
-                        </tr>
-                        <td colspan="3">
-                                <ul>
-                                        <li>
-                                                <pre><code>sudo apt install docker.io -y</code></pre>
-                                        </li>
-                                        <li>
-                                                <pre><code>sudo usermod -aG docker ubuntu</code></pre>
-                                        </li>
-                                </ul>
-                        </td>
-                        <tr>
-                                <td>VM</td>
-                                <td>Si Docker n'est pas installé</td>
-                                <td>Mise à jour des paquets disponibles + installation de Docker dans la VM</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>exit</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Retour dans le shell en local</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker images</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Pour récupérer les valeurs de l'image à importer dans les colonnes "REPOSITORY" et
-                                        "TAG"</td>
-                                <td>Docker images permet d'avoir la taille des images <i>(colonne SIZE)</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker ps -a</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Permet d'afficher la liste des conteneurs exécutés / arrêtés, avec les statuts
-                                        suivants :
-                                        <ul>
-                                                <li>Exited (0) : <i>aucune erreur</i></li>
-                                                <li>Exited (1) : <i>au moins une erreur présente</i></li>
-                                                <li>Exited (137) : <i>conteneur arrêté / forcé / manque de mémoire</i>
-                                                </li>
-                                        </ul>
-                                </td>
-                                <td>
-                                        <ul>
-                                                <li><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une
-                                                                commande
-                                                                Unix qui affiche l’état des processus en cours, et
-                                                                Docker a
-                                                                repris ce nom pour afficher l’état des conteneurs</i>
-                                                </li>
-                                                <li><b>-a</b> : <i>signifie 'all'</i> </li>
-                                        </ul>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker logs CONTAINER ID</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Si un des conteneurs a le statut Exited (1) ou Exited (137)</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker save <span id="repoResponse1">REPOSITORY</span>:<span
-                                                id="tagResponse1">TAG</span> -o <span
-                                                id="repoResponse2">REPOSITORY</span>.tar</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Exportation de l'image ciblée en dossier archivé .tar sur le PC</td>
-                                <td><b>-o</b> : <i>signifie output</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>ls <span id="repoResponse3">REPOSITORY</span>.tar</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Vérifie que le dossier archivé .tar a bien été créé en local</td>
-                                <td><b>ls</b> : <i>signifie “list” : elle sert à lister les fichiers et dossiers d’un
-                                                répertoire</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>scp -i $env:USERPROFILE\.ssh\<span id="keyResponse2">id_ed25519</span> <span
-                                                id="repoResponse4">REPOSITORY</span>.tar ubuntu@<span
-                                                id="ipv4Response2">IPv4</span>:/home/ubuntu/</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Copie le dossier archivé .tar vers la VM OVH</td>
-                                <td><b>scp</b> : <i>signifie Secure Copy Protocol. C’est la commande qui permet
-                                                de copier des fichiers de façon sécurisée entre le PC et la VM en
-                                                utilisant le protocole SSH (chiffrement, même port 22)</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse3">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response3">IPv4</span></code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Connexion au shell de la VM</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <ul>
-                                                <li>
-                                                        <pre><code>ls</code></pre>
-                                                </li>
-                                                ou
-                                                <li>
-                                                        <pre><code>ls -lh</code></pre>
-                                                </li>
-                                        </ul>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Permet de voir si le dossier archivé .tar a bien été transféré dans la VM</td>
-                                <td><b>ls -lh</b> : <i>liste détaillée avec tailles lisibles (Mo, Go, etc.)</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">docker load -i <span id="repoResponse5">REPOSITORY</span>.tar</td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Chargement de l'image dans Docker sur la VM</td>
-                                <td><b>-i</b> : <i>signifie input : elle indique à Docker de quel
-                                                fichier .tar il doit lire
-                                                l’image à importer
-                                        </i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker images</code></pre>
-                                </td>
-                        </tr>
-
-                        <tr>
-                                <td>VM</td>
-                                <td>Vérifie que l'image dans Docker a bien été chargée sur la VM</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker run -d --restart unless-stopped --name <span id="repoResponse6">REPOSITORY</span>-container -p <span id="networkResponse1">PortReseau:PortReseau</span> <span id="repoResponse7">REPOSITORY</span>:<span id="tagResponse2">TAG</span></code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Lancement de l'application</td>
-                                <td>
-                                        <ul>
-                                                <li><b>-d</b> : <i>mode détaché (en arrière-plan)</i></li>
-                                                <li><b>--restart unless-stopped</b> : <i>évite de supprimer le conteneur
-                                                                arrêté / suspendu et de le relancer</i></li>
-                                                <li><b>-p : <span id="networkResponse2">PortReseau:PortReseau</span></b>
-                                                        : <i>mappe le port réseau de la VM vers
-                                                                le port réseau dans le conteneur</i>
-                                                </li>
-                                        </ul>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker ps</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Vérifie que l'application tourne</td>
-                                <td><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une commande Unix
-                                                qui
-                                                affiche l’état des processus en cours, et Docker a repris ce nom pour
-                                                afficher l’état des conteneurs</i></td>
-                        </tr>
-                </tbody>
-        </table><br>
-
-        <i><a href="#menu">Retour au menu</a></i><br><br>
-
-        <!-- ***************** Chapitre VII -------------------- -->
-        <h2 id="chap7">7. Pour relancer une application suspendue</h2>
-
-        <table>
-                <thead>
-                        <tr>
-                                <th width="70px">Shell</th>
-                                <th>Motif</th>
-                                <th>Explications</th>
-                        </tr>
-                </thead>
-                <tbody>
-                        <tr>
-                                <td colspan="3">Relancer l'instance via le site OVH</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResponse4">id_ed25519</span> ubuntu@<span
-                                                id="ipv4Response4">IPv4</span></code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>Local</td>
-                                <td>Se reconnecter dans le shell de la VM</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker images</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Vérifie que l'image est encore là</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker ps -a</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Vérifie que le conteneur n'a pas été arrêté</td>
-                                <td><b>-a</b> : <i>signifie 'all'. Docker ps ne montre que les conteneurs encore en
-                                                cours
-                                                d’exécution, alors que docker ps -a montre aussi ceux qui se sont
-                                                arrêtés. Pour vérifier qu’un conteneur n’a pas été arrêté, il faut donc
-                                                regarder la vue complète avec -a</i></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3"><b>Si le statut n'est pas de type <i>Exited (0)</i>
-                                                alors passer aux étapes suivantes :</b></td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker rm <span id="repoResponse8">REPOSITORY</span>-container</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Supprime le conteneur arrêté</td>
-                                <td><b>rm</b> : <i>signifie remove, cela veut littéralement dire “supprimer ce
-                                                conteneur”</i>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker rm -f <span id="repoResponse9">REPOSITORY</span>-container</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>S'il faut forcer l'arrêt</td>
-                                <td><b>-f</b> : <i>force l'arrêt notamment si le conteneur est en cours d'exécution</i>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker run -d --restart unless-stopped --name <span id="repoResponse10">REPOSITORY</span>-container -p<span id="networkResponse3">PortReseau:PortReseau</span> <span id="repoResponse11">REPOSITORY</span>:<span id="tagResponse3">TAG</span></code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Relance l'application</td>
-                                <td>-</td>
-                        </tr>
-                        <tr>
-                                <td colspan="3">
-                                        <pre><code>docker ps</code></pre>
-                                </td>
-                        </tr>
-                        <tr>
-                                <td>VM</td>
-                                <td>Vérifie que l'application tourne</td>
-                                <td><b>ps</b> : <i>vient de “process status”. Historiquement, ps est une commande Unix
-                                                qui
-                                                affiche l’état des processus en cours, et Docker a repris ce nom pour
-                                                afficher l’état des conteneurs</i></td>
-                        </tr>
-                </tbody>
-        </table><br>
-
-        <i><a href="#menu">Retour au menu</a></i><br><br>
-
-        <a id='lien' href="./index.html">Retour au sommaire</a>
-
-        <script src="script_ovh3.js"></script>
 </body>
 
 </html>

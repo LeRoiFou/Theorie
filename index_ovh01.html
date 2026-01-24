@@ -4,18 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVH - Chapitre I</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>L'essentiel du Public Cloud OVHcloud</title>
+    <link rel="stylesheet" href="styleOVH.css">
 </head>
 
 <body>
-    <href="https:
+    <div class="container">
+
+        <a href="https:
         //help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">
-        <h1>Chapitre I : Comprendre l’essentiel du Public Cloud OVHcloud</h1>
+            <h1>🤔 Comprendre l’essentiel du Public Cloud OVHcloud</h1>
         </a>
 
-        <h2>1. Le compute (serveurs virtuels)</h2>
+        <h2 id="menu">👨‍🍳 Menu</h2>
+        <div class="diagram">
+            🧮 <a href="#part1">1. Le compute</a><br>
+            📦 <a href="#part2">2. Storage & backup</a> <br>
+            🔧 <a href="#part3">3. Network</a> <br>
+            ⚙️ <a href="#part4">4. Containers & Orchestration</a><br>
+            🎁 <a href="#part5">5. Databases & Analytics</a> <br>
+            💻 <a href="#part6">6. AI & Machine Learning</a> <br>
+        </div>
 
+        <!-- Partie I -->
+        <div class="section-title" id="part1">🧮 1. Le compute</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Lancer et gérer des serveurs virtuels (appelés "instances") dans le cloud</li>
@@ -28,8 +40,8 @@
         <p>Utilité ? Oui, pour héberger le conteneur Docker</p>
         <br>
 
-        <h2>2. Storage & backup (stockage et sauvegarde)</h2>
-
+        <!-- Partie II -->
+        <div class="section-title" id="part2">📦 2. Storage & backup</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Proposer différents types de stockage pour tes fichiers, données, sauvegardes et bases de données</li>
@@ -42,8 +54,8 @@
         <p>Utilité ? Oui, pour les FEC et fichiers des stocks uploadés, les fichiers Excel générés</p>
         <br>
 
-        <h2>3. Network (réseau et sécurité)</h2>
-
+        <!-- Partie III -->
+        <div class="section-title" id="part3">🔧 3. Network</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Connecter tes ressources cloud OVH entre elles et avec d’autres produits (ex : serveurs dédiés, CDN,
@@ -61,8 +73,8 @@
         </ul>
         <br>
 
-        <h2>4. Containers & Orchestration (déploiement automatisé d’applicationss comme par ex Docker/Kubernetes)</h2>
-
+        <!-- Partie IV -->
+        <div class="section-title" id="part4">⚙️ 4. Containers & Orchestration</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Lancer, gérer et automatiser des conteneurs Docker (et équivalents) dans le cloud</li>
@@ -75,8 +87,8 @@
         <p>Utilité ? Oui, seulement si déploiement de plusieurs instances ou ajout d'autres services dockerisés</p>
         <br>
 
-        <h2>5. Databases & Analytics (bases de données et Big Data)</h2>
-
+        <!-- Partie V -->
+        <div class="section-title" id="part5">🎁 5. Databases & Analytics</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Proposer des bases de données (MySQL, PostgreSQL, MongoDB…) comme service cloud, avec sauvegarde,
@@ -89,8 +101,8 @@
         <p>Utilité ? Non</p>
         <br>
 
-        <h2>6. AI & Machine Learning (IA et infrastructures avancées)</h2>
-
+        <!-- Partie VI -->
+        <div class="section-title" id="part6">💻 6. AI & Machine Learning</div>
         <p>A quoi ça sert ?</p>
         <ul>
             <li>Mettre à disposition des infrastructures optimisées (GPU, CPU puissants), plateformes et outils pour
@@ -142,10 +154,14 @@
                     <td>Pas d'automatisation IA/ML prévue</td>
                 </tr>
             </tbody>
-        </table><br>
+        </table>
+        <hr>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <a id='lien' href="./index.html">Retour au sommaire</a>
 
+    </div>
 </body>
 
 </html>

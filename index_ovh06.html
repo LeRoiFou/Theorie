@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mise à jour Application FastAPI</title>
-    <link rel="stylesheet" href="index_ovhXX1.css">
+    <link rel="stylesheet" href="styleOVH.css">
 </head>
 
 <body>
@@ -15,17 +15,17 @@
 
         <h2 id="menu">👨‍🍳 Menu</h2>
         <div class="diagram">
-            🚀 Procédure de mise à jour
-            ├── ÉTAPE 1️⃣ : LOCAL - Préparer la nouvelle image
-            ├── ÉTAPE 2️⃣ : VM - Charger la nouvelle image
-            ├── ÉTAPE 3️⃣ : VM - Arrêter l'ancienne version (⚠️ DOWNTIME ~10-30 sec)
-            ├── ÉTAPE 4️⃣ : VM - Lancer la nouvelle version
-            ├── ÉTAPE 5️⃣ : VÉRIFICATION - Tester la nouvelle version
-            └── ÉTAPE 6️⃣ : OPTIONNEL - Nettoyer les anciennes versions
+            <a href="#part1">🚀 Procédure de mise à jour</a>
+            ├── <a href="#part11">ÉTAPE 1️⃣ : LOCAL - Préparer la nouvelle image</a>
+            ├── <a href="#part12">ÉTAPE 2️⃣ : VM - Charger la nouvelle image</a>
+            ├── <a href="#part13">ÉTAPE 3️⃣ : VM - Arrêter l'ancienne version (⚠️ DOWNTIME ~10-30 sec)</a>
+            ├── <a href="#part14">ÉTAPE 4️⃣ : VM - Lancer la nouvelle version</a>
+            ├── <a href="#part15">ÉTAPE 5️⃣ : VÉRIFICATION - Tester la nouvelle version</a>
+            └── <a href="#part16">ÉTAPE 6️⃣ : OPTIONNEL - Nettoyer les anciennes versions</a>
 
-            📋 Résumé des impacts
+            <a href="#part2">📋 Résumé des impacts</a>
 
-            🔄 Rollback en cas de problème (urgent)
+            <a href="#part3">🔄 Rollback en cas de problème (urgent)</a>
         </div>
 
         <h2>📊 Vue d'ensemble : Qu'est-ce qui change ?</h2>
@@ -44,7 +44,7 @@
         </div>
 
         <!-- ZONE DE SAISIE -->
-        <div class="section-title">ZONE DE SAISIE DES DONNEES</div>
+        <div class="section-title" id="part1">ZONE DE SAISIE DES DONNEES</div>
 
         <label for="repository">REPOSITORY</label>
         <input type="text" name="repository" id="repository" placeholder="Commande dans le shell : 'docker images'"
@@ -90,7 +90,7 @@
         <h2>🚀 Procédure de mise à jour</h2>
 
         <!-- ÉTAPE 1 : LOCAL -->
-        <div class="section-title">
+        <div class="section-title" id="part11">
             ÉTAPE 1️⃣ : LOCAL - Préparer la nouvelle image
         </div>
         <table>
@@ -217,7 +217,7 @@
         </table>
 
         <!-- ÉTAPE 2 : VM -->
-        <div class="section-title">
+        <div class="section-title" id="part12">
             ÉTAPE 2️⃣ : VM - Charger la nouvelle image
         </div>
         <table>
@@ -264,7 +264,7 @@
         </table>
 
         <!-- ÉTAPE 3 : ARRÊT ANCIEN CONTENEUR -->
-        <div class="section-title">
+        <div class="section-title" id="part13">
             ÉTAPE 3️⃣ : VM - Arrêter l'ancienne version (⚠️ DOWNTIME ~10-30 sec)
         </div>
         <table>
@@ -291,7 +291,7 @@
         </table>
 
         <!-- ÉTAPE 4 : LANCEMENT NOUVEAU CONTENEUR -->
-        <div class="section-title">
+        <div class="section-title" id="part14">
             ÉTAPE 4️⃣ : VM - Lancer la nouvelle version
         </div>
         <table>
@@ -332,7 +332,7 @@
         </table>
 
         <!-- ÉTAPE 5 : VÉRIFICATION -->
-        <div class="section-title">
+        <div class="section-title" id="part15">
         ÉTAPE 5️⃣ : VÉRIFICATION - Tester la nouvelle version
         </div>
         <table>
@@ -369,7 +369,7 @@
 
 
         <!-- ÉTAPE 6 : OPTIONNEL - NETTOYAGE -->
-        <div class="section-title">
+        <div class="section-title" id="part16">
             ÉTAPE 6️⃣ : OPTIONNEL - Nettoyer les anciennes versions
         </div>
         <table>
@@ -430,7 +430,7 @@
             </tbody>
         </table>
 
-        <h2>📋 Résumé des impacts</h2>
+        <h2 id="part2">📋 Résumé des impacts</h2>
         <table>
             <tbody>
                 <tr class="safe">
@@ -449,7 +449,7 @@
             </tbody>
         </table>
 
-        <h2>🔄 Rollback en cas de problème (urgent)</h2>
+        <h2 id="part3">🔄 Rollback en cas de problème (urgent)</h2>
         <div class="step">
             <div class="step-title">Si la v1 a un bug critique :</div>
             <ul>
@@ -461,12 +461,13 @@
             </ul>
         </div>
         <br>
+        <hr>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <i><a id='lien' href="./index.html">Retour au sommaire</a></i>
     </div>
-    <script src="/index_ovhXX2.js"></script>
+    <script src="/index_ovh06.js"></script>
 </body>
 
 </html>

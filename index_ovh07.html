@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring</title>
+    <link rel="stylesheet" href="styleOVH.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>📈 Monitoring</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Shell</th>
+                    <th>Motif</th>
+                    <th>Explications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">Sur OVH, cliquer sur le nom de l'instance (couleur bleue) pour afficher les données
+                        statistiques
+                        (menu à gauche → partie "COMPUTE" → sous-partie "Instances") <br><br>
+                        <i>NB : certaines instances comme le modèle "Discovery" ne permettent pas d'afficher les
+                            graphiques</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>ssh -i $env:USERPROFILE\.ssh\[Cle] ubuntu@[IPv4]</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Local</td>
+                    <td>Connexion au shell de la VM</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong><i>Si c'est la première fois que les données statistiques sont analysées
+                                pour
+                                cette instance :</i></strong></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt update</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Mise à jour des paquets disponibles</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt install nload -y</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Installation du paquet nload</td>
+                    <td><b>-y</b> : <i>l’option -y signifie “assume yes” 👉 elle répond automatiquement “yes” à toutes
+                            les
+                            questions posées par apt pendant l’installation</i></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>nload</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Accès aux données statistiques</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><strong><i>Si ce n'est pas la première que les données statistiques sont effectuées
+                                pour
+                                cette instance : </i></strong></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>nload</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Accès aux données statistiques</td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table><br>
+
+        <p><b>Données restituées dans le shell : </b></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Élément</th>
+                    <th>Rôle</th>
+                    <th>Détail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Incoming</td>
+                    <td>Trafic entrant</td>
+                    <td>Données qui arrivent sur la VM (requêtes HTTP, téléchargements, flux depuis Internet, etc.).
+                    </td>
+                </tr>
+                <tr>
+                    <td>Outgoing</td>
+                    <td>Trafic sortant</td>
+                    <td>Données qui partent de la VM (réponses HTTP, envoi de fichiers, etc.). </td>
+                </tr>
+                <tr>
+                    <td>Curr</td>
+                    <td>Débit instantané</td>
+                    <td>Débit mesuré au dernier rafraîchissement, en kBit/s ou MBit/s selon la valeur.</td>
+                </tr>
+                <tr>
+                    <td>Avg</td>
+                    <td>Débit moyen</td>
+                    <td>Moyenne du débit sur une fenêtre de temps récente (par défaut ≈ 5 minutes). </td>
+                </tr>
+                <tr>
+                    <td>Min</td>
+                    <td>Débit minimum</td>
+                    <td>Plus faible débit observé pendant la session en cours de nload. </td>
+                </tr>
+                <tr>
+                    <td>Max</td>
+                    <td>Débit maximum</td>
+                    <td>Pic de débit observé pendant la session en cours de nload. </td>
+                </tr>
+                <tr>
+                    <td>Ttl</td>
+                    <td>Volume total</td>
+                    <td>Quantité totale de données transférées depuis le lancement de nload, en kByte/MByte/GByte. </td>
+                </tr>
+            </tbody>
+        </table><br>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
+
+        <a id='lien' href="./index.html">Retour au sommaire</a>
+
+    </div>
+</body>
+
+</html>

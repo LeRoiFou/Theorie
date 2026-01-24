@@ -4,262 +4,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OVH - Chapitre II</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Se familiariser avec Public Cloud</title>
+    <link rel="stylesheet" href="styleOVH.css">
 </head>
 
 <body>
-    <a target="_blank"
-        href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">
-        <h1>Chapitre II : Se familiariser avec l'interface Public Cloud</h1>
-    </a>
-    <br>
+    <div class="container">
 
-    <h2>Introduction</h2>
+        <a target="_blank"
+            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-control-panel?id=kb_article_view&sysparm_article=KB0050409">
+            <h1>🚀 Se familiariser avec l'interface Public Cloud</h1>
+        </a>
 
-    <p>La visite guidée de l’interface Public Cloud OVHcloud se fait directement après être connecté à l’espace client
-        et avoir créé son premier projet Public Cloud.</p>
+        <h2 id="menu">👨‍🍳 Menu</h2>
+        <div class="diagram">
+            📋 <a href="#part1">Introduction</a><br>
+            🔧 <a href="#part2">Les options de gestion des services</a> <br>
+            🎺 <a href="#part3">Outils utilisés</a> <br>
+            🎁 <a href="#part4">Vocabulaire</a><br>
+            ⚙️ <a href="#part5">Facturation</a>
+        </div>
 
-    <p>Concrètement :</p>
+        <div class="diagram">
+            En langage courant :
+            → VM = VPS = instance
 
-    <ul>
-        <li>Dès qu'on se connecte à son espace client OVHcloud et qu'on accède à la section Public Cloud (avec un
-            projet existant), l’interface affiche les menus principaux et des raccourcis vers les assistants de
-            configuration et les guides utiles.</li>
-        <li>Pour chaque ressource (instance, stockage, réseau…), un assistant de configuration guide étape par étape
-            à l’écran.</li>
-        <li>Il n’y a généralement pas de “tutoriel interactif animé”, mais l’interface présente une navigation
-            explicative avec noms de sections, descriptions, raccourcis, et accompagnement intégré à chaque étape de
-            création ou de gestion.</li>
-    </ul>
-    <br>
+            Sur OVH :
+            → VM = instance ≠ VPS
+        </div>
 
-    <h2>Les options de gestion des services</h2>
+        <!-- Partie I -->
+        <div class="section-title" id="part1">📋 Introduction</div>
 
-    <p>OVHcloud propose 3 outils principaux :</p>
-    <ul>
-        <li>L'espace client OVHcloud</li>
-        <li>Horizon</li>
-        <li>API OpenStack</li>
-    </ul>
+        <p>La visite guidée de l’interface Public Cloud OVHcloud se fait directement après être connecté à l’espace
+            client
+            et avoir créé son premier projet Public Cloud.</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Critères/Caractéristiques</th>
-                <th>Espace client OVHcloud</th>
-                <th>Horizon</th>
-                <th>OpenStack API</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Avantages principaux</td>
-                <td>Interface intuitive, idéale pour une prise en main rapide.</td>
-                <td>Offre un contrôle accru pour les utilisateurs expérimentés, avec une vue avancée des paramètres.
-                </td>
-                <td>Automatisation complète, avec intégration fluide à d'autres outils.</td>
-            </tr>
-            <tr>
-                <td>Niveau de compétence requis</td>
-                <td>Accessible à tous, idéal pour les débutants ou les besoins simples</td>
-                <td>Intermédiaire, requiert une certaine expertise (Administrateurs systèmes, Ingénieurs Cloud…)</td>
-                <td>Avancé, nécessite des compétences en scripting/API (Architectes Cloud, Ingénieurs DevOps, Experts en
-                    automatisation)</td>
-            </tr>
-            <tr>
-                <td>Facilité d'utilisation</td>
-                <td>Intuitive et accessible</td>
-                <td>Avancée mais visuelle</td>
-                <td>Technique</td>
-            </tr>
-            <tr>
-                <td>Personnalisation</td>
-                <td>Faible – Idéal pour des configurations standards et rapides, avec un contrôle avancé limité.</td>
-                <td>Moyenne – Interface graphique offrant des réglages avancés (réseau, stockage, etc.), bien que
-                    restreints par l’interface utilisateur.</td>
-                <td>Très élevée – Personnalisation quasi complète via API, avec possibilité de créer des scripts, des
-                    workflows automatisés et des architectures sur mesure.</td>
-            </tr>
-            <tr>
-                <td>Performances et scalabilité</td>
-                <td>Performances limitées et <strong>scalabilité</strong> basique. Adapté aux déploiements de petite
-                    taille ou non
-                    critiques. La scalabilité est généralement manuelle et plus lente. Idéal pour des environnements
-                    statiques ou des petits projets.</td>
-                <td>Performances moyennes avec une gestion améliorée de la scalabilité via l'interface graphique.
-                    Scalabilité plus rapide qu'avec l'espace client OVHcloud, mais limitée par l’interface. Adapté aux
-                    projets de taille moyenne ou nécessitant une certaine évolutivité.</td>
-                <td>Performances optimales et scalabilité complète. Permet des déploiements massifs, automatisés et
-                    rapides via des scripts ou des outils tiers. Idéal pour des infrastructures dynamiques, des charges
-                    lourdes et des environnements nécessitant une haute élasticité. Recommandé pour des architectures
-                    critiques.</td>
-            </tr>
-            <tr>
-                <td>Périmètres d'utilisation (Compute)</td>
-                <td>- Création et gestion simplifiée des <strong> machines virtuelles (VM)</strong>.<br> -
-                    Redimensionnement des VM après
-                    création (modification du modèle <strong>flavor</strong> à chaud ou à froid, selon les ressources
-                    disponibles).<br> -
-                    Sélection de configurations standards pour les VM (RAM, CPU, stockage).<br> - Gestion des actions
-                    essentielles : démarrage, arrêt et suppression des VM.<br> - Accès aux <strong>snapshots</strong>
-                    pour des
-                    sauvegardes rapides et restaurations simplifiées.<br> - Attribution et gestion des <strong>adresses
-                        Floating IP</strong>
-                    .<br> - Création et administration basique des disques additionnels.<br> - Supervision des
-                    ressources avec un monitoring essentiel (CPU, mémoire, stockage).</td>
-                <td>- Gestion avancée des accès : prise en charge du contrôle des accès basé sur les rôles (RBAC) pour
-                    une gestion multi-utilisateurs sécurisée.<br> - Administration réseau avancée : création et gestion
-                    de réseaux privés complexes associés aux VM (réseaux internes, sous-réseaux).<br> - Déploiement de
-                    VM avec configurations réseau spécifiques, incluant la gestion de plusieurs interfaces réseau.<br> -
-                    Utilisation d'images personnalisées pour la création de VM, en alternative aux images standards
-                    proposées par OVHcloud.<br> - Intégration de workflows préconfigurés via Horizon pour automatiser
-                    les déploiements et configurations.</td>
-                <td>- Automatisation complète : toutes les actions disponibles dans l'espace client OVHcloud et Horizon
-                    sont réalisables via l’API, avec la possibilité de les automatiser et de les scripter.<br> -
-                    Déploiement d’infrastructures en mode Infrastructure as Code (IaC) à l’aide d’outils comme
-                    Terraform, Ansible ou de scripts personnalisés.<br> - Intégration aux pipelines CI/CD pour des
-                    déploiements automatisés (ex. intégration avec GitLab CI).<br> - Gestion avancée des quotas de
-                    ressources (nombre de CPU, RAM total, etc.).<br> - Scalabilité dynamique : ajustement automatique
-                    des instances en fonction de la charge via API ou scripts.<br> - Monitoring et collecte de métriques
-                    personnalisées via API, offrant plus de granularité que l'interface Horizon ou l'espace client
-                    OVHcloud.</td>
-            </tr>
-            <tr>
-                <td>Périmètres d'utilisation (Network)</td>
-                <td>- Création et gestion de réseaux privés (Private Networks).<br> - Association d'adresses
-                    Floating IP
-                    et <strong>d'adresses Additional IP</strong>.<br> - Configuration de routage de base (<strong>Basic
-                        Routing</strong>).</td>
-                <td>- Gestion avancée des règles de sécurité via les groupes de sécurité (Security Groups).<br> -
-                    Visualisation des topologies réseau pour une gestion simplifiée.<br> - Support complet des
-                    sous-réseaux IPv6 pour une connectivité moderne.<br> - Configuration des politiques QoS (Quality of
-                    Service) pour prioriser les ressources réseau.</td>
-                <td>- Accès à toutes les fonctionnalités disponibles sur Horizon et l'espace client OVHcloud.<br> -
-                    Création de routes personnalisées pour une gestion réseau plus flexible.<br> - Configuration précise
-                    des politiques QoS (Quality of Service).<br> - Gestion avancée des VRRP (Virtual Router Redundancy
-                    Protocol) pour assurer la redondance des routeurs.<br> - Automatisation des actions réseau grâce à
-                    des scripts (Infrastructure as Code).<br> - Intégration avec des solutions SDN (Software-Defined
-                    Networking) pour une gestion réseau agile.</td>
-            </tr>
-            <tr>
-                <td>Périmètres d'utilisation (Storage &amp; backup)</td>
-                <td>- Création et gestion des volumes de stockage : <strong>Object Storage</strong>, Block Storage et
-                    File Storage.<br> -
-                    Sauvegarde automatique basique (snapshots) des volumes, avec possibilité de restauration.<br> -
-                    Association des volumes de stockage aux instances pour un accès simplifié.<br> - Gestion des
-                    conteneurs Object Storage (Swift) pour organiser les données.<br> - Visualisation de l'état des
-                    volumes et de l'espace de stockage utilisé.<br> - Ajout et gestion de fichiers dans un Object
-                    Storage.</td>
-                <td>- Gestion avancée des snapshots : rétention, duplication et autres options pour un contrôle précis
-                    des sauvegardes.<br> - Gestion détaillée des partages de volumes (multi-attach) pour une flexibilité
-                    accrue.<br> - Création et gestion des sauvegardes planifiées avec des politiques de sauvegarde
-                    personnalisables.<br> - Surveillance de l'utilisation des quotas de stockage pour un suivi optimal
-                    de l'espace disponible.</td>
-                <td>- Fonctionnalités accessibles via Horizon et l'espace client OVHcloud.<br> - Intégration et
-                    automatisation via scripts (Infrastructure as Code) pour une gestion fluide.<br> - Configuration
-                    avancée des partages réseau (NFS, CIFS) pour une flexibilité accrue dans l'organisation des
-                    fichiers.<br> - Gestion précise des métadonnées des objets dans Object Storage pour un contrôle
-                    optimal des données.<br> - Configuration avancée de la réplication et du versioning d'objets pour
-                    une haute disponibilité et une gestion des versions complète.<br> - Accès direct à l'API Swift pour
-                    une intégration fluide avec des outils tiers.<br> - Création de workflows personnalisés pour
-                    automatiser et gérer efficacement les processus de sauvegarde.</td>
-            </tr>
-        </tbody>
-    </table>
+        <p>Concrètement :</p>
 
-    <h2>Vocabulaire</h2>
+        <ul>
+            <li>Dès qu'on se connecte à son espace client OVHcloud et qu'on accède à la section Public Cloud (avec un
+                projet existant), l’interface affiche les menus principaux et des raccourcis vers les assistants de
+                configuration et les guides utiles.</li>
+            <li>Pour chaque ressource (instance, stockage, réseau…), un assistant de configuration guide étape par étape
+                à l’écran.</li>
+            <li>Il n’y a généralement pas de “tutoriel interactif animé”, mais l’interface présente une navigation
+                explicative avec noms de sections, descriptions, raccourcis, et accompagnement intégré à chaque étape de
+                création ou de gestion.</li>
+        </ul>
+        <br>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Concept</th>
-                <th>Définition simple</th>
-                <th>Analogie restaurant</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Scalabilité</td>
-                <td>Capacité du cloud à augmenter ou diminuer automatiquement les ressources (CPU, RAM, stockage, etc.)
-                    pour s’adapter à la charge de travail, sans tout reconstruire.[1][2]</td>
-                <td>Pouvoir ajouter ou enlever des tables et des serveurs en fonction du nombre de clients, pour éviter
-                    à la fois le surpeuplement et les salles vides.</td>
-            </tr>
-            <tr>
-                <td>Machines virtuelles (VM)</td>
-                <td>“Ordinateurs simulés” qui tournent à l’intérieur d’un vrai serveur, avec leur propre système
-                    d’exploitation, leurs applications et leurs ressources dédiées.[3][4]</td>
-                <td>Plusieurs petites cuisines séparées à l’intérieur d’une grande cuisine centrale, chacune avec son
-                    propre chef, ses ustensiles et son menu.</td>
-            </tr>
-            <tr>
-                <td>Flavor</td>
-                <td>Gabarit de VM qui définit le nombre de vCPU, la quantité de RAM et la taille de disque attribués à
-                    une machine virtuelle.[4][3]</td>
-                <td>Une formule de menu (petite faim, standard, XXL) qui précise la taille du plat, la garniture et la
-                    boisson.</td>
-            </tr>
-            <tr>
-                <td>Snapshots</td>
-                <td>“Photos” de l’état d’une VM ou d’un disque à un instant T, permettant de revenir à cet état plus
-                    tard (sauvegarde rapide ou point de restauration).[3][4]</td>
-                <td>Prendre une photo très détaillée de la cuisine et des plats à un moment précis, pour pouvoir
-                    remettre tout exactement comme avant en cas de problème.</td>
-            </tr>
-            <tr>
-                <td>Adresses Floating IP</td>
-                <td>Adresses IP publiques et fixes que l’on peut réassigner rapidement d’une VM à une autre pour assurer
-                    la haute disponibilité ou le basculement en cas de panne.[5][6]</td>
-                <td>Un numéro de téléphone unique du restaurant que tu peux rediriger vers une autre cuisine si la
-                    première ferme ou a un problème, sans que les clients aient à changer de numéro.</td>
-            </tr>
-            <tr>
-                <td>Adresses Additional IP</td>
-                <td>Adresses IP supplémentaires associées à une même VM ou interface réseau, permettant par exemple
-                    d’héberger plusieurs services ou sites distincts sur la même machine.[6][5]</td>
-                <td>Plusieurs numéros de téléphone pour le même restaurant (une ligne pour les commandes, une pour les
-                    réservations, une pour le service traiteur).</td>
-            </tr>
-            <tr>
-                <td>Basic Routing</td>
-                <td>Règles de base qui définissent par où passent les paquets réseau pour atteindre Internet, d’autres
-                    réseaux ou d’autres machines (tables de routage, passerelles, etc.).[5][6]</td>
-                <td>Le plan qui indique par quelle porte entrent les clients, où passent les serveurs et par quelle
-                    sortie sortent les livraisons pour que tout circule au bon endroit.</td>
-            </tr>
-            <tr>
-                <td>Object Storage</td>
-                <td>Service de stockage où les fichiers sont stockés comme des “objets” avec des métadonnées,
-                    accessibles via une API ou HTTP, adapté aux gros volumes (backups, médias, logs, etc.).[2]</td>
-                <td>Un grand entrepôt où chaque carton (objet) a une étiquette unique et des informations, et où tu peux
-                    demander un carton précis sans te soucier de l’étagère exacte où il se trouve.</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- Partie II -->
+        <div class="section-title" id="part2">🔧 Les options de gestion des services</div>
 
-    <a target="_blank" href="https://fr.wikipedia.org/wiki/%C3%89lasticit%C3%A9_(cloud_computing)">[1]</a>
-    <a target="_blank"
-        href="https://www.oneadvanced.com/resources/scalability-in-cloud-computing-definition-examples-types-and-more/">[2]</a>
-    <a target="_blank" href="https://docs.rackspacecloud.com/openstack-flavors/">[3]</a>
-    <a target="_blank" href="https://openmetal.io/docs/manage-flavors-in-openstack/">[4]</a>
-    <a target="_blank" href="https://www.ovhcloud.com/en/public-cloud/floating-ip/">[5]</a>
-    <a target="_blank" href="https://www.transip.eu/knowledgebase/5861-what-is-a-floating-ip">[6]</a><br>
+        <p><u>Pour le public cloud, OVHcloud propose 3 outils :</u></p>
+        <ul>
+            <li>L'espace client OVHcloud</li>
+            <li>Horizon</li>
+            <li>API OpenStack</li>
+        </ul><br>
 
-    <h2>Autres points essentiels</h2>
-    <ul>
-        <li><a target="_blank"
-                href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-billing-options?id=kb_article_view&sysparm_article=KB0050459">Informations
-                concernant le mode de facturation Public Cloud : comment bloquer un montant à payer ?</a>
-        </li><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Critères/Caractéristiques</th>
+                    <th>Espace client OVHcloud</th>
+                    <th>Horizon</th>
+                    <th>OpenStack API</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Avantages principaux</td>
+                    <td>Interface intuitive, idéale pour une prise en main rapide.</td>
+                    <td>Offre un contrôle accru pour les utilisateurs expérimentés, avec une vue avancée des paramètres.
+                    </td>
+                    <td>Automatisation complète, avec intégration fluide à d'autres outils.</td>
+                </tr>
+                <tr>
+                    <td>Niveau de compétence requis</td>
+                    <td>Accessible à tous, idéal pour les débutants ou les besoins simples</td>
+                    <td>Intermédiaire, requiert une certaine expertise (Administrateurs systèmes, Ingénieurs Cloud…)
+                    </td>
+                    <td>Avancé, nécessite des compétences en scripting/API (Architectes Cloud, Ingénieurs DevOps,
+                        Experts en
+                        automatisation)</td>
+                </tr>
+                <tr>
+                    <td>Facilité d'utilisation</td>
+                    <td>Intuitive et accessible</td>
+                    <td>Avancée mais visuelle</td>
+                    <td>Technique</td>
+                </tr>
+                <tr>
+                    <td>Personnalisation</td>
+                    <td>Faible – Idéal pour des configurations standards et rapides, avec un contrôle avancé limité.
+                    </td>
+                    <td>Moyenne – Interface graphique offrant des réglages avancés (réseau, stockage, etc.), bien que
+                        restreints par l’interface utilisateur.</td>
+                    <td>Très élevée – Personnalisation quasi complète via API, avec possibilité de créer des scripts,
+                        des
+                        workflows automatisés et des architectures sur mesure.</td>
+                </tr>
+                <tr>
+                    <td>Performances et scalabilité</td>
+                    <td>Performances limitées et <strong>scalabilité</strong> basique. Adapté aux déploiements de petite
+                        taille ou non
+                        critiques. La scalabilité est généralement manuelle et plus lente. Idéal pour des environnements
+                        statiques ou des petits projets.</td>
+                    <td>Performances moyennes avec une gestion améliorée de la scalabilité via l'interface graphique.
+                        Scalabilité plus rapide qu'avec l'espace client OVHcloud, mais limitée par l’interface. Adapté
+                        aux
+                        projets de taille moyenne ou nécessitant une certaine évolutivité.</td>
+                    <td>Performances optimales et scalabilité complète. Permet des déploiements massifs, automatisés et
+                        rapides via des scripts ou des outils tiers. Idéal pour des infrastructures dynamiques, des
+                        charges
+                        lourdes et des environnements nécessitant une haute élasticité. Recommandé pour des
+                        architectures
+                        critiques.</td>
+                </tr>
+                <tr>
+                    <td>Périmètres d'utilisation (Compute)</td>
+                    <td>- Création et gestion simplifiée des <strong> machines virtuelles (VM)</strong>.<br> -
+                        Redimensionnement des VM après
+                        création (modification du modèle <strong>flavor</strong> à chaud ou à froid, selon les
+                        ressources
+                        disponibles).<br> -
+                        Sélection de configurations standards pour les VM (RAM, CPU, stockage).<br> - Gestion des
+                        actions
+                        essentielles : démarrage, arrêt et suppression des VM.<br> - Accès aux
+                        <strong>snapshots</strong>
+                        pour des
+                        sauvegardes rapides et restaurations simplifiées.<br> - Attribution et gestion des
+                        <strong>adresses
+                            Floating IP</strong>
+                        .<br> - Création et administration basique des disques additionnels.<br> - Supervision des
+                        ressources avec un monitoring essentiel (CPU, mémoire, stockage).
+                    </td>
+                    <td>- Gestion avancée des accès : prise en charge du contrôle des accès basé sur les rôles (RBAC)
+                        pour
+                        une gestion multi-utilisateurs sécurisée.<br> - Administration réseau avancée : création et
+                        gestion
+                        de réseaux privés complexes associés aux VM (réseaux internes, sous-réseaux).<br> - Déploiement
+                        de
+                        VM avec configurations réseau spécifiques, incluant la gestion de plusieurs interfaces
+                        réseau.<br> -
+                        Utilisation d'images personnalisées pour la création de VM, en alternative aux images standards
+                        proposées par OVHcloud.<br> - Intégration de workflows préconfigurés via Horizon pour
+                        automatiser
+                        les déploiements et configurations.</td>
+                    <td>- Automatisation complète : toutes les actions disponibles dans l'espace client OVHcloud et
+                        Horizon
+                        sont réalisables via l’API, avec la possibilité de les automatiser et de les scripter.<br> -
+                        Déploiement d’infrastructures en mode Infrastructure as Code (IaC) à l’aide d’outils comme
+                        Terraform, Ansible ou de scripts personnalisés.<br> - Intégration aux pipelines CI/CD pour des
+                        déploiements automatisés (ex. intégration avec GitLab CI).<br> - Gestion avancée des quotas de
+                        ressources (nombre de CPU, RAM total, etc.).<br> - Scalabilité dynamique : ajustement
+                        automatique
+                        des instances en fonction de la charge via API ou scripts.<br> - Monitoring et collecte de
+                        métriques
+                        personnalisées via API, offrant plus de granularité que l'interface Horizon ou l'espace client
+                        OVHcloud.</td>
+                </tr>
+                <tr>
+                    <td>Périmètres d'utilisation (Network)</td>
+                    <td>- Création et gestion de réseaux privés (Private Networks).<br> - Association d'adresses
+                        Floating IP
+                        et <strong>d'adresses Additional IP</strong>.<br> - Configuration de routage de base
+                        (<strong>Basic
+                            Routing</strong>).</td>
+                    <td>- Gestion avancée des règles de sécurité via les groupes de sécurité (Security Groups).<br> -
+                        Visualisation des topologies réseau pour une gestion simplifiée.<br> - Support complet des
+                        sous-réseaux IPv6 pour une connectivité moderne.<br> - Configuration des politiques QoS (Quality
+                        of
+                        Service) pour prioriser les ressources réseau.</td>
+                    <td>- Accès à toutes les fonctionnalités disponibles sur Horizon et l'espace client OVHcloud.<br> -
+                        Création de routes personnalisées pour une gestion réseau plus flexible.<br> - Configuration
+                        précise
+                        des politiques QoS (Quality of Service).<br> - Gestion avancée des VRRP (Virtual Router
+                        Redundancy
+                        Protocol) pour assurer la redondance des routeurs.<br> - Automatisation des actions réseau grâce
+                        à
+                        des scripts (Infrastructure as Code).<br> - Intégration avec des solutions SDN (Software-Defined
+                        Networking) pour une gestion réseau agile.</td>
+                </tr>
+                <tr>
+                    <td>Périmètres d'utilisation (Storage &amp; backup)</td>
+                    <td>- Création et gestion des volumes de stockage : <strong>Object Storage</strong>, Block Storage
+                        et
+                        File Storage.<br> -
+                        Sauvegarde automatique basique (snapshots) des volumes, avec possibilité de restauration.<br> -
+                        Association des volumes de stockage aux instances pour un accès simplifié.<br> - Gestion des
+                        conteneurs Object Storage (Swift) pour organiser les données.<br> - Visualisation de l'état des
+                        volumes et de l'espace de stockage utilisé.<br> - Ajout et gestion de fichiers dans un Object
+                        Storage.</td>
+                    <td>- Gestion avancée des snapshots : rétention, duplication et autres options pour un contrôle
+                        précis
+                        des sauvegardes.<br> - Gestion détaillée des partages de volumes (multi-attach) pour une
+                        flexibilité
+                        accrue.<br> - Création et gestion des sauvegardes planifiées avec des politiques de sauvegarde
+                        personnalisables.<br> - Surveillance de l'utilisation des quotas de stockage pour un suivi
+                        optimal
+                        de l'espace disponible.</td>
+                    <td>- Fonctionnalités accessibles via Horizon et l'espace client OVHcloud.<br> - Intégration et
+                        automatisation via scripts (Infrastructure as Code) pour une gestion fluide.<br> - Configuration
+                        avancée des partages réseau (NFS, CIFS) pour une flexibilité accrue dans l'organisation des
+                        fichiers.<br> - Gestion précise des métadonnées des objets dans Object Storage pour un contrôle
+                        optimal des données.<br> - Configuration avancée de la réplication et du versioning d'objets
+                        pour
+                        une haute disponibilité et une gestion des versions complète.<br> - Accès direct à l'API Swift
+                        pour
+                        une intégration fluide avec des outils tiers.<br> - Création de workflows personnalisés pour
+                        automatiser et gérer efficacement les processus de sauvegarde.</td>
+                </tr>
+            </tbody>
+        </table>
 
-    </ul>
+        <!-- Partie III -->
+        <div class="section-title" id="part3">🎺 Outils utilisés</div>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Page web</th>
+                    <th>Outil</th>
+                    <th>front-end / Back-end</th>
+                    <th>Accès</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Site internet</td>
+                    <td>Site mutualisé</td>
+                    <td>Front-end : HTML, CSS et JS</td>
+                    <td>L'application FileZila SFTP (port réseau 22)</td>
+                </tr>
+                <tr>
+                    <td>Applications</td>
+                    <td>Espace client OVHcloud :
+                        <ul>
+                            <li>❌ VPS</li>
+                            <li>✅ Instances</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Front-end : HTML, CSS, JS</li>
+                            <li>Back-end : Python</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Docker pour conteneuriser les applications Python en images</li>
+                            <li>SSH (secure shell)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
+        <!-- Partie IV -->
+        <div class="section-title" id="part4">🎁 Vocabulaire</div>
 
+        <table>
+            <thead>
+                <tr>
+                    <th>Concept</th>
+                    <th>Définition simple</th>
+                    <th>Analogie restaurant</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scalabilité</td>
+                    <td>Capacité du cloud à augmenter ou diminuer automatiquement les ressources (CPU, RAM, stockage,
+                        etc.)
+                        pour s’adapter à la charge de travail, sans tout reconstruire.[1][2]</td>
+                    <td>Pouvoir ajouter ou enlever des tables et des serveurs en fonction du nombre de clients, pour
+                        éviter
+                        à la fois le surpeuplement et les salles vides.</td>
+                </tr>
+                <tr>
+                    <td>Machines virtuelles (VM)</td>
+                    <td>“Ordinateurs simulés” qui tournent à l’intérieur d’un vrai serveur, avec leur propre système
+                        d’exploitation, leurs applications et leurs ressources dédiées.[3][4]</td>
+                    <td>Plusieurs petites cuisines séparées à l’intérieur d’une grande cuisine centrale, chacune avec
+                        son
+                        propre chef, ses ustensiles et son menu.</td>
+                </tr>
+                <tr>
+                    <td>Flavor</td>
+                    <td>Gabarit de VM qui définit le nombre de vCPU, la quantité de RAM et la taille de disque attribués
+                        à
+                        une machine virtuelle.[4][3]</td>
+                    <td>Une formule de menu (petite faim, standard, XXL) qui précise la taille du plat, la garniture et
+                        la
+                        boisson.</td>
+                </tr>
+                <tr>
+                    <td>Snapshots</td>
+                    <td>“Photos” de l’état d’une VM ou d’un disque à un instant T, permettant de revenir à cet état plus
+                        tard (sauvegarde rapide ou point de restauration).[3][4]</td>
+                    <td>Prendre une photo très détaillée de la cuisine et des plats à un moment précis, pour pouvoir
+                        remettre tout exactement comme avant en cas de problème.</td>
+                </tr>
+                <tr>
+                    <td>Adresses Floating IP</td>
+                    <td>Adresses IP publiques et fixes que l’on peut réassigner rapidement d’une VM à une autre pour
+                        assurer
+                        la haute disponibilité ou le basculement en cas de panne.[5][6]</td>
+                    <td>Un numéro de téléphone unique du restaurant que tu peux rediriger vers une autre cuisine si la
+                        première ferme ou a un problème, sans que les clients aient à changer de numéro.</td>
+                </tr>
+                <tr>
+                    <td>Adresses Additional IP</td>
+                    <td>Adresses IP supplémentaires associées à une même VM ou interface réseau, permettant par exemple
+                        d’héberger plusieurs services ou sites distincts sur la même machine.[6][5]</td>
+                    <td>Plusieurs numéros de téléphone pour le même restaurant (une ligne pour les commandes, une pour
+                        les
+                        réservations, une pour le service traiteur).</td>
+                </tr>
+                <tr>
+                    <td>Basic Routing</td>
+                    <td>Règles de base qui définissent par où passent les paquets réseau pour atteindre Internet,
+                        d’autres
+                        réseaux ou d’autres machines (tables de routage, passerelles, etc.).[5][6]</td>
+                    <td>Le plan qui indique par quelle porte entrent les clients, où passent les serveurs et par quelle
+                        sortie sortent les livraisons pour que tout circule au bon endroit.</td>
+                </tr>
+                <tr>
+                    <td>Object Storage</td>
+                    <td>Service de stockage où les fichiers sont stockés comme des “objets” avec des métadonnées,
+                        accessibles via une API ou HTTP, adapté aux gros volumes (backups, médias, logs, etc.).[2]</td>
+                    <td>Un grand entrepôt où chaque carton (objet) a une étiquette unique et des informations, et où tu
+                        peux
+                        demander un carton précis sans te soucier de l’étagère exacte où il se trouve.</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <a target="_blank" href="https://fr.wikipedia.org/wiki/%C3%89lasticit%C3%A9_(cloud_computing)">[1]</a>
+        <a target="_blank"
+            href="https://www.oneadvanced.com/resources/scalability-in-cloud-computing-definition-examples-types-and-more/">[2]</a>
+        <a target="_blank" href="https://docs.rackspacecloud.com/openstack-flavors/">[3]</a>
+        <a target="_blank" href="https://openmetal.io/docs/manage-flavors-in-openstack/">[4]</a>
+        <a target="_blank" href="https://www.ovhcloud.com/en/public-cloud/floating-ip/">[5]</a>
+        <a target="_blank" href="https://www.transip.eu/knowledgebase/5861-what-is-a-floating-ip">[6]</a><br>
 
-    <a id='lien' href="./index.html">Retour au sommaire</a>
+        <!-- Partie V -->
+        <div class="section-title" id="part5">⚙️ Facturation</div>
+
+        <a target="_blank"
+            href="https://help.ovhcloud.com/csm/fr-public-cloud-compute-billing-options?id=kb_article_view&sysparm_article=KB0050459">Informations
+            concernant le mode de facturation Public Cloud : comment bloquer un montant à payer ?</a>
+        <br><br>
+        <hr>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
+
+        <a id='lien' href="./index.html">Retour au sommaire</a>
+
+    </div>
 </body>
 
 </html>
