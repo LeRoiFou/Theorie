@@ -14,8 +14,8 @@
 
         <h2 id="menu">👨‍🍳 Menu</h2>
         <div class="diagram">
-            📦 <a href="#part1">BLOC 1 : Préparation Docker & Transfert vers VM</a><br>
-            🔧 <a href="#part2">BLOC 2 : Installation des paquets Nginx + Certbot</a> <br>
+            🔧 <a href="#part1">BLOC 1 : Installation des paquets Nginx + Certbot</a> <br>
+            📦 <a href="#part2">BLOC 2 : Préparation Docker & Transfert vers VM</a><br>
             ⚙️ <a href="#part3">BLOC 3 : Configuration Nginx Reverse Proxy</a> <br>
             🔒 <a href="#part4">BLOC 4 : Génération Certificat SSL Let's Encrypt</a>
         </div>
@@ -27,6 +27,14 @@
             → VM Ubuntu 22.04
             → Nginx (reverse proxy)
             → HTTPS (Let's Encrypt)
+
+            <b>NB 1 :</b>
+            → <b>Le bloc 1 est à appliquer pour chaque nouvelle instance (= VM)</b>
+            → <b>Le bloc 2 est à appliquer pour chaque nouvelle application</b>
+            → <b>Les blocs 3 et 4 sont à appliquer pour chaque nouveau sous-domaine</b>
+
+            <b>NB 2 : une application est rattachée à un sous-domaine qui est rattaché à un port réseau spécifique
+                (8000, ou 8001...)</b>
         </div>
 
         <!-- ZONE DE SAISIE -->
@@ -60,8 +68,98 @@
 
         <button type="submit" id="btn">Valider</button>
 
-        <!-- BLOC 1 : DOCKER & TRANSFERT -->
-        <div class="section-title" id="part1">📦 BLOC 1 : Préparation Docker & Transfert vers VM</div>
+        <!-- BLOC 1 : INSTALLATION NGINX + CERTBOT -->
+        <div class="section-title" id="part1">🔧 BLOC 1 <u>POUR CHAQUE NOUVELLE INSTANCE</u> : Installation des paquets
+            Nginx + Certbot</div>
+        <table>
+            <thead>
+                <tr>
+                    <th width="80px">Shell</th>
+                    <th width="400px">Motif</th>
+                    <th>Explications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Mettre à jour les paquets</td>
+                    <td><strong>sudo</strong> : mode administrateur <br>
+                        <strong>apt update</strong> : récupère les listes de paquets <br>
+                        <strong>apt upgrade</strong> : installe les mises à jour <br>
+                        <strong>-y</strong> : répondre "oui" automatiquement <br>
+                        ⏱️ 1-3 min
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt install nginx certbot python3-certbot-nginx ufw -y</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Installer les paquets Nginx + Certbot + UFW</td>
+                    <td><strong>nginx</strong> : reverse proxy <br>
+                        <strong>certbot</strong> : gestion certificat SSL <br>
+                        <strong>python3-certbot-nginx</strong> : plugin Certbot pour Nginx <br>
+                        <strong>ufw</strong> : firewall <br>
+                        ⏱️ 1-2 min
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo ufw allow 'Nginx Full' && sudo ufw allow 'OpenSSH' && sudo ufw enable</code></pre>
+                    </td>
+                </tr>
+                <tr class="critical">
+                    <td>VM</td>
+                    <td>Configurer le firewall UFW</td>
+                    <td><strong>CRITIQUE :</strong> Ajoute OpenSSH AVANT d'activer le firewall ! Sinon tu seras bloqué.
+                        <br>
+                        <ul>
+                            <li><strong>sudo ufw allow 'Nginx Full'</strong> : autorise ports 80 + 443 (HTTP+HTTPS)</li>
+                            <li><strong>sudo ufw allow 'OpenSSH'</strong> : autorise SSH (port 22)</li>
+                            <li><strong>sudo ufw enable</strong> : active le firewall (pare-feu)</li>
+                        </ul>
+                        Lorsque la partie sudo ufw enable va se lancer, le serveur va poser une question de sécurité :
+                        <br>
+                        <pre><code>Command may disrupt existing ssh connections. Proceed with operation (y|n)?</code></pre>
+                        Réponds : y (puis Entrée) évitant que la connexion soit coupée en autorisant openSSH avant
+                        le firewall
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo systemctl start nginx && sudo systemctl enable nginx</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Démarrer Nginx</td>
+                    <td><strong>start</strong> : lance le service immédiatement <br>
+                        <strong>enable</strong> : le redémarre automatiquement au boot du VM
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo systemctl status nginx</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Vérifier que Nginx fonctionne</td>
+                    <td>Doit afficher
+                        <pre><code>active (running)</code> en vert ✅. Appuie sur <strong>Q</strong> pour quitter</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- BLOC 2 : DOCKER & TRANSFERT -->
+        <div class="section-title" id="part2">📦 BLOC 2 <u>POUR CHAQUE NOUVELLE APPLICATION</u> : Préparation Docker & Transfert vers VM</div>
         <table>
             <thead>
                 <tr>
@@ -271,8 +369,9 @@
             </tbody>
         </table>
 
-        <!-- BLOC 2 : INSTALLATION NGINX + CERTBOT -->
-        <div class="section-title" id="part2">🔧 BLOC 2 : Installation des paquets Nginx + Certbot</div>
+        <!-- BLOC 3 : CONFIGURATION NGINX -->
+        <div class="section-title" id="part3">⚙️ BLOC 3 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Configuration Nginx
+            Reverse Proxy</div>
         <table>
             <thead>
                 <tr>
@@ -284,88 +383,7 @@
             <tbody>
                 <tr>
                     <td colspan="3">
-                        <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Mettre à jour les paquets</td>
-                    <td><strong>sudo</strong> : mode administrateur <br>
-                        <strong>apt update</strong> : récupère les listes de paquets <br>
-                        <strong>apt upgrade</strong> : installe les mises à jour <br>
-                        <strong>-y</strong> : répondre "oui" automatiquement <br>
-                        ⏱️ 1-3 min
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo apt install nginx certbot python3-certbot-nginx ufw -y</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Installer les paquets Nginx + Certbot + UFW</td>
-                    <td><strong>nginx</strong> : reverse proxy <br>
-                        <strong>certbot</strong> : gestion certificat SSL <br>
-                        <strong>python3-certbot-nginx</strong> : plugin Certbot pour Nginx <br>
-                        <strong>ufw</strong> : firewall <br>
-                        ⏱️ 1-2 min
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo ufw allow 'Nginx Full' && sudo ufw allow 'OpenSSH' && sudo ufw enable</code></pre>
-                    </td>
-                </tr>
-                <tr class="critical">
-                    <td>VM</td>
-                    <td>Configurer le firewall UFW</td>
-                    <td><strong>CRITIQUE :</strong> Ajoute OpenSSH AVANT d'activer le firewall ! Sinon tu seras bloqué.
-                        <br>
-                        <strong>Nginx Full</strong> : autorise ports 80 + 443 (HTTP+HTTPS) <br>
-                        <strong>OpenSSH</strong> : autorise SSH (port 22)
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo systemctl start nginx && sudo systemctl enable nginx</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Démarrer Nginx</td>
-                    <td><strong>start</strong> : lance le service immédiatement <br>
-                        <strong>enable</strong> : le redémarre automatiquement au boot du VM
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo systemctl status nginx</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Vérifier que Nginx fonctionne</td>
-                    <td>Doit afficher
-                        <pre><code>active (running)</code> en vert ✅. Appuie sur <strong>Q</strong> pour quitter</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- BLOC 3 : CONFIGURATION NGINX -->
-    <div class="section-title" id="part3">⚙️ BLOC 3 : Configuration Nginx Reverse Proxy</div>
-    <table>
-        <thead>
-            <tr>
-                <th width="80px">Shell</th>
-                <th width="400px">Motif</th>
-                <th>Explications</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="3">
-                    <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse2">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse2">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -381,7 +399,7 @@
     server_name <span id="domainResponse3">[SOUS_DOMAINE]</span>.fr;
 
     location / {
-        proxy_pass http://127.0.0.1:8000;
+        proxy_pass http://127.0.0.1:[PORT RESEAU];
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -423,7 +441,8 @@
         </table>
 
         <!-- BLOC 4 : GÉNÉRATION CERTIFICAT SSL -->
-        <div class="section-title" id="part4">🔒 BLOC 4 : Génération Certificat SSL Let's Encrypt</div>
+        <div class="section-title" id="part4">🔒 BLOC 4 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Génération Certificat
+            SSL Let's Encrypt</div>
         <table>
             <thead>
                 <tr>
