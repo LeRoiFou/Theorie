@@ -420,8 +420,10 @@
                         port 8000 <br>
                         <strong>proxy_set_header</strong> : transmet infos client <br>
                         <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
-                        ➜ Clic droit = coller, puis <strong>Ctrl+X</strong> → <strong>Y</strong> →
-                        <strong>Enter</strong>
+                        Puis : <br>
+                        → <b>CTRL + O</b> (pour 'Write Out' / Enregistrer)<br>
+                        → <b>ENTREE</b> (pour confirmer le nom du fichier)<br>
+                        → <b>CTRL + X</b> (quitter)
                     </td>
                 </tr>
                 <tr>
@@ -454,7 +456,7 @@
             <tbody>
                 <tr>
                     <td colspan="3">
-                        <pre>de>sudo nginx -t</code></pre>
+                        <pre><code>sudo nginx -t</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -465,7 +467,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>de>sudo systemctl reload nginx</code></pre>
+                        <pre><code>sudo systemctl reload nginx</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -475,7 +477,17 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>de>sudo certbot --nginx -d <span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>http://<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="safe">
+                    <td>@</td>
+                    <td>Tester via HTTP sur internet</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo certbot --nginx -d <span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -493,28 +505,26 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>de>sudo certbot renew --dry-run</code></pre>
+                        <pre><code>sudo certbot renew --dry-run</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
                     <td>Tester le renouvellement automatique</td>
                     <td><strong>--dry-run</strong> : teste le renouvellement sans le faire vraiment <br><br>
-                        Doit afficher "Congratulations" ✅ Certbot renouvellera auto 30 jours avant expiration via
-                        cron</td>
+                        Doit afficher "Congratulations" ✅ <br>
+                        Certbot renouvellera auto 30 jours avant expiration, et évite
+                        donc au bout de 30 jours de ne plus pouvoir accéder à l'application</td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>de>curl https://<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>https://<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="safe">
-                    <td>VM</td>
-                    <td>Tester HTTPS depuis le VM</td>
-                    <td>Si aucune erreur SSL, le certificat fonctionne ✅ <br><br>
-                        Tu peux aussi ouvrir
-                        https://<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr dans ton navigateur (cadenas vert =
-                        certificat valide).</td>
+                    <td>@</td>
+                    <td>Tester via HTTPS sur internet</td>
+                    <td>-</td>
                 </tr>
             </tbody>
         </table>
