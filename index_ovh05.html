@@ -416,7 +416,7 @@
                     <td><strong>listen 80</strong> : écoute HTTP port 80 <br>
                         <strong>server_name app.datacofi.fr</strong> :
                         répondra à ce domaine <br>
-                        <strong>proxy_pass http://127.0.0.1:8000</strong> : redirige vers Docker sur
+                        <strong>proxy_pass http://127.0.0.1:[PORT RESEAU]</strong> : redirige vers Docker sur
                         port 8000 <br>
                         <strong>proxy_set_header</strong> : transmet infos client <br>
                         <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
