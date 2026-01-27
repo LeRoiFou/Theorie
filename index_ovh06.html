@@ -85,6 +85,14 @@
         <input type="text" name="prevContainerName" id="prevContainerName"
             placeholder="Commande dans le shell de la VM : 'docker ps'" title="Conteneur actif dans la VM"><br>
 
+        <label for="prevRepository">Ancien REPOSITORY</label>
+        <input type="text" name="prevRepository" id="prevRepository"
+            placeholder="Commande dans le shell de la VM : 'docker images'" title="Image active dans la VM"><br>
+
+        <label for="prevTag">Ancien TAG</label>
+        <input type="text" name="prevTag" id="prevTag" placeholder="Commande dans le shell de la VM : 'docker images'"
+            title="Version de l'image active dans la VM"><br>
+
         <button type="submit" id="btn">Valider</button>
 
         <h2>🚀 Procédure de mise à jour</h2>
@@ -181,13 +189,13 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>ls -lh <span id="repoResp5">[REPOSITORY]</span>.tar</code></pre>
+                        <pre><code>ls <span id="repoResp5">[REPOSITORY]</span>.tar</code></pre>
                     </td>
                 </tr>
                 <tr class="local">
                     <td>Local</td>
                     <td>Vérifier que le .tar existe</td>
-                    <td><strong>ls -lh</strong> : liste détaillée avec taille lisible (Mo, Go). Si absent, l'export a
+                    <td><strong>ls</strong> : liste détaillée avec taille lisible. Si absent, l'export a
                         échoué
                     </td>
                 </tr>
@@ -350,8 +358,8 @@
                     </td>
                 </tr>
                 <tr class="vm">
-                    <td>VM</td>
-                    <td>Tester l'accès</td>
+                    <td>@</td>
+                    <td>Tester l'accès directement sur @</td>
                     <td>Doit retourner du HTML</td>
                 </tr>
                 <tr>
@@ -393,28 +401,26 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>docker rm -f <span id="prevContainerIDResp2">[ancien CONTAINER ID]</span></pre>
+                        <pre>docker rm <span id="prevContainerIDResp2">[ancien CONTAINER ID]</span></pre>
                     </td>
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
                     <td>Supprimer le conteneur arrêté (ancien)</td>
-                    <td><strong>rm - f</strong> = remove force 👉 suppression forcée. Cela libère de l'espace
-                        disque.<br>
-                        ATTENTION : irréversible. Si tu
-                        veux rollback ultra-rapide, ne fais pas cette étape</td>
+                    <td>-</td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>docker rmi <span id="repoResp9">[REPOSITORY]</span>:<span id="tagResp3">[TAG]</span></pre>
+                        <pre>docker rmi <span id="prevRepoResp1">[Ancien REPOSITORY]</span>:<span id="prevTagResp1">[Ancien TAG]</span></pre>
                     </td>
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
                     <td>Supprimer l'image Docker ancienne (optionnel)</td>
-                    <td><strong>rmi</strong> = remove image. Libère beaucoup d'espace (~500MB-2GB). <br>
-                        ATTENTION : si tu redéploies, il faudra re-upload l'image. Recommandé seulement si tu as peu
-                        d'espace disque</td>
+                    <td><strong>rmi</strong> = remove image. Libère l'espace dans l'instance ciblée. <br>
+                        <b>⚠️ Vérifier que l'image n'est pas utilisée dans un autre sous-domaine avant de la
+                            supprimer</b>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -423,7 +429,7 @@
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
-                    <td>Vérifier l'espace disque libéré</td>
+                    <td><b>⚠️ Vérifier l'espace disque libéré</b></td>
                     <td><strong>df -h</strong> : affiche l'utilisation disque. La colonne "Use%" doit diminuer après le
                         nettoyage</td>
                 </tr>

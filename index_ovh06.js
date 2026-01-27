@@ -9,6 +9,8 @@ let ipv4 = document.getElementById("ipv4");
 let images = document.getElementById("images");
 let prevContainerID = document.getElementById("prevContainerID");
 let prevContainerName = document.getElementById("prevContainerName");
+let prevRepo = document.getElementById("prevRepository");
+let prevTag = document.getElementById("prevTag");
 
 let button = document.getElementById("btn");
 
@@ -22,12 +24,10 @@ button.addEventListener("click", () => {
   repoResp6.textContent = repo.value;
   repoResp7.textContent = repo.value;
   repoResp8.textContent = repo.value;
-  repoResp9.textContent = repo.value;
 
   // TAG value changed
   tagResp1.textContent = tag.value;
   tagResp2.textContent = tag.value;
-  tagResp3.textContent = tag.value;
 
   // CONTAINER ID changed
   containerIDResp1.textContent = containerID.value;
@@ -64,4 +64,10 @@ button.addEventListener("click", () => {
 
   // PREVIOUS CONTAINER NAME changed
   prevContainerNameResp1.textContent = prevContainerName.value;
+
+  // PREVIOUS REPOSITORY value changed
+  prevRepoResp1.textContent = prevRepo.value;
+
+  // PREVIOUS TAG value changed
+  prevTagResp1.textContent = prevTag.value;
 });
