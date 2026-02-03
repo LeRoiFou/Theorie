@@ -4,6 +4,7 @@ let tag = document.getElementById("tag");
 let containerID = document.getElementById("containerID");
 let containerName = document.getElementById("containerName");
 let network = document.getElementById("network");
+let networkVM = document.getElementById("networkVM");
 let key = document.getElementById("key");
 let ipv4 = document.getElementById("ipv4");
 let images = document.getElementById("images");
@@ -39,12 +40,14 @@ button.addEventListener("click", () => {
   containerNameResp4.textContent = containerName.value;
   containerNameResp5.textContent = containerName.value;
 
-  // NETWORK changed
+  // NETWORK LOCAL changed
   networkResp1.textContent = network.value;
   networkResp2.textContent = network.value;
   networkResp3.textContent = network.value;
-  networkResp4.textContent = network.value;
-  networkResp5.textContent = network.value;
+
+  // NETWORK VM changed
+  networkVMResp1.textContent = networkVM.value;
+  networkVMResp2.textContent = networkVM.value;
 
   // KEY changed
   keyResp1.textContent = key.value;

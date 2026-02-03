@@ -63,8 +63,13 @@
         <input type="text" name="containerName" id="containerName" placeholder="Commande dans le shell : docker ps -a"
             title="Charger préalablement docker desktop - nom du conteneur"><br>
 
-        <label for="network">PORT</label>
+        <label for="network">PORT LOCAL</label>
         <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+
+        <label for="networkVM">PORT VM</label>
+        <input type="text" name="networkVM" id="networkVM"
+            placeholder="8000 pour le sous-domaine n°1, 8001 pour le sous-domaine 2..."><br>
+
 
         <label for="key">CLE</label>
         <input type="text" name="key" id="key" value="id_ed25519"
@@ -122,7 +127,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre>docker run -p <span id="networkResp1">[PORT]</span>:<span id="networkResp2">[PORT]</span> <span id="repoResp2">[nomImage]</span></pre>
+                        <pre>docker run -p <span id="networkResp1">[PORT LOCAL]</span>:<span id="networkResp2">[PORT LOCAL]</span> -e COOKIE_SECURE=1 <span id="repoResp2">[nomImage]</span></pre>
                     </td>
                 </tr>
                 <tr class="local">
@@ -313,7 +318,7 @@
             <tbody>
                 <tr>
                     <td colspan="3">
-                        <pre>docker run -d --restart unless-stopped --name <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkResp3">[PORT]</span>:<span id="networkResp4">[PORT]</span> <span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></pre>
+                        <pre>docker run -d --restart unless-stopped --name <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkVMResp1">[PORT VM]</span>:<span id="networkResp3">[PORT LOCAL]</span> <span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -462,7 +467,7 @@
                 <li>
                     <pre><code>docker stop <span id="containerNameResp5">[CONTAINER NAME]</span></code> : arrête la version bugguée</li>
                 <li><pre><code>docker start <span id="prevContainerNameResp1">[Ancien CONTAINER NAME]</span></code> : relance l'ancienne version (si pas supprimée à l'étape 6)</li>
-                <li>Nginx redirige immédiatement vers le port <span id="networkResp5">[PORT]</span> → ancien conteneur ✅</li>
+                <li>Nginx redirige immédiatement vers le port <span id="networkVMResp2">[PORT VM]</span> → ancien conteneur ✅</li>
                 <li>Durée : ~10 sec. Dépannage rapide !</li>
             </ul>
         </div>
