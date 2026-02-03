@@ -10,7 +10,20 @@
 
 <body>
     <div class="container">
-        <h1>📈 Monitoring</h1>
+        <h1>📈 Monitoring & Logs</h1>
+
+        <h2 id="menu">👨‍🍳 Menu</h2>
+        <div class="diagram">
+            <a href="#part1">🧑‍💻 Monitoring</a>
+
+            <a href="#part2">📋 Logs</a>
+
+        </div>
+
+        <!-- BLOC 1 : MONITORING -->
+        <div class="section-title" id="part1">
+            BLOC 1️⃣ : 🧑‍💻 MONITORING
+        </div>
 
         <table>
             <thead>
@@ -144,6 +157,30 @@
             </tbody>
         </table>
         <hr>
+
+        <!-- BLOC 2 : LOGS -->
+        <div class="section-title" id="part2">
+            BLOC 2️⃣ : 📋 LOGS
+        </div>
+
+        <p>Pour accéder aux logs d'une application, faire les instructions suivantes sur la VM :</p>
+        <ul>
+            <li>
+                <pre><code>docker ps</code></pre>
+                <p>Récupérer le conteneur l'ID du conteneur ciblé</p>
+            </li>
+            <li>
+                <pre><code>docker exec -it [CONTAINER ID] /bin/bash</code></pre>
+            </li>
+            <li>
+                <pre><code>cd /app/app/logs</code></pre>
+                <p>Dans cette commande, on estime que le répertoire "logs" est dans le répertoire "app"</p>
+            </li>
+            <li>
+                <pre><code>cat auth.log</code></pre>
+                <p>'auth.log' : nom du fichier log ciblé</p>
+            </li>
+        </ul>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
