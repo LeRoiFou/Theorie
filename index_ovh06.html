@@ -66,7 +66,7 @@
         <label for="network">PORT LOCAL</label>
         <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
 
-        <label for="networkVM">PORT VM</label>
+        <label for="networkVM">PORT RESEAU</label>
         <input type="text" name="networkVM" id="networkVM"
             placeholder="8000 pour le sous-domaine n°1, 8001 pour le sous-domaine 2..."><br>
 
@@ -318,7 +318,7 @@
             <tbody>
                 <tr>
                     <td colspan="3">
-                        <pre>docker run -d --restart unless-stopped --name <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkVMResp1">[PORT VM]</span>:<span id="networkResp3">[PORT LOCAL]</span> <span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></pre>
+                        <pre>docker run -d --restart unless-stopped --name <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp3">[PORT LOCAL]</span> <span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -467,7 +467,7 @@
                 <li>
                     <pre><code>docker stop <span id="containerNameResp5">[CONTAINER NAME]</span></code> : arrête la version bugguée</li>
                 <li><pre><code>docker start <span id="prevContainerNameResp1">[Ancien CONTAINER NAME]</span></code> : relance l'ancienne version (si pas supprimée à l'étape 6)</li>
-                <li>Nginx redirige immédiatement vers le port <span id="networkVMResp2">[PORT VM]</span> → ancien conteneur ✅</li>
+                <li>Nginx redirige immédiatement vers le port <span id="networkVMResp2">[PORT RESEAU]</span> → ancien conteneur ✅</li>
                 <li>Durée : ~10 sec. Dépannage rapide !</li>
             </ul>
         </div>

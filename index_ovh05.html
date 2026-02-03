@@ -352,7 +352,7 @@
                     <td><strong>-d</strong> : mode détaché (arrière-plan) <br>
                         <strong>--restart unless-stopped</strong> :
                         relance auto si crash <br>
-                        <strong>-p 8000:8000</strong> : mappe port interne au port VM <br>
+                        <strong>-p PORT RESEAU:PORT RESEAU</strong> : mappe port interne au port VM <br>
                         <strong>--name fastapi-app</strong> : nom du conteneur pour le retrouver facilement
                     </td>
                 </tr>
@@ -417,7 +417,7 @@
                         <strong>server_name app.datacofi.fr</strong> :
                         répondra à ce domaine <br>
                         <strong>proxy_pass http://127.0.0.1:[PORT RESEAU]</strong> : redirige vers Docker sur
-                        port 8000 <br>
+                        port <br>
                         <strong>proxy_set_header</strong> : transmet infos client <br>
                         <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
                         Puis : <br>
