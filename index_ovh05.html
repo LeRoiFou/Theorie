@@ -482,8 +482,7 @@
                 </tr>
                 <tr class="safe">
                     <td>@</td>
-                    <td>Tester via HTTP sur internet</td>
-                    <td>-</td>
+                    <td colspan="2">Tester via HTTP sur internet</td>
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -518,13 +517,77 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>https://<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>server {
+    listen 443 ssl;
+    server_name <span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code>;
+
+    # Certificats SSL (Let's Encrypt ou autre)
+    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr</code>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse9">[SOUS_DOMAINE]</span>.fr</code>/privkey.pem;
+
+    # --- Headers de sécurité ---
+
+    # HSTS : forcer HTTPS pour 2 ans
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+
+    # Empêche l'affichage du site dans une iframe (clickjacking)
+    add_header X-Frame-Options "DENY" always;
+
+    # Empêche le "mime sniffing"
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # Politique de referrer raisonnable
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # CSP basique pour une app simple (adapter si tu ajoutes des CDN / scripts externes)
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;" always;
+
+    # --- Proxy vers ton conteneur FastAPI ---
+
+    location / {
+        proxy_pass         http://127.0.0.1:8000;  # ton conteneur FastAPI
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Headers de sécurité pour prévenir des vulnérabilités</td>
+                    <td><a target="_blank" href="https://geekflare.com/fr/http-header-implementation/">Documentation sur
+                            les risques de vulnérabilités</a></td>
+                    </td>
+                </tr>
+                <tr rowspan="2">
+                    <td colspan="3">
+                        <pre><code>sudo nginx -t</code></pre>
+                        <pre><code>sudo systemctl reload nginx</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td colspan="2">Tester la configuration et recharger</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>https://<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="safe">
                     <td>@</td>
-                    <td>Tester via HTTPS sur internet</td>
-                    <td>-</td>
+                    <td colspan="2">
+                        <ul>
+                            <li>Tester via HTTPS sur internet</li>
+                            <li><a target="_blank" href="https://securityheaders.com/">Test sur les headers de
+                                    sécurité</a></li>
+                            <li><a target="_blank" href="https://domsignal.com/secure-header-test">Test de sécurité</a>
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
         </table>
