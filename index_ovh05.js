@@ -5,6 +5,7 @@ let container = document.getElementById("container");
 let repo = document.getElementById("repository");
 let tag = document.getElementById("tag");
 let network = document.getElementById("network");
+let networkVM = document.getElementById("networkVM");
 let domain = document.getElementById("domain");
 let button = document.getElementById("btn");
 
@@ -35,8 +36,11 @@ button.addEventListener("click", () => {
   tagResponse1.textContent = tag.value;
   tagResponse2.textContent = tag.value;
 
-  // Network port changed
-  networkResponse1.textContent = `${network.value}:${network.value}`;
+  // Local network port changed
+  networkResponse1.textContent = network.value;
+
+  // VM network port changed
+  networkVMResponse1.textContent = networkVM.value;
 
   // Domain changed
   domainResponse1.textContent = domain.value;

@@ -60,8 +60,12 @@
         <input type="text" name="tag" id="tag" placeholder="Version de l'image à charger  (en local : docker images)"
             title="Par défaut, le nom de la version de l'image est latest"><br>
 
-        <label for="network">Port réseau</label>
+        <label for="network">PORT LOCAL</label>
         <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+
+        <label for="networkVM">PORT RESEAU</label>
+        <input type="text" name="networkVM" id="networkVM"
+            placeholder="8000 pour le sous-domaine n°1, 8001 pour le sous-domaine 2..."><br>
 
         <label for="domain">Sous-domaine</label>
         <input type="text" name="domain" id="domain" placeholder="Nom du sous-domaine (par exempe test.datacofi)"><br>
@@ -343,7 +347,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>docker run -d --restart unless-stopped --name <span id="domainResponse1">[SOUS_DOMAINE]</span> -p <span id="networkResponse1">[PORT_RESEAU:PORT_RESEAU]</span> <span id="repoResponse7">[REPOSITORY]</span>:<span id="tagResponse2">[TAG]</span></code></pre>
+                        <pre><code>docker run -d --restart unless-stopped --name <span id="domainResponse1">[SOUS_DOMAINE]</span> -p <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkVMResponse1">[PORT RESEAU]</span>:<span id="networkResponse1">[PORT LOCAL]</span> <span id="repoResponse7">[REPOSITORY]</span>:<span id="tagResponse2">[TAG]</span></code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
@@ -352,7 +356,8 @@
                     <td><strong>-d</strong> : mode détaché (arrière-plan) <br>
                         <strong>--restart unless-stopped</strong> :
                         relance auto si crash <br>
-                        <strong>-p PORT RESEAU:PORT RESEAU</strong> : mappe port interne au port VM <br>
+                        <strong>-p PORT RESEAU:PORT LOCAL</strong> : mappe port interne au port VM (se lit à
+                        l'envers)<br>
                         <strong>--name fastapi-app</strong> : nom du conteneur pour le retrouver facilement
                     </td>
                 </tr>
@@ -417,7 +422,7 @@
                         <strong>server_name app.datacofi.fr</strong> :
                         répondra à ce domaine <br>
                         <strong>proxy_pass http://127.0.0.1:[PORT RESEAU]</strong> : redirige vers Docker sur
-                        port <br>
+                        port VM<br>
                         <strong>proxy_set_header</strong> : transmet infos client <br>
                         <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
                         Puis : <br>
@@ -519,11 +524,11 @@
                     <td colspan="3">
                         <pre><code>server {
     listen 443 ssl;
-    server_name <span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code>;
+    server_name <span id="domainResponse8">[SOUS_DOMAINE]</span>.fr;
 
     # Certificats SSL (Let's Encrypt ou autre)
-    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr</code>/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse9">[SOUS_DOMAINE]</span>.fr</code>/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse9">[SOUS_DOMAINE]</span>.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr/privkey.pem;
 
     # --- Headers de sécurité ---
 
@@ -536,16 +541,16 @@
     # Empêche le "mime sniffing"
     add_header X-Content-Type-Options "nosniff" always;
 
-    # Politique de referrer raisonnable
+    # Politique de referrer
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
-    # CSP basique pour une app simple (adapter si tu ajoutes des CDN / scripts externes)
+    # CSP basique
     add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;" always;
 
-    # --- Proxy vers ton conteneur FastAPI ---
+    # --- Proxy vers mon conteneur ---
 
     location / {
-        proxy_pass         http://127.0.0.1:8000;  # ton conteneur FastAPI
+        proxy_pass         http://127.0.0.1:[PORT RESEAU];
         proxy_set_header   Host $host;
         proxy_set_header   X-Real-IP $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
