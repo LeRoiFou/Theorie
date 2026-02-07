@@ -527,18 +527,11 @@
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
-                    <td colspan="2">Ouverture du fichier de config vierge pour édition</td>
+                    <td colspan="2">Ouverture du fichier de config déjà complété</td>
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>server {
-    listen 443 ssl;
-    server_name <span id="domainResponse9">[SOUS_DOMAINE]</span>.fr;
-
-    # Certificats SSL (Let's Encrypt ou autre)
-    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse11">[SOUS_DOMAINE]</span>.fr/privkey.pem;
-
+                        <pre><code>
     # --- Headers de sécurité ---
 
     # HSTS : forcer HTTPS pour 2 ans
@@ -556,24 +549,20 @@
     # CSP basique
     add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;" always;
 
-    # --- Proxy vers mon conteneur ---
-
-    location / {
-        proxy_pass         http://127.0.0.1:[PORT RESEAU];
-        proxy_set_header   Host $host;
-        proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Forwarded-Proto $scheme;
-    }
-}
 </code></pre>
                     </td>
                 </tr>
                 <tr>
                     <td>VM</td>
-                    <td>Headers de sécurité pour prévenir des vulnérabilités</td>
-                    <td><a target="_blank" href="https://geekflare.com/fr/http-header-implementation/">Documentation sur
-                            les risques de vulnérabilités</a></td>
+                    <td><a target="_blank" href="https://geekflare.com/fr/http-header-implementation/">Headers de
+                            sécurité pour prévenir des vulnérabilités</a></td>
+                    </td>
+                    <td>A intégrer dans le premier bloc du fichier de config après la ligne suivante : <br>
+                        <pre><code>server_name [NOM DOMAINE].fr;</code></pre>
+                        <ul>Puis :
+                            <li>CTRL + O puis ENTREE (pour enregistrer)</li>
+                            <li>CTRL + X (pour quitter le fichier de config)</li>
+                        </ul>
                     </td>
                 </tr>
                 <tr rowspan="2">
