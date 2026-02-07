@@ -482,7 +482,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>http://<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>http://<span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="safe">
@@ -491,14 +491,14 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>sudo certbot --nginx -d <span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>sudo certbot --nginx -d <span id="domainResponse6">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="vm">
                     <td>VM</td>
                     <td>Générer certificat SSL Let's Encrypt</td>
                     <td><strong>--nginx</strong> : Certbot configure auto Nginx avec HTTPS <br>
-                        <strong>-d <span id="domainResponse6">[SOUS_DOMAINE]</span>.fr</strong> : domaine à sécuriser
+                        <strong>-d <span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</strong> : domaine à sécuriser
                         <br><br>
                         Certbot va : <br>
                         1) Vérifier que le domaine pointe bien sur ce VM, <br>
@@ -522,13 +522,22 @@
                 </tr>
                 <tr>
                     <td colspan="3">
+                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Ouverture du fichier de config vierge pour édition</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
                         <pre><code>server {
     listen 443 ssl;
-    server_name <span id="domainResponse8">[SOUS_DOMAINE]</span>.fr;
+    server_name <span id="domainResponse9">[SOUS_DOMAINE]</span>.fr;
 
     # Certificats SSL (Let's Encrypt ou autre)
-    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse9">[SOUS_DOMAINE]</span>.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<span id="domainResponse11">[SOUS_DOMAINE]</span>.fr/privkey.pem;
 
     # --- Headers de sécurité ---
 
@@ -579,7 +588,7 @@
                 </tr>
                 <tr>
                     <td colspan="3">
-                        <pre><code>https://<span id="domainResponse10">[SOUS_DOMAINE]</span>.fr</code></pre>
+                        <pre><code>https://<span id="domainResponse12">[SOUS_DOMAINE]</span>.fr</code></pre>
                     </td>
                 </tr>
                 <tr class="safe">
