@@ -29,6 +29,17 @@
         </div>
     </div>
 
+    <h2>ℹ️ Informations</h2>
+    <div class="diagram">
+        <b>En local :</b>
+        ├── le backtick ` permet de couper une commande sur plusieurs lignes
+        └── On parle de Powershell (ou invite de commandes)
+
+        <b>En VM Unbuntu :</b>
+        ├── l'anti slache \ permet de couper une commande sur plusieurs lignes
+        └── On parle de shell bash (via SSH)
+    </div>
+
     <h2>📊 Vue d'ensemble : Qu'est-ce qui change ?</h2>
     <div class="diagram">
         AVANT MISE À JOUR
@@ -317,14 +328,39 @@
         <tbody>
             <tr>
                 <td colspan="3">
-                    <pre>docker run -d --restart unless-stopped --name <span id="containerNameResp1">[CONTAINER NAME]</span> -p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp3">[PORT LOCAL]</span> <span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></pre>
+                    <pre><code>export MAILJET_API_KEY="ta_cle_api"</code></pre>
+                    <pre><code>export MAILJET_API_SECRET="ton_secret_api"</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td colspan="2">Si recours à des clés</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker run -d \<br>--restart unless-stopped \<br>-p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp3">[PORT LOCAL]</span> \<br>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements \<br>--e MAILJET_API_KEY="$MAILJET_API_KEY" \<br>--e MAILJET_API_SECRET="$MAILJET_API_SECRET" \<br>--e COOKIE_SECURE=1 \<br>--name <span id="containerNameResp1">[CONTAINER NAME]</span> \<br><span id="repoResp8">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></code></pre>
                 </td>
             </tr>
             <tr class="vm">
                 <td>VM</td>
                 <td>Lancer le nouveau conteneur</td>
-                <td><strong>--name <span id="containerNameResp2">[CONTAINER NAME]</span></strong> : crée le
-                    conteneur avec un nouveau nom <br>
+                <td>
+                    <ul>
+                        <li><b>-d</b> : mode détaché (arrière-plan)</li>
+                        <li><b>--restart unless-stopped</b> : relance auto si crash <br></li>
+                        <li><b>-p PORT RESEAU:PORT LOCAL</b> : mappe port interne au port VM (se lit à
+                            l'envers)</li>
+                        <li><b>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements</b> : si export des
+                            données en tant qu'admin</li>
+                        <li><b>--e MAILJET_API_KEY="$MAILJET_API_KEY"</b></li> : si présence d'une clé API de
+                        MAILJET
+                        <li><b>--e MAILJET_API_SECRET="$MAILJET_API_SECRET"</b> : </li> si présence d'un MDP API de
+                        MAILJET
+                        <li><b>--e COOKIE_SECURE=1</b> : si présence de cookies</li>
+                        <li><b>--name <span id="containerNameResp2">[CONTAINER NAME]</span></b> : crée le
+                            conteneur avec un nouveau nom</li>
+                    </ul>
+                    <br>
                     ⏱️ 3-10 sec pour démarrer
                 </td>
             </tr>
