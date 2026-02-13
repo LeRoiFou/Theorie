@@ -23,8 +23,6 @@ button.addEventListener("click", () => {
   repoResp4.textContent = repo.value;
   repoResp5.textContent = repo.value;
   repoResp6.textContent = repo.value;
-  repoResp7.textContent = repo.value;
-  repoResp8.textContent = repo.value;
 
   // TAG value changed
   tagResp1.textContent = tag.value;
@@ -42,8 +40,6 @@ button.addEventListener("click", () => {
 
   // NETWORK LOCAL changed
   networkResp1.textContent = network.value;
-  networkResp2.textContent = network.value;
-  networkResp3.textContent = network.value;
 
   // NETWORK VM changed
   networkVMResp1.textContent = networkVM.value;

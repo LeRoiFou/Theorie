@@ -15,9 +15,9 @@
         <h2 id="menu">👨‍🍳 Menu</h2>
         <div class="diagram">
             🔧 <a href="#part1">BLOC 1 : Installation des paquets Nginx + Certbot</a> <br>
-            📦 <a href="#part2">BLOC 2 : Préparation Docker & Transfert vers VM</a><br>
-            ⚙️ <a href="#part3">BLOC 3 : Configuration Nginx Reverse Proxy</a> <br>
-            🔒 <a href="#part4">BLOC 4 : Génération Certificat SSL Let's Encrypt</a>
+            ⚙️ <a href="#part2">BLOC 2 : Configuration Nginx Reverse Proxy</a> <br>
+            🔒 <a href="#part3">BLOC 3 : Génération Certificat SSL Let's Encrypt</a> <br>
+            📦 <a href="#part4">BLOC 4 : Préparation Docker & Transfert vers VM</a>
         </div>
 
         <div class="diagram">
@@ -30,8 +30,8 @@
 
             <b>NB 1 :</b>
             → <b>Le bloc 1 est à appliquer pour chaque nouvelle instance (= VM)</b>
-            → <b>Le bloc 2 est à appliquer pour chaque nouvelle application</b>
-            → <b>Les blocs 3 et 4 sont à appliquer pour chaque nouveau sous-domaine</b>
+            → <b>Les blocs 2 et 3 sont à appliquer pour chaque nouveau sous-domaine</b>
+            → <b>Le bloc 4 est à appliquer pour chaque nouvelle application</b>
 
             <b>NB 2 : une application est rattachée à un sous-domaine qui est rattaché à un port réseau spécifique
                 (8000, ou 8001...)</b>
@@ -162,8 +162,231 @@
             </tbody>
         </table>
 
-        <!-- BLOC 2 : DOCKER & TRANSFERT -->
-        <div class="section-title" id="part2">📦 BLOC 2 <u>POUR CHAQUE NOUVELLE APPLICATION</u> : Préparation Docker & Transfert vers VM</div>
+        <!-- BLOC 2 : CONFIGURATION NGINX -->
+        <div class="section-title" id="part2">⚙️ BLOC 2 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Configuration Nginx
+            Reverse Proxy</div>
+        <table>
+            <thead>
+                <tr>
+                    <th width="80px">Shell</th>
+                    <th width="400px">Motif</th>
+                    <th>Explications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse1">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Créer le fichier de config Nginx</td>
+                    <td><strong>nano</strong> : éditeur texte simple. Ouvre un fichier vierge pour édition</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name <span id="domainResponse2">[SOUS_DOMAINE]</span>.fr;
+
+    location / {
+        proxy_pass http://127.0.0.1:[PORT RESEAU];
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
+    }
+}</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Contenu à coller dans nano</td>
+                    <td><strong>listen 80</strong> : écoute HTTP port 80 <br>
+                        <strong>server_name app.datacofi.fr</strong> :
+                        répondra à ce domaine <br>
+                        <strong>proxy_pass http://127.0.0.1:[PORT RESEAU]</strong> : redirige vers Docker sur
+                        port VM<br>
+                        <strong>proxy_set_header</strong> : transmet infos client <br>
+                        <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
+                        Puis : <br>
+                        → <b>CTRL + O</b> (pour 'Write Out' / Enregistrer)<br>
+                        → <b>ENTREE</b> (pour confirmer le nom du fichier)<br>
+                        → <b>CTRL + X</b> (quitter)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse3">[SOUS_DOMAINE]</span>.fr /etc/nginx/sites-enabled/</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Activer le site dans Nginx</td>
+                    <td><strong>ln -s</strong> : crée un lien symbolique (raccourci). Nginx lit les configs de
+                        sites-enabled/ au démarrage</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                </tr>
+        </table>
+
+        <!-- BLOC 3 : GÉNÉRATION CERTIFICAT SSL -->
+        <div class="section-title" id="part3">🔒 BLOC 3 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Génération Certificat
+            SSL Let's Encrypt</div>
+        <table>
+            <thead>
+                <tr>
+                    <th width="80px">Shell</th>
+                    <th width="400px">Motif</th>
+                    <th>Explications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo nginx -t</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Tester la syntaxe Nginx</td>
+                    <td>Doit afficher "syntax is ok" et "test is successful" ✅ Si erreur, le config Nginx a
+                        un problème.</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo systemctl reload nginx</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Recharger Nginx avec le nouveau config</td>
+                    <td>Applique le reverse proxy pour le sous-domaine. Sans erreur = ✅</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>http://<span id="domainResponse4">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="safe">
+                    <td>@</td>
+                    <td colspan="2">Tester via HTTP sur internet</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo certbot --nginx -d <span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Générer certificat SSL Let's Encrypt</td>
+                    <td><strong>--nginx</strong> : Certbot configure auto Nginx avec HTTPS <br>
+                        <strong>-d <span id="domainResponse6">[SOUS_DOMAINE]</span>.fr</strong> : domaine à sécuriser
+                        <br><br>
+                        Certbot va : <br>
+                        1) Vérifier que le domaine pointe bien sur ce VM, <br>
+                        2) Générer un certificat valide 90 jours, <br>
+                        3) Modifier le config Nginx pour activer HTTPS <br><br>
+                        ⏱️ 1-2 min : tu verra des prompts - accepte les conditions Let's Encrypt.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo certbot renew --dry-run</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Tester le renouvellement automatique</td>
+                    <td><strong>--dry-run</strong> : teste le renouvellement sans le faire vraiment <br><br>
+                        Doit afficher "Congratulations" ✅ <br>
+                        Certbot renouvellera auto 30 jours avant expiration, et évite
+                        donc au bout de 30 jours de ne plus pouvoir accéder à l'application</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Ouverture du fichier de config déjà complété</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>
+    # --- Headers de sécurité ---
+
+    # HSTS : forcer HTTPS pour 2 ans
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+
+    # Empêche l'affichage du site dans une iframe (clickjacking)
+    add_header X-Frame-Options "DENY" always;
+
+    # Empêche le "mime sniffing"
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # Politique de referrer
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # CSP basique
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;" always;
+
+</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td><a target="_blank" href="https://geekflare.com/fr/http-header-implementation/">Headers de
+                            sécurité pour prévenir des vulnérabilités</a></td>
+                    </td>
+                    <td>A intégrer dans le premier bloc du fichier de config après la ligne suivante : <br>
+                        <pre><code>server_name [NOM DOMAINE].fr;</code></pre>
+                        <ul>Puis :
+                            <li>CTRL + O puis ENTREE (pour enregistrer)</li>
+                            <li>CTRL + X (pour quitter le fichier de config)</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr rowspan="2">
+                    <td colspan="3">
+                        <pre><code>sudo nginx -t</code></pre>
+                        <pre><code>sudo systemctl reload nginx</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td colspan="2">Tester la configuration et recharger</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>https://<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr</code></pre>
+                    </td>
+                </tr>
+                <tr class="safe">
+                    <td>@</td>
+                    <td colspan="2">
+                        <ul>
+                            <li>Tester via HTTPS sur internet</li>
+                            <li><a target="_blank" href="https://securityheaders.com/">Test sur les headers de
+                                    sécurité</a></li>
+                            <li><a target="_blank" href="https://domsignal.com/secure-header-test">Test de sécurité</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+
+        <!-- BLOC 4 : DOCKER & TRANSFERT -->
+        <div class="section-title" id="part4">📦 BLOC 4 <u>POUR CHAQUE NOUVELLE APPLICATION A INSTALLER</u> :
+            Préparation Docker & Transfert vers VM</div>
         <table>
             <thead>
                 <tr>
@@ -347,6 +570,16 @@
                 </tr>
                 <tr>
                     <td colspan="3">
+                        <pre><code>export MAILJET_API_KEY="ta_cle_api"</code></pre>
+                        <pre><code>export MAILJET_API_SECRET="ton_secret_api"</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Si recours à des clés</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
                         <pre><code>docker run -d \<br>--restart unless-stopped \<br>-p <span id="networkVMResponse1">[PORT RESEAU]</span>:<span id="networkResponse1">[PORT LOCAL]</span> \<br>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements \<br>--e MAILJET_API_KEY="$MAILJET_API_KEY" \<br>--e MAILJET_API_SECRET="$MAILJET_API_SECRET" \<br>--e COOKIE_SECURE=1 \<br>--name <span id="containerNameResp1">[CONTAINER NAME]</span> \<br><span id="repoResponse7">[REPOSITORY]</span>:<span id="tagResponse2">[TAG]</span></code></pre>
                     </td>
                 </tr>
@@ -384,228 +617,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!-- BLOC 3 : CONFIGURATION NGINX -->
-        <div class="section-title" id="part3">⚙️ BLOC 3 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Configuration Nginx
-            Reverse Proxy</div>
-        <table>
-            <thead>
-                <tr>
-                    <th width="80px">Shell</th>
-                    <th width="400px">Motif</th>
-                    <th>Explications</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse1">[SOUS_DOMAINE]</span>.fr</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Créer le fichier de config Nginx</td>
-                    <td><strong>nano</strong> : éditeur texte simple. Ouvre un fichier vierge pour édition</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>server {
-    listen 80;
-    listen [::]:80;
-    server_name <span id="domainResponse2">[SOUS_DOMAINE]</span>.fr;
-
-    location / {
-        proxy_pass http://127.0.0.1:[PORT RESEAU];
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_read_timeout 300s;
-        proxy_connect_timeout 75s;
-    }
-}</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Contenu à coller dans nano</td>
-                    <td><strong>listen 80</strong> : écoute HTTP port 80 <br>
-                        <strong>server_name app.datacofi.fr</strong> :
-                        répondra à ce domaine <br>
-                        <strong>proxy_pass http://127.0.0.1:[PORT RESEAU]</strong> : redirige vers Docker sur
-                        port VM<br>
-                        <strong>proxy_set_header</strong> : transmet infos client <br>
-                        <strong>proxy_*_timeout</strong> : délais pour ne pas crash <br><br>
-                        Puis : <br>
-                        → <b>CTRL + O</b> (pour 'Write Out' / Enregistrer)<br>
-                        → <b>ENTREE</b> (pour confirmer le nom du fichier)<br>
-                        → <b>CTRL + X</b> (quitter)
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo ln -s /etc/nginx/sites-available/<span id="domainResponse3">[SOUS_DOMAINE]</span>.fr /etc/nginx/sites-enabled/</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Activer le site dans Nginx</td>
-                    <td><strong>ln -s</strong> : crée un lien symbolique (raccourci). Nginx lit les configs de
-                        sites-enabled/ au démarrage</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                </tr>
-        </table>
-
-        <!-- BLOC 4 : GÉNÉRATION CERTIFICAT SSL -->
-        <div class="section-title" id="part4">🔒 BLOC 4 <u>POUR CHAQUE NOUVEAU SOUS-DOMAINE</u> : Génération Certificat
-            SSL Let's Encrypt</div>
-        <table>
-            <thead>
-                <tr>
-                    <th width="80px">Shell</th>
-                    <th width="400px">Motif</th>
-                    <th>Explications</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo nginx -t</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Tester la syntaxe Nginx</td>
-                    <td>Doit afficher "syntax is ok" et "test is successful" ✅ Si erreur, le config Nginx a
-                        un problème.</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo systemctl reload nginx</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Recharger Nginx avec le nouveau config</td>
-                    <td>Applique le reverse proxy pour le sous-domaine. Sans erreur = ✅</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>http://<span id="domainResponse4">[SOUS_DOMAINE]</span>.fr</code></pre>
-                    </td>
-                </tr>
-                <tr class="safe">
-                    <td>@</td>
-                    <td colspan="2">Tester via HTTP sur internet</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo certbot --nginx -d <span id="domainResponse5">[SOUS_DOMAINE]</span>.fr</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Générer certificat SSL Let's Encrypt</td>
-                    <td><strong>--nginx</strong> : Certbot configure auto Nginx avec HTTPS <br>
-                        <strong>-d <span id="domainResponse6">[SOUS_DOMAINE]</span>.fr</strong> : domaine à sécuriser
-                        <br><br>
-                        Certbot va : <br>
-                        1) Vérifier que le domaine pointe bien sur ce VM, <br>
-                        2) Générer un certificat valide 90 jours, <br>
-                        3) Modifier le config Nginx pour activer HTTPS <br><br>
-                        ⏱️ 1-2 min : tu verra des prompts - accepte les conditions Let's Encrypt.
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo certbot renew --dry-run</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td>Tester le renouvellement automatique</td>
-                    <td><strong>--dry-run</strong> : teste le renouvellement sans le faire vraiment <br><br>
-                        Doit afficher "Congratulations" ✅ <br>
-                        Certbot renouvellera auto 30 jours avant expiration, et évite
-                        donc au bout de 30 jours de ne plus pouvoir accéder à l'application</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo nano /etc/nginx/sites-available/<span id="domainResponse7">[SOUS_DOMAINE]</span>.fr</code></pre>
-                    </td>
-                </tr>
-                <tr class="vm">
-                    <td>VM</td>
-                    <td colspan="2">Ouverture du fichier de config déjà complété</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>
-    # --- Headers de sécurité ---
-
-    # HSTS : forcer HTTPS pour 2 ans
-    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
-
-    # Empêche l'affichage du site dans une iframe (clickjacking)
-    add_header X-Frame-Options "DENY" always;
-
-    # Empêche le "mime sniffing"
-    add_header X-Content-Type-Options "nosniff" always;
-
-    # Politique de referrer
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-
-    # CSP basique
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;" always;
-
-</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td><a target="_blank" href="https://geekflare.com/fr/http-header-implementation/">Headers de
-                            sécurité pour prévenir des vulnérabilités</a></td>
-                    </td>
-                    <td>A intégrer dans le premier bloc du fichier de config après la ligne suivante : <br>
-                        <pre><code>server_name [NOM DOMAINE].fr;</code></pre>
-                        <ul>Puis :
-                            <li>CTRL + O puis ENTREE (pour enregistrer)</li>
-                            <li>CTRL + X (pour quitter le fichier de config)</li>
-                        </ul>
-                    </td>
-                </tr>
-                <tr rowspan="2">
-                    <td colspan="3">
-                        <pre><code>sudo nginx -t</code></pre>
-                        <pre><code>sudo systemctl reload nginx</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td colspan="2">Tester la configuration et recharger</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>https://<span id="domainResponse8">[SOUS_DOMAINE]</span>.fr</code></pre>
-                    </td>
-                </tr>
-                <tr class="safe">
-                    <td>@</td>
-                    <td colspan="2">
-                        <ul>
-                            <li>Tester via HTTPS sur internet</li>
-                            <li><a target="_blank" href="https://securityheaders.com/">Test sur les headers de
-                                    sécurité</a></li>
-                            <li><a target="_blank" href="https://domsignal.com/secure-header-test">Test de sécurité</a>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <hr>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
