@@ -318,7 +318,7 @@
             </tr>
             <tr>
                 <td colspan="3">
-                    <pre><code>docker run -d \<br>--restart unless-stopped \<br>-p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp1">[PORT LOCAL]</span> \<br>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements \<br>--e MAILJET_API_KEY="$MAILJET_API_KEY" \<br>--e MAILJET_API_SECRET="$MAILJET_API_SECRET" \<br>--e COOKIE_SECURE=1 \<br>--name <span id="containerNameResp1">[CONTAINER NAME]</span> \<br><span id="repoResp6">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></code></pre>
+                    <pre><code>docker run -d \<br>--restart unless-stopped \<br>-p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp1">[PORT LOCAL]</span> \<br>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements \<br>-e MAILJET_API_KEY="$MAILJET_API_KEY" \<br>-e MAILJET_API_SECRET="$MAILJET_API_SECRET" \<br>-e COOKIE_SECURE=1 \<br>--name <span id="containerNameResp1">[CONTAINER NAME]</span> \<br><span id="repoResp6">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></code></pre>
                 </td>
             </tr>
             <tr class="vm">
@@ -332,11 +332,11 @@
                             l'envers)</li>
                         <li><b>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements</b> : si export des
                             données en tant qu'admin</li>
-                        <li><b>--e MAILJET_API_KEY="$MAILJET_API_KEY"</b></li> : si présence d'une clé API de
+                        <li><b>-e MAILJET_API_KEY="$MAILJET_API_KEY"</b></li> : si présence d'une clé API de
                         MAILJET
-                        <li><b>--e MAILJET_API_SECRET="$MAILJET_API_SECRET"</b> : </li> si présence d'un MDP API de
+                        <li><b>-e MAILJET_API_SECRET="$MAILJET_API_SECRET"</b> : </li> si présence d'un MDP API de
                         MAILJET
-                        <li><b>--e COOKIE_SECURE=1</b> : si présence de cookies</li>
+                        <li><b>-e COOKIE_SECURE=1</b> : si présence de cookies</li>
                         <li><b>--name <span id="containerNameResp2">[CONTAINER NAME]</span></b> : crée le
                             conteneur avec un nouveau nom</li>
                     </ul>
