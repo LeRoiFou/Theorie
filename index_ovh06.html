@@ -4,189 +4,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoring</title>
+    <title>Mise à jour application</title>
     <link rel="stylesheet" href="styleOVH.css">
 </head>
 
 <body>
+
     <div class="container">
-        <h1>📈 Monitoring & Logs</h1>
+        <h1>🔄 Mise à jour d'une application - Impact & Procédure</h1>
 
         <h2 id="menu">👨‍🍳 Menu</h2>
         <div class="diagram">
-            <a href="#part1">🧑‍💻 Monitoring</a>
+            <a href="#part1">🚀 Procédure de mise à jour</a>
+            ├── <a href="#part11">ÉTAPE 1️⃣ : LOCAL - Préparer la nouvelle image</a>
+            ├── <a href="#part12">ÉTAPE 2️⃣ : VM - Charger la nouvelle image</a>
+            ├── <a href="#part13">ÉTAPE 3️⃣ : VM - Arrêter l'ancienne version (⚠️ DOWNTIME ~10-30 sec)</a>
+            ├── <a href="#part14">ÉTAPE 4️⃣ : VM - Lancer la nouvelle version</a>
+            ├── <a href="#part15">ÉTAPE 5️⃣ : VÉRIFICATION - Tester la nouvelle version</a>
+            └── <a href="#part16">ÉTAPE 6️⃣ : OPTIONNEL - Nettoyer les anciennes versions</a>
 
-            <a href="#part2">📋 Logs</a>
+            <a href="#part2">📋 Résumé des impacts</a>
 
+            <a href="#part3">🔄 Rollback en cas de problème (urgent)</a>
         </div>
+    </div>
 
-        <!-- BLOC 1 : MONITORING -->
-        <div class="section-title" id="part1">
-            BLOC 1️⃣ : 🧑‍💻 MONITORING
-        </div>
+    <h2>ℹ️ Informations</h2>
+    <div class="diagram">
+        <b>En local :</b>
+        ├── le backtick ` permet de couper une commande sur plusieurs lignes
+        └── On parle de Powershell (ou invite de commandes)
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Shell</th>
-                    <th>Motif</th>
-                    <th>Explications</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="3">Sur OVH, cliquer sur le nom de l'instance (couleur bleue) pour afficher les données
-                        statistiques
-                        (menu à gauche → partie "COMPUTE" → sous-partie "Instances") <br><br>
-                        <i>NB : certaines instances comme le modèle "Discovery" ne permettent pas d'afficher les
-                            graphiques</i>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>ssh -i $env:USERPROFILE\.ssh\[Cle] ubuntu@[IPv4]</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Local</td>
-                    <td>Connexion au shell de la VM</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td colspan="3"><strong><i>Si c'est la première fois que les données statistiques sont analysées
-                                pour
-                                cette instance :</i></strong></td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo apt update</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td>Mise à jour des paquets disponibles</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>sudo apt install nload -y</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td>Installation du paquet nload</td>
-                    <td><b>-y</b> : <i>l’option -y signifie “assume yes” 👉 elle répond automatiquement “yes” à toutes
-                            les
-                            questions posées par apt pendant l’installation</i></td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>nload</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td>Accès aux données statistiques</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td colspan="3"><strong><i>Si ce n'est pas la première que les données statistiques sont effectuées
-                                pour
-                                cette instance : </i></strong></td>
-                </tr>
-                <tr>
-                    <td colspan="3">
-                        <pre><code>nload</code></pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VM</td>
-                    <td>Accès aux données statistiques</td>
-                    <td>-</td>
-                </tr>
-            </tbody>
-        </table><br>
+        <b>En VM Unbuntu :</b>
+        ├── l'anti slache \ permet de couper une commande sur plusieurs lignes
+        └── On parle de shell bash (via SSH)
+    </div>
 
-        <p><b>Données restituées dans le shell : </b></p>
+    <h2>📊 Vue d'ensemble : Qu'est-ce qui change ?</h2>
+    <div class="diagram">
+        AVANT MISE À JOUR
+        ├── Docker conteneur (v1) ❌ À REMPLACER
+        ├── Nginx (reverse proxy) ✅ INCHANGÉ
+        ├── Certbot (SSL/HTTPS) ✅ INCHANGÉ
+        └── Firewall UFW ✅ INCHANGÉ
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Élément</th>
-                    <th>Rôle</th>
-                    <th>Détail</th>
+        APRÈS MISE À JOUR
+        ├── Docker conteneur (v2) ✅ NOUVEAU
+        ├── Nginx (reverse proxy) ✅ INCHANGÉ
+        ├── Certbot (SSL/HTTPS) ✅ INCHANGÉ
+        └── Firewall UFW ✅ INCHANGÉ
+    </div>
+
+    <!-- ZONE DE SAISIE -->
+    <div class="section-title" id="part1">ZONE DE SAISIE DES DONNEES</div>
+
+    <label for="repository">REPOSITORY</label>
+    <input type="text" name="repository" id="repository" placeholder="Commande dans le shell : 'docker images'"
+        title="Charger préalablement docker desktop (image = REPOSITORY:TAG)"><br>
+
+    <label for="tag">TAG</label>
+    <input type="text" name="tag" id="tag" placeholder="Commande dans le shell : 'docker images'"
+        title="Par défaut, le nom de la version de l'image est latest" title="Charger préalablement docker desktop"><br>
+
+    <label for="containerID">CONTAINER ID</label>
+    <input type="text" name="containerID" id="containerID" placeholder="Commande dans le shell : docker ps -a"
+        title="Charger préalablement docker desktop"><br>
+
+    <label for="containerName">CONTAINER NAME</label>
+    <input type="text" name="containerName" id="containerName" placeholder="Commande dans le shell : docker ps -a"
+        title="Charger préalablement docker desktop - nom du conteneur"><br>
+
+    <label for="network">PORT LOCAL</label>
+    <input type="text" name="network" id="network" placeholder="8000 pour fastapi, 8050 pour dash"><br>
+
+    <label for="networkVM">PORT RESEAU</label>
+    <input type="text" name="networkVM" id="networkVM"
+        placeholder="8000 pour le sous-domaine n°1, 8001 pour le sous-domaine 2..."><br>
+
+    <label for="key">CLE</label>
+    <input type="text" name="key" id="key" value="id_ed25519"
+        title="Nom par défaut de la clé privée attribué par OVH"><br>
+
+    <label for="ipv4">IPv4</label>
+    <input type="text" name="ipv4" id="ipv4" placeholder="Adresse IPv4 sur OVH du projet ciblé"><br>
+
+    <label for="images">IMAGE</label>
+    <input type="text" name="images" id="images" placeholder="Nom commun de l'ancien et de la nouvelle image"
+        title="Exemple : projet003"><br>
+
+    <label for="prevContainerID">Ancien CONTAINER ID</label>
+    <input type="text" name="prevContainerID" id="prevContainerID"
+        placeholder="Commande dans le shell de la VM : 'docker ps'" title="Conteneur actif dans la VM"><br>
+
+    <label for="prevContainerName">Ancien CONTAINER NAME</label>
+    <input type="text" name="prevContainerName" id="prevContainerName"
+        placeholder="Commande dans le shell de la VM : 'docker ps'" title="Conteneur actif dans la VM"><br>
+
+    <label for="prevRepository">Ancien REPOSITORY</label>
+    <input type="text" name="prevRepository" id="prevRepository"
+        placeholder="Commande dans le shell de la VM : 'docker images'" title="Image active dans la VM"><br>
+
+    <label for="prevTag">Ancien TAG</label>
+    <input type="text" name="prevTag" id="prevTag" placeholder="Commande dans le shell de la VM : 'docker images'"
+        title="Version de l'image active dans la VM"><br>
+
+    <button type="submit" id="btn">Valider</button>
+
+    <h2>🚀 Procédure de mise à jour</h2>
+
+    <!-- ÉTAPE 1 : LOCAL -->
+    <div class="section-title" id="part11">
+        ÉTAPE 1️⃣ : LOCAL - Préparer la nouvelle image
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">Shell</th>
+                <th width="48%">Motif</th>
+                <th width="48%">Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre>docker images</pre>
+                </td>
+            <tr class="local">
+                <td>Local</td>
+                <td>Récupérer REPOSITORY et TAG de ton image</td>
+                <td>Affiche toutes les images disponibles
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker ps -a</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Permet d'afficher la liste des conteneurs exécutés / arrêtés, avec les statuts
+                    suivants :
+                    <ul>
+                        <li>Exited (0) : <i>aucune erreur</i></li>
+                        <li>Exited (1) : <i>au moins une erreur présente</i></li>
+                        <li>Exited (137) : <i>conteneur arrêté / forcé / manque de mémoire</i>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li><b>ps</b> : vient de “process status”. Historiquement, ps est une
+                            commande
+                            Unix qui affiche l’état des processus en cours, et
+                            Docker a
+                            repris ce nom pour afficher l’état des conteneurs
+                        </li>
+                        <li><b>-a</b> : signifie 'all'</li>
+                    </ul>
+                </td>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker logs <span id="containerIDResp1">[CONTAINER_ID]</span></code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td>Local</td>
+                <td>Si un des conteneurs a le statut Exited (1) ou Exited (137)</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker save <span id="repoResp1">[REPOSITORY]</span>:<span id="tagResp1">[TAG]</span> -o <span id="repoResp2">[REPOSITORY]</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Exporter l'image en fichier .tar</td>
+                <td><strong>-o</strong> : output
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ls <span id="repoResp3">[REPOSITORY]</span>.tar</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Vérifier que le .tar existe</td>
+                <td><strong>ls</strong> : liste détaillée avec taille lisible. Si absent, l'export a
+                    échoué
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>scp -i $env:USERPROFILE\.ssh\<span id="keyResp1">[CLE]</span> <span id="repoResp4">[REPOSITORY]</span>.tar ubuntu@<span
+                                                id="ipv4Resp1">[IPV4]</span>:/home/ubuntu/</code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Copier le fichier .tar vers le VM</td>
+                <td><strong>scp</strong> : Secure Copy via SSH</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>ssh -i $env:USERPROFILE\.ssh\<span id="keyResp2">[CLE]</span> ubuntu@<span
+                                                id="ipv4Resp2">[IPV4]</span></code></pre>
+                </td>
+            </tr>
+            <tr class="local">
+                <td>Local</td>
+                <td>Se connecter au VM en SSH</td>
+                <td>Tu entres maintenant dans le shell du VM</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ÉTAPE 2 : VM -->
+    <div class="section-title" id="part12">
+        ÉTAPE 2️⃣ : VM - Charger la nouvelle image
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">Shell</th>
+                <th width="48%">Motif</th>
+                <th width="48%">Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre>docker load -i <span id="repoResp5">[REPOSITORY]</span>.tar</pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Charger la nouvelle image Docker</td>
+                <td>Crée l'image v1 dans Docker. L'ancienne (v0) reste aussi disponible</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>docker images | grep <span id="imagesResp1">[IMAGE]</span></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Vérifier que les 2 images coexistent</td>
+                <td>Affiche
+                    <pre><code>...version0:0</code> et <pre><code>...version0:1</code> ✅</td>
                 </tr>
-            </thead>
-            <tbody>
                 <tr>
-                    <td>Incoming</td>
-                    <td>Trafic entrant</td>
-                    <td>Données qui arrivent sur la VM (requêtes HTTP, téléchargements, flux depuis Internet, etc.).
-                    </td>
-                </tr>
-                <tr>
-                    <td>Outgoing</td>
-                    <td>Trafic sortant</td>
-                    <td>Données qui partent de la VM (réponses HTTP, envoi de fichiers, etc.). </td>
-                </tr>
-                <tr>
-                    <td>Curr</td>
-                    <td>Débit instantané</td>
-                    <td>Débit mesuré au dernier rafraîchissement, en kBit/s ou MBit/s selon la valeur.</td>
-                </tr>
-                <tr>
-                    <td>Avg</td>
-                    <td>Débit moyen</td>
-                    <td>Moyenne du débit sur une fenêtre de temps récente (par défaut ≈ 5 minutes). </td>
-                </tr>
-                <tr>
-                    <td>Min</td>
-                    <td>Débit minimum</td>
-                    <td>Plus faible débit observé pendant la session en cours de nload. </td>
-                </tr>
-                <tr>
-                    <td>Max</td>
-                    <td>Débit maximum</td>
-                    <td>Pic de débit observé pendant la session en cours de nload. </td>
-                </tr>
-                <tr>
-                    <td>Ttl</td>
-                    <td>Volume total</td>
-                    <td>Quantité totale de données transférées depuis le lancement de nload, en kByte/MByte/GByte. </td>
+                    <td colspan="3">
+                        <pre>docker ps</pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Voir le conteneur actif (ancienne version)</td>
+                <td>-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ÉTAPE 3 : ARRÊT ANCIEN CONTENEUR -->
+    <div class="section-title" id="part13">
+        ÉTAPE 3️⃣ : VM - Arrêter l'ancienne version (⚠️ DOWNTIME ~10-30 sec)
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">Shell</th>
+                <th width="48%">Motif</th>
+                <th width="48%">Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre>docker stop <span id="prevContainerIDResp1">[ancien CONTAINER ID]</span></pre>
+                </td>
+            </tr>
+            <tr class="warning">
+                <td>VM</td>
+                <td>Arrêter le conteneur actif</td>
+                <td><strong>ATTENTION :</strong> À ce moment, l'app est DOWN (non accessible). Durée : ~5-10 sec.
+                    Nginx affichera "502 Bad Gateway" pour les utilisateurs</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ÉTAPE 4 : LANCEMENT NOUVEAU CONTENEUR -->
+    <div class="section-title" id="part14">
+        ÉTAPE 4️⃣ : VM - Lancer la nouvelle version
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">Shell</th>
+                <th width="48%">Motif</th>
+                <th width="48%">Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre><code>export MAILJET_API_KEY="ta_cle_api"</code></pre>
+                    <pre><code>export MAILJET_API_SECRET="ton_secret_api"</code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td colspan="2">Si recours à des clés</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre><code>docker run -d \<br>--restart unless-stopped \<br>-p <span id="networkVMResp1">[PORT RESEAU]</span>:<span id="networkResp1">[PORT LOCAL]</span> \<br>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements \<br>--e MAILJET_API_KEY="$MAILJET_API_KEY" \<br>--e MAILJET_API_SECRET="$MAILJET_API_SECRET" \<br>--e COOKIE_SECURE=1 \<br>--name <span id="containerNameResp1">[CONTAINER NAME]</span> \<br><span id="repoResp6">[REPOSITORY]</span>:<span id="tagResp2">[TAG]</span></code></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Lancer le nouveau conteneur</td>
+                <td>
+                    <ul>
+                        <li><b>-d</b> : mode détaché (arrière-plan)</li>
+                        <li><b>--restart unless-stopped</b> : relance auto si crash <br></li>
+                        <li><b>-p PORT RESEAU:PORT LOCAL</b> : mappe port interne au port VM (se lit à
+                            l'envers)</li>
+                        <li><b>-v /home/ubuntu/enregistrements_formulaires:/app/Enregistrements</b> : si export des
+                            données en tant qu'admin</li>
+                        <li><b>--e MAILJET_API_KEY="$MAILJET_API_KEY"</b></li> : si présence d'une clé API de
+                        MAILJET
+                        <li><b>--e MAILJET_API_SECRET="$MAILJET_API_SECRET"</b> : </li> si présence d'un MDP API de
+                        MAILJET
+                        <li><b>--e COOKIE_SECURE=1</b> : si présence de cookies</li>
+                        <li><b>--name <span id="containerNameResp2">[CONTAINER NAME]</span></b> : crée le
+                            conteneur avec un nouveau nom</li>
+                    </ul>
+                    <br>
+                    ⏱️ 3-10 sec pour démarrer
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>docker ps</pre>
+                </td>
+            </tr>
+            <tr class="safe">
+                <td>VM</td>
+                <td>Vérifier que la nouvelle version du conteneur tourne</td>
+                <td>Doit afficher
+                    <pre><code><span id="containerNameResp3">[CONTAINER NAME]</span></code> avec <pre><code>STATUS: Up X seconds</code> 
+                    <p>✅ L'app est de retour en ligne !</p></td>
                 </tr>
             </tbody>
         </table>
-        <hr>
 
-        <!-- BLOC 2 : LOGS -->
-        <div class="section-title" id="part2">
-            BLOC 2️⃣ : 📋 LOGS
+        <!-- ÉTAPE 5 : VÉRIFICATION -->
+        <div class="section-title" id="part15">
+        ÉTAPE 5️⃣ : VÉRIFICATION - Tester la nouvelle version
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th width="4%">Shell</th>
+                    <th width="48%">Motif</th>
+                    <th width="48%">Explications</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <pre>curl https://[SOUS-DOMAINE].[DOMAINE].fr/docs</pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>@</td>
+                <td>Tester l'accès directement sur @</td>
+                <td>Doit retourner du HTML</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>docker logs <span id="containerNameResp4">[CONTAINER NAME]</span></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Si erreur 502 ou timeout</td>
+                <td>Affiche les logs du conteneur pour diagnostiquer le problème</td>
+            </tr>
+        </tbody>
+    </table>
 
-        <p>Pour accéder aux logs d'une application, faire les instructions suivantes sur la VM :</p>
+
+    <!-- ÉTAPE 6 : OPTIONNEL - NETTOYAGE -->
+    <div class="section-title" id="part16">
+        ÉTAPE 6️⃣ : OPTIONNEL - Nettoyer les anciennes versions
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th width="4%">Shell</th>
+                <th width="48%">Motif</th>
+                <th width="48%">Explications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3">
+                    <pre>docker ps -a | grep <span id="imagesResp2">[IMAGE]</span></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Lister tous les conteneurs avec le même nom commun pour l'image (actifs + arrêtés)</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>docker rm <span id="prevContainerIDResp2">[ancien CONTAINER ID]</span></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Supprimer le conteneur arrêté (ancien)</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>docker rmi <span id="prevRepoResp1">[Ancien REPOSITORY]</span>:<span id="prevTagResp1">[Ancien TAG]</span></pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td>Supprimer l'image Docker ancienne (optionnel)</td>
+                <td><strong>rmi</strong> = remove image. Libère l'espace dans l'instance ciblée. <br>
+                    <b>⚠️ Vérifier que l'image n'est pas utilisée dans un autre sous-domaine avant de la
+                        supprimer</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <pre>df -h /</pre>
+                </td>
+            </tr>
+            <tr class="vm">
+                <td>VM</td>
+                <td><b>⚠️ Vérifier l'espace disque libéré</b></td>
+                <td><strong>df -h</strong> : affiche l'utilisation disque. La colonne "Use%" doit diminuer après le
+                    nettoyage</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="part2">📋 Résumé des impacts</h2>
+    <table>
+        <tbody>
+            <tr class="safe">
+                <td width="200px"><strong>✅ Inchangé</strong></td>
+                <td>Nginx, Certbot, Firewall UFW, certificat SSL, domaine</td>
+            </tr>
+            <tr class="impact">
+                <td><strong>⚠️ Downtime</strong></td>
+                <td>~10-30 secondes (temps pour arrêter l'ancien conteneur et en lancer un nouveau)</td>
+            </tr>
+            <tr class="safe">
+                <td><strong>✅ Transparent</strong></td>
+                <td>Pour l'utilisateur, c'est comme si rien ne s'était passé. HTTPS reste actif pendant toute la
+                    mise à jour (Nginx = reverse proxy, l'accès continue).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 id="part3">🔄 Rollback en cas de problème (urgent)</h2>
+    <div class="step">
+        <div class="step-title">Si la v1 a un bug critique :</div>
         <ul>
             <li>
-                <pre><code>docker ps</code></pre>
-                <p>Récupérer le conteneur l'ID du conteneur ciblé</p>
-            </li>
-            <li>
-                <pre><code>docker exec -it [CONTAINER ID] /bin/bash</code></pre>
-            </li>
-            <li>
-                <pre><code>cd /app/app/logs</code></pre>
-                <p>Dans cette commande, on estime que le répertoire "logs" est dans le répertoire "app"</p>
-            </li>
-            <li>
-                <pre><code>cat auth.log</code></pre>
-                <p>'auth.log' : nom du fichier log ciblé</p>
-            </li>
-        </ul>
+                <pre><code>docker stop <span id="containerNameResp5">[CONTAINER NAME]</span></code> : arrête la version bugguée</li>
+                <li><pre><code>docker start <span id="prevContainerNameResp1">[Ancien CONTAINER NAME]</span></code> : relance l'ancienne version (si pas supprimée à l'étape 6)</li>
+                <li>Nginx redirige immédiatement vers le port <span id="networkVMResp2">[PORT RESEAU]</span> → ancien conteneur ✅</li>
+                <li>Durée : ~10 sec. Dépannage rapide !</li>
+            </ul>
+        </div>
+        <br>
+        <hr>
 
         <i><a href="#menu">Retour au menu</a></i><br><br>
 
-        <a id='lien' href="./index.html">Retour au sommaire</a>
-
+        <i><a id='lien' href="./index.html">Retour au sommaire</a></i>
     </div>
+    <script src="/index_ovh06.js"></script>
 </body>
 
 </html>
