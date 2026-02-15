@@ -5,15 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Divers</title>
-    <link rel="stylesheet" href="styleOVH.css">
+    <link rel="stylesheet" href="styleOVH.css?=v001">
 </head>
 
 <body>
     <div class="container">
         <h1>❓ Divers</h1>
 
-        <div class="section-title">Création d'un dossier pour récupérer les données d'un fichier en tant
-            qu'administrateur</div>
+        <h2 id="menu">👨‍🍳 Menu</h2>
+        <div class="diagram">
+            🎨 <a href="#part1">BLOC 1 : Création d'un dossier pour récupérer les données d'un fichier .csv</a> <br>
+            🛄 <a href="#part2">BLOC 2 : Récupération des fichiers techniques (logs)</a> <br>
+            📇 <a href="#part3">BLOC 3 : Accès à son adresse IPv6</a> <br>
+            🛄 <a href="#part4">BLOC 4 : Blocage manuel d'adresses IP</a> <br>
+            🚮 <a href="#part5">BLOC 5 : Suppression d'un répertoire</a> <br>
+        </div>
+
+        <!-- ********************* ZONE DE SAISIE ********************* -->
+        <div class="section-title">ZONE DE SAISIE DES DONNEES</div>
+
+        <label for="directory">Nom du dossier local</label>
+        <input type="text" name="directory" id="directory" title="Nom du répertoire en local rattaché à l'application"
+            placeholder="ex: projet004"><br>
+        <label for="ipv4">Adresse IPv4</label>
+        <input type="text" name="ipv4" id="ipv4"><br>
+
+        <button type="submit" id="btn">Valider</button><br><br>
+
+        <!-- *************************** BLOC 1 *************************** -->
+        <div class="section-title" id="part1">🎨 BLOC 1 - RECUPERATION DES DONNEES D'UN FICHIER .CSV</div>
         <table>
             <thead>
                 <tr>
@@ -24,7 +44,7 @@
             <tbody>
                 <tr>
                     <td colspan="2">
-                        <pre><code>mkdir -p /home/ubuntu/enregistrements_formulaires</code></pre>
+                        <pre><code>mkdir -p ~/enregistrements_formulaires</code></pre>
                     </td>
                 </tr>
                 <tr>
@@ -33,8 +53,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <pre><code>ls /home/ubuntu/enregistrements_formulaires</code></pre>
-                        <pre><code>cat /home/ubuntu/enregistrements_formulaires/Inscriptions.csv</code></pre>
+                        <pre><code>ls ~/enregistrements_formulaires</code></pre>
+                        <pre><code>cat ~/enregistrements_formulaires/Inscriptions.csv</code></pre>
                     </td>
                 </tr>
                 <tr>
@@ -47,11 +67,198 @@
                     </td>
                 </tr>
             </tbody>
+        </table><br>
+
+        <!-- *************************** BLOC 2 *************************** -->
+        <div class="section-title" id="part2">🛄 BLOC 2 - RECUPERATION DES FICHIERS TECHNIQUES (LOGS)</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Shell</th>
+                    <th>Motif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>mkdir -p ~/archives_logs/auth_<span id="directoryResponse1">[NOM_DOSSIER_EN_LOCAL]</span></code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Création de dossiers persistants sur le bash par application publiée</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>sudo cp /var/log/auth.log \
+~/archives_logs/auth_<span id="directoryResponse2">[NOM_DOSSIER_EN_LOCAL]</span>/auth_$(date +%Y%m%d).log</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Copie de l'historique du log <br><br>
+                        <i>Proposition de copier hebdomadairement le fichier log</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>sudo chown ubuntu:ubuntu ~/archives_logs/auth_<span id="directoryResponse3">[NOM_DOSSIER_EN_LOCAL]</span>/auth_20260215.log</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Droits d'accès aux fichiers logs</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>head ~/archives_logs/auth_<span id="directoryResponse4">[NOM_DOSSIER_EN_LOCAL]</span>/auth_20260215.log
+                        </code></pre>
+                        <pre><code>tail ~/archives_logs/auth_<span id="directoryResponse5">[NOM_DOSSIER_EN_LOCAL]</span>/auth_20260215.log
+                        </code></pre>
+                        <pre><code>less ~/archives_logs/auth_<span id="directoryResponse6">[NOM_DOSSIER_EN_LOCAL]</span>/auth_20260215.log
+                        </code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>
+                        <ul> Consultation du détail d'un fichier log archivé :
+                            <li>1ère ligne de code : consultation du début du fichier</li>
+                            <li>2ème ligne de code : consultation de la fin du fichier</li>
+                            <li>3ème ligne de code : consultation complète du fichier.
+                                <ul>Commandes à utiliser dans "less" :
+                                    <li>flèches haut/bas pour naviguer</li>
+                                    <li>
+                                        <pre><code>/mot</code></pre> pour chercher
+                                    </li>
+                                    <li>
+                                        <pre><code>n</code></pre> pour chercher l'occurence suivante
+                                    </li>
+                                    <li>
+                                        <pre><code>q</code></pre> pour quitter
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>scp ubuntu@<span id="ipv4Response1">[ADRESSE IPv4]</span>:~/archives_logs/auth_<span id="directoryResponse7">[NOM_DOSSIER_EN_LOCAL]</span>/auth_[YYYYMMAA du fichier à récupérer].log .
+                        </code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>VSC</b></td>
+                    <td>Rapatriement du fichier sur le PC pour l'ouvrir via l'EDI VS CODE</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>find ~/archives_logs -type f -mtime +365 -delete
+                    </code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td><b>Purge des archives de + de 365 jours dans les répertoires créés</b></td>
+                </tr>
+            </tbody>
         </table>
+
+        <!-- *************************** BLOC 3 *************************** -->
+        <div class="section-title" id="part3">🚮 BLOC 3 - ACCESS A SON ADRESSE IPv6</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shell</th>
+                    <th>Motif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>curl ifconfig.me</code></pre>
+                        </code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Accès à l'adresse IPv6 après avoir installé le paquet curl
+                    </td>
+                </tr>
+            </tbody>
+        </table><br>
+
+        <!-- *************************** BLOC 4 *************************** -->
+        <div class="section-title" id="part4">🚮 BLOC 4 - BLOCAGE MANUEL D'ADRESSES IP</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shell</th>
+                    <th>Motif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>sudo ufw deny from [ADRESSE IP]</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Blocage manuel d'une adresse IP qui spamme beaucoup avec le paquet UFW</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>sudo tail -f /var/log/fail2ban.log</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Vérifie en temps réel quand une adresse IP sera bannie (touches CTRL + C pour quitter)</td>
+                </tr>
+
+            </tbody>
+        </table><br>
+
+        <!-- *************************** BLOC 5 *************************** -->
+        <div class="section-title" id="part5">🚮 BLOC 5 - SUPPRESSION D'UN REPERTOIRE</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shell</th>
+                    <th>Motif</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>rmdir [NOM_REPERTOIRE]</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Suppression d'un répertoire vide</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <pre><code>rm -r [NOM_REPERTOIRE]</code></pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td>VM</td>
+                    <td>Suppression d'un répertoire contenant des sous-dossiers / fichiers</td>
+                </tr>
+            </tbody>
+        </table><br>
+
+        <i><a href="#menu">Retour au menu</a></i><br><br>
 
         <a id='lien' href="./index.html">Retour au sommaire</a>
 
     </div>
+    <script src="/index_ovh08.js"></script>
 </body>
 
 </html>

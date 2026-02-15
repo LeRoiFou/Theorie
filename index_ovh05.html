@@ -14,7 +14,7 @@
 
         <h2 id="menu">👨‍🍳 Menu</h2>
         <div class="diagram">
-            🔧 <a href="#part1">BLOC 1 : Installation des paquets Nginx + Certbot</a> <br>
+            🔧 <a href="#part1">BLOC 1 : Installation des paquets Fail2ban + Nginx + Certbot</a> <br>
             ⚙️ <a href="#part2">BLOC 2 : Configuration Nginx Reverse Proxy</a> <br>
             🔒 <a href="#part3">BLOC 3 : Génération Certificat SSL Let's Encrypt</a> <br>
             📦 <a href="#part4">BLOC 4 : Préparation Docker & Transfert vers VM</a>
@@ -74,7 +74,7 @@
 
         <!-- BLOC 1 : INSTALLATION NGINX + CERTBOT -->
         <div class="section-title" id="part1">🔧 BLOC 1 <u>POUR CHAQUE NOUVELLE INSTANCE</u> : Installation des paquets
-            Nginx + Certbot</div>
+            fail2ban + Nginx + Certbot</div>
         <table>
             <thead>
                 <tr>
@@ -98,6 +98,90 @@
                         <strong>-y</strong> : répondre "oui" automatiquement <br>
                         ⏱️ 1-3 min
                     </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt install curl</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Installation du paquet curl pour l'accès à mon adresse IPv6 publique actuelle</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>curl ifconfig.me</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Récupération de mon adresse IPv6 publique</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo apt install fail2ban</code></pre>
+                    </td>
+                </tr class="vm">
+                <tr>
+                    <td>VM</td>
+                    <td>Installation du paquet fail2ban</td>
+                    <td>Permet de bloquer les adresse IP automatiques qui spamment les fichiers log</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo nano /etc/fail2ban/jail.local</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Création / Edition de la config locale du paquet fail2ban</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>[DEFAULT]
+ignoreip = 127.0.0.1/8 ::1 [MON ADRESSE IPv6]
+
+[sshd]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 5
+bantime  = 1h
+findtime = 10m
+</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Paramétrage des données du paquet fail2ban dans le fichier de configuration </td>
+                    <td>
+                        <p>La commande ci-après permet de bloquer toutes les adresses IP qui spamment le fichier log,
+                            sauf mon adresse IPv6 (récupérée ci-avant) :</p>
+                        <pre><code>[DEFAULT]
+ignoreip = 127.0.0.1/8 ::1 [MON ADRESSE IPv6]</code></pre>
+                        <ul>
+                            <li><b>maxretry = 5</b> : à partir de x échecs</li>
+                            <li><b>bantime = 1h</b> : l'IP est bannie pendant x heure(s)</li>
+                            <li><b>findtime = 10m</b> : sur une fenêtre de x minutes</li>
+                        </ul><br>
+                        <ul>Puis :
+                            <li>→ CTRL + O (pour 'Write Out' / Enregistrer)</li>
+                            <li>→ ENTREE (pour confirmer le nom du fichier)</li>
+                            <li>→ CTRL + X (quitter)</li>
+                        </ul>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo systemctl restart fail2ban</code></pre>
+                        <pre><code>sudo fail2ban-client status sshd</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td colspan="2">Redémarrage du paque fail2ban</td>
                 </tr>
                 <tr>
                     <td colspan="3">
@@ -158,6 +242,21 @@
                     <td>Vérifier que Nginx fonctionne</td>
                     <td>Doit afficher
                         <pre><code>active (running)</code> en vert ✅. Appuie sur <strong>Q</strong> pour quitter</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <pre><code>sudo ufw status verbose</code></pre>
+                    </td>
+                </tr>
+                <tr class="vm">
+                    <td>VM</td>
+                    <td>Vérifier le statut du firewall</td>
+                    <td>
+                        <ul>
+                            <li>La colonne "Action" doit avoir le statut "ALLOW IN"</li>
+                            <li>La colonne "From" doit avoir le statut "Anywhere"</li>
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
         </table>
